@@ -2,19 +2,20 @@ package br.com.sga.services;
 
 import org.jboss.as.cli.scriptsupport.CLI;
 
+import br.com.sga.monitoramento.enumeration.AmbienteEnum;
+
 
 public class ConexaoCLI {
 
 	public static CLI cli;
+	
+	
 
-
-	public void ConnectCli() {
-		String domain = LoadBundle.getValue(server.getNomeAmbiente() + "-host",PropertiesFile.MONITOR);
-		String username = LoadBundle.getValue(server.getNomeAmbiente()
-				+ "-username",PropertiesFile.MONITOR);
-		String password = LoadBundle.getValue(server.getNomeAmbiente()
-				+ "-password",PropertiesFile.MONITOR);
-		int porta = Integer.parseInt(LoadBundle.getValue("porta",PropertiesFile.MONITOR));
+	public void ConnectCli(AmbienteEnum ambiente) {
+		String domain = ambiente.getHost();
+		String username = ambiente.getUsuario();
+		String password = ambiente.getSenha();
+		int porta = ambiente.getPorta();
 		getConnection(domain, porta, username, password);
 	}
 

@@ -5,9 +5,7 @@ import java.util.List;
 
 import javax.xml.crypto.Data;
 
-import org.jboss.as.cli.scriptsupport.CLI;
-
-import br.com.anbima.monitor.model.Datasource;
+import br.com.sga.monitoramento.model.Datasource;
 
 public class DataSourceCLI {
 

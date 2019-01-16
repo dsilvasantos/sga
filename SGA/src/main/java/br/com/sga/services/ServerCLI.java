@@ -5,7 +5,7 @@ import java.util.List;
 import org.jboss.as.cli.scriptsupport.CLI;
 
 public class ServerCLI {
-
+    
 	private static ServicosCLI service;
 
 	public boolean startServer(Server server) throws Exception {
