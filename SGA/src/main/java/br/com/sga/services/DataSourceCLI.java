@@ -8,7 +8,7 @@ import javax.xml.crypto.Data;
 import br.com.sga.monitoramento.model.Datasource;
 
 public class DataSourceCLI {
-
+/*
 	private static ServicosCLI service;
 
 	public boolean testConnect(Data data) throws IllegalStateException {
@@ -51,5 +51,5 @@ public class DataSourceCLI {
 		}
 		return datas;
 	}
-
+*/
 }

@@ -1,7 +1,7 @@
 package br.com.sga.monitoramento.enumeration;
 
 public enum AmbienteEnum {
-	PRODUCAO("Produção", "192.168.1.255", "sga", "sga.1234", 9990);
+	PRODUCAO("Produção", "192.168.1.188", "sga", "sga.1234", 9999);
 
 	private String ambiente;
 	private String host;
@@ -37,7 +37,7 @@ public enum AmbienteEnum {
 		return this.porta;
 	}
 
-	public AmbienteEnum getAmbiente(int opcao) {
+	public static AmbienteEnum getAmbiente(int opcao) {
 		switch (opcao) {
 		case 1:
 			return PRODUCAO;

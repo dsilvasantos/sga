@@ -1,18 +1,14 @@
 package br.com.sga.services;
 
-import javax.inject.Inject;
-
 import br.com.sga.monitoramento.enumeration.AmbienteEnum;
 
 public class AmbienteServices {
+		
 	
-	public AmbienteEnum ambiente;
-	
-	@Inject
-	public ConexaoCLI conexaoCLI;
+	public ConexaoCLI conexaoCLI  = new ConexaoCLI();
 	
 	public void selecionarAmbiente(int opcao) {
-		ambiente = ambiente.getAmbiente(opcao);
+		AmbienteEnum ambiente = AmbienteEnum.getAmbiente(opcao);
 		conexaoCLI.ConnectCli(ambiente);
 	}
 
