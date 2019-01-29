@@ -9,5 +9,11 @@ public class teste {
 		System.out.println("Teste");
 		AmbienteServices amb = new AmbienteServices();
 		amb.selecionarAmbiente(1);
+		
+		DepartamentoCLIServices departamento = new DepartamentoCLIServices();
+		departamento.verficarDepartamento("desenvolvimento");
+		
+		CelulaCLIServices celula =new CelulaCLIServices();
+		celula.verficarCelula("selic");
 	}
 }
