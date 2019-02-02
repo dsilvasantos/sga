@@ -1,8 +1,24 @@
 package br.com.sga.monitoramento.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="celula")
 public class Celula {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@Column(name = "nome",nullable=false)
 	private String nome;
+	
+	@Column(name = "descricao",nullable=true)
 	private String descricao;
 
 	public String getNome() {
@@ -19,6 +35,14 @@ public class Celula {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public Celula() {
