@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.as.cli.scriptsupport.CLI;
+import org.jboss.dmr.ModelNode;
 
 public class ServicosCLI {
 	
@@ -18,6 +19,10 @@ public class ServicosCLI {
 	public String executeCommand(String cmd) {
 		String result = cli.cmd(cmd).getResponse().get("outcome").toString();
 		return result;
+	}
+	
+	public List<ModelNode> executeCommandList(String cmd){
+		return cli.cmd(cmd).getResponse().get("result").asList();
 	}
 
 	public String readValor(String cmd) {
@@ -84,4 +89,10 @@ public class ServicosCLI {
 		String resource = cli.cmd(cmd).getResponse().get("result").toString();
 		return resource;
 	}
+
+	public static CLI getCli() {
+		return cli;
+	}
+	
+	
 }

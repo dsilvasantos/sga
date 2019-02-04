@@ -1,36 +1,46 @@
 package br.com.sga.services;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import br.com.sga.monitoramento.model.Aplicacao;
+import br.com.sga.monitoramento.model.AplicacaoThread;
+
 public class ThreadServices {
-	/*
 	
-	public List<ServerThread> getTenMoreThreads(Server server)
+	private ServicosCLI service = new ServicosCLI();
+	AmbienteServices ambiente = new AmbienteServices();
+	
+	public List<AplicacaoThread> getTenMoreThreads(Aplicacao aplicacao)
 	{
-		List<ServerThread> allThreads = getAllThreads(cli,server);
-		List<ServerThread> tenThreads = new ArrayList<ServerThread>();
+		List<AplicacaoThread> allThreads = getAllThreads(aplicacao);
+		List<AplicacaoThread> tenThreads = new ArrayList<AplicacaoThread>();
 		Collections.sort(allThreads);
 		
 		for(int i=allThreads.size()-1;i>=allThreads.size()-10;i--){
-			tenThreads.add(getThreadsInformations(cli, allThreads.get(i), server));
+			tenThreads.add(getThreadsInformations(allThreads.get(i), aplicacao));
 		}
 		
 		Collections.sort(tenThreads);
-		disconnect(cli);
 		return tenThreads;
 	}
 	
 	
-	private List<ServerThread> getAllThreads(CLI cli,Server server){
+	private List<AplicacaoThread> getAllThreads(Aplicacao aplicacao){
 		
-		String cmdAllThreads = "/host="+server.getNomeHost()+"/server="+server.getNomeServer()+"/core-service=platform-mbean/type=threading:read-resource(include-runtime=true)";
-		String[] ids = parseResult(service.readResource(cli, cmdAllThreads));
-		ServerThread thread;
-		List<ServerThread> threads = new ArrayList<ServerThread>();
+		String cmdAllThreads = "/host="+ambiente.getAmbiente().getHost()+"/aplicacao="+aplicacao.getNome()+"/core-service=platform-mbean/type=threading:read-resource(include-runtime=true)";
+		String[] ids = parseResult(service.readResource(cmdAllThreads));
+		AplicacaoThread thread;
+		List<AplicacaoThread> threads = new ArrayList<AplicacaoThread>();
 		
 		for(int i=0;i<ids.length;i++){
-			thread = new ServerThread();
+			thread = new AplicacaoThread();
 			thread.setId(Long.parseLong(ids[i].trim().replace("L", "")));
-			String cmdCpuTime =  "/host="+server.getNomeHost()+"/server="+server.getNomeServer()+"/core-service=platform-mbean/type=threading:get-thread-cpu-time(id="+thread.getId()+")";
-			String res = service.readResource(cli, cmdCpuTime).replace("L", "");
+			String cmdCpuTime =  "/host="+ambiente.getAmbiente().getHost()+"/aplicacao="+aplicacao.getNome()+"/core-service=platform-mbean/type=threading:get-thread-cpu-time(id="+thread.getId()+")";
+			String res = service.readResource(cmdCpuTime).replace("L", "");
 			thread.setCpu_time(Long.parseLong(res));
 			threads.add(thread);
 		}	
@@ -52,9 +62,9 @@ public class ThreadServices {
 		return id.split(",");
 	}
 	
-	private ServerThread getThreadsInformations(ServerThread thread,Server server){
-		String command = "/host="+server.getNomeHost()+"/server="+server.getNomeServer()+"/core-service=platform-mbean/type=threading:get-thread-info(id="+thread.getId()+")";
-		String[] resultado = service.readResource(cli, command).split(",");
+	private AplicacaoThread getThreadsInformations(AplicacaoThread thread,Aplicacao aplicacao){
+		String command = "/host="+ambiente.getAmbiente().getHost()+"/aplicacao="+aplicacao.getNome()+"/core-service=platform-mbean/type=threading:get-thread-info(id="+thread.getId()+")";
+		String[] resultado = service.readResource(command).split(",");
 		String name = resultado[1].replace("\"","").replace("thread-name", "").replace("=>", "").trim();
 		String state = resultado[2].replace("\"", "").replace("thread-state", "").replace("=>", "").trim();
 		String blockTime = resultado[3].replace("\"", "").replace("blocked-time", "").replace("=>", "").replace("L", "").trim();
@@ -71,5 +81,5 @@ public class ThreadServices {
 		
 		return thread;
 	}
-	*/
+	
 }

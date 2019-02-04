@@ -6,10 +6,14 @@ public class AmbienteServices {
 		
 	
 	public ConexaoCLI conexaoCLI  = new ConexaoCLI();
+	private static AmbienteEnum ambiente;
 	
 	public void selecionarAmbiente(int opcao) {
-		AmbienteEnum ambiente = AmbienteEnum.getAmbiente(opcao);
+		ambiente = AmbienteEnum.getAmbiente(opcao);
 		conexaoCLI.ConnectCli(ambiente);
 	}
 
+	public AmbienteEnum getAmbiente() {
+		return ambiente;
+	}
 }

@@ -3,7 +3,7 @@ package br.com.sga.monitoramento.model;
 import java.util.concurrent.TimeUnit;
 
 
-public class ServerThread implements Comparable<ServerThread>{
+public class AplicacaoThread implements Comparable<AplicacaoThread>{
 	private long id;
 	private String name;
 	private String state;
@@ -14,7 +14,7 @@ public class ServerThread implements Comparable<ServerThread>{
 	
 	private long cpu_time;
 	
-	public ServerThread() {
+	public AplicacaoThread() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -83,7 +83,7 @@ public class ServerThread implements Comparable<ServerThread>{
 
 
 	@Override
-	public int compareTo(ServerThread arg0) {
+	public int compareTo(AplicacaoThread arg0) {
 		if(this.cpu_time < arg0.getCpu_time()){
 			return -1;
 		}
