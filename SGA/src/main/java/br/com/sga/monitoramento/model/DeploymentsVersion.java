@@ -1,7 +1,5 @@
 package br.com.sga.monitoramento.model;
 
-import java.util.Date;
-
 public class DeploymentsVersion {
 	
 	private String nomeAplicacao;

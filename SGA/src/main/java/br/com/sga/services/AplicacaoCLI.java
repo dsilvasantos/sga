@@ -15,16 +15,21 @@ public class AplicacaoCLI {
 	AmbienteServices ambiente = new AmbienteServices();
 	
 	public Aplicacao recuperarAplicacao(String nome) {
-		Aplicacao aplicao = new Aplicacao();
-		aplicao.setNome(nome);
-		aplicao.setStatus(service.readAttribute("/host="+ambiente.getAmbiente().getHost()+"/server="+aplicao.getNome()+":read-attribute(name=server-state)"));
-		aplicao.setImagem(getImagem(aplicao.getStatus()));
-		aplicao.setDescricaoImagem(aplicao.getStatus());
-		return aplicao;
+		Aplicacao aplicacao = new Aplicacao();
+		String host = getHost(nome);
+		if(host.isEmpty()) {
+			return null;
+		}
+		aplicacao.setHost(host);
+		aplicacao.setNome(nome);
+		aplicacao.setStatus(service.readAttribute("/host="+aplicacao.getHost()+"/server="+aplicacao.getNome()+":read-attribute(name=server-state)"));
+		aplicacao.setImagem(getImagem(aplicacao.getStatus()));
+		aplicacao.setDescricaoImagem(aplicacao.getStatus());
+		return aplicacao;
 	}
 	
 	public boolean startAplicacao(Aplicacao aplicacao) throws Exception {
-		String cmdStart = "/host=" + ambiente.getAmbiente().getHost() + "/aplicacao-config=" + aplicacao.getNome() + ":start()";
+		String cmdStart = "/host=" + aplicacao.getHost() + "/server-config=" + aplicacao.getNome() + ":start()";
 		String result = service.executeCommand(cmdStart);
 		if (result.contains("success")) {
 			LOGGER.info("Comando START executado com sucesso no CLI.");
@@ -36,7 +41,7 @@ public class AplicacaoCLI {
 	}
 
 	public boolean verifyAplicacao(Aplicacao aplicacao) throws Exception {
-		String comando = "/host=" + ambiente.getAmbiente().getHost() + "/aplicacao=" + aplicacao.getNome()
+		String comando = "/host=" + aplicacao.getHost() + "/server=" + aplicacao.getNome()
 				+ "/subsystem=logging/log-file=aplicacao.log:read-log-file(tail=true,lines=100)";
 		List<ModelNode> lista = service.executeCommandList(comando);
 		if (lista.toString().contains("JBAS015874")) {
@@ -50,7 +55,7 @@ public class AplicacaoCLI {
 
 	
 	public boolean killAplicacao(Aplicacao aplicacao) throws Exception {
-		String cmdStop = "/host=" + ambiente.getAmbiente().getHost() + "/aplicacao-config=" + aplicacao.getNome() + ":kill()";
+		String cmdStop = "/host=" + aplicacao.getHost() + "/server-config=" + aplicacao.getNome() + ":kill()";
 		String result = service.executeCommand(cmdStop);
 		if (result.contains("success")) {
 			LOGGER.info("Comando KILL executado com sucesso no CLI.");
@@ -64,7 +69,7 @@ public class AplicacaoCLI {
 	
 	public boolean stopAplicacao(Aplicacao aplicacao) throws Exception {
 		String cmdStop = null;
-		cmdStop = "/host=" + ambiente.getAmbiente().getHost() + "/aplicacao-config=" + aplicacao.getNome() + ":destroy()";
+		cmdStop = "/host=" + aplicacao.getHost() + "/server-config=" + aplicacao.getNome() + ":destroy()";
 		
 		String result = service.executeCommand(cmdStop);
 		if (result.contains("success")) {
@@ -83,11 +88,24 @@ public class AplicacaoCLI {
 	 */
 	private String getImagem(String status){
 		if(status.equals(StatusServer.running.getValor())){
-			return "../../images/ok-16.png";
+			return "../../imagens/ok-16.png";
 		}else if(status.equals(StatusServer.restartrequired.getValor())){
-			return "../../images/warning-16.png";
+			return "../../imagens/warning-16.png";
 		}else{
-			return "../../images/error-16.png";
+			return "../../imagens/error-16.png";
 		}
+	}
+	
+	public String getHost(String aplicacao) {
+		String cmdGetHost = "ls /host";
+		List<String> hosts = service.readList(cmdGetHost);
+		for(String host:hosts) {
+			String cmdGetAplicacao = "ls /host=" + host + "/server";
+			List<String> aplicacoes = service.readList(cmdGetAplicacao);
+			if(aplicacoes.contains(aplicacao)) {
+				return host;
+			}
+		}
+		return null;
 	}
 }

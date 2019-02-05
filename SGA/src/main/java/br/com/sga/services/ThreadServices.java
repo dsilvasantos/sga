@@ -31,7 +31,7 @@ public class ThreadServices {
 	
 	private List<AplicacaoThread> getAllThreads(Aplicacao aplicacao){
 		
-		String cmdAllThreads = "/host="+ambiente.getAmbiente().getHost()+"/aplicacao="+aplicacao.getNome()+"/core-service=platform-mbean/type=threading:read-resource(include-runtime=true)";
+		String cmdAllThreads = "/host="+aplicacao.getHost()+"/server="+aplicacao.getNome()+"/core-service=platform-mbean/type=threading:read-resource(include-runtime=true)";
 		String[] ids = parseResult(service.readResource(cmdAllThreads));
 		AplicacaoThread thread;
 		List<AplicacaoThread> threads = new ArrayList<AplicacaoThread>();
@@ -39,7 +39,7 @@ public class ThreadServices {
 		for(int i=0;i<ids.length;i++){
 			thread = new AplicacaoThread();
 			thread.setId(Long.parseLong(ids[i].trim().replace("L", "")));
-			String cmdCpuTime =  "/host="+ambiente.getAmbiente().getHost()+"/aplicacao="+aplicacao.getNome()+"/core-service=platform-mbean/type=threading:get-thread-cpu-time(id="+thread.getId()+")";
+			String cmdCpuTime =  "/host="+aplicacao.getHost()+"/server="+aplicacao.getNome()+"/core-service=platform-mbean/type=threading:get-thread-cpu-time(id="+thread.getId()+")";
 			String res = service.readResource(cmdCpuTime).replace("L", "");
 			thread.setCpu_time(Long.parseLong(res));
 			threads.add(thread);
@@ -63,7 +63,7 @@ public class ThreadServices {
 	}
 	
 	private AplicacaoThread getThreadsInformations(AplicacaoThread thread,Aplicacao aplicacao){
-		String command = "/host="+ambiente.getAmbiente().getHost()+"/aplicacao="+aplicacao.getNome()+"/core-service=platform-mbean/type=threading:get-thread-info(id="+thread.getId()+")";
+		String command = "/host="+aplicacao.getHost()+"/server="+aplicacao.getNome()+"/core-service=platform-mbean/type=threading:get-thread-info(id="+thread.getId()+")";
 		String[] resultado = service.readResource(command).split(",");
 		String name = resultado[1].replace("\"","").replace("thread-name", "").replace("=>", "").trim();
 		String state = resultado[2].replace("\"", "").replace("thread-state", "").replace("=>", "").trim();

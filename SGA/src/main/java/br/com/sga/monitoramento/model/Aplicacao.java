@@ -2,14 +2,14 @@ package br.com.sga.monitoramento.model;
 
 import java.util.List;
 
-import javax.faces.bean.RequestScoped;
-
 import br.com.sga.monitoramento.enumeration.StatusServer;
 
 
-@RequestScoped
+
+
 public class Aplicacao{
 
+	private String host;
 	private String nome;
 	private String status;
 	private boolean valid;
@@ -189,5 +189,11 @@ public class Aplicacao{
 		this.thread = thread;
 	}
 
-	
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
+	}
 }

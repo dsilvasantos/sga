@@ -24,18 +24,18 @@ public class JvmServices {
 		Jvm jvm = new Jvm();
 
 		// Recuperando valores dos scripts do GC
-		String cmdGetScripts = "ls /host=" + ambiente.getAmbiente().getHost() + "/aplicacao=" + aplicacao.getNome()
+		String cmdGetScripts = "ls /host=" + aplicacao.getHost() + "/server=" + aplicacao.getNome()
 				+ "/core-service=platform-mbean/" + "type=garbage-collector/name";
 
 		List<String> scriptsGC = getScriptsGC(cmdGetScripts);
 		List<GC> gc = new ArrayList<GC>();
 		for (String script : scriptsGC) {
 			GC item = new GC();
-			String cmdGetCount = "/host=" + ambiente.getAmbiente().getHost() + "/aplicacao=" + aplicacao.getNome()
+			String cmdGetCount = "/host=" + aplicacao.getHost() + "/server=" + aplicacao.getNome()
 					+ "/core-service=platform-mbean/" + "type=garbage-collector/name=" + script
 					+ ":read-attribute(name=collection-count)";
 
-			String cmdGetTime = "/host=" + ambiente.getAmbiente().getHost() + "/aplicacao=" + aplicacao.getNome()
+			String cmdGetTime = "/host=" + aplicacao.getHost() + "/server=" + aplicacao.getNome()
 					+ "/core-service=platform-mbean/" + "type=garbage-collector/name=" + script
 					+ ":read-attribute(name=collection-time)";
 
@@ -56,7 +56,7 @@ public class JvmServices {
 		jvm.setInfoGC(gc);
 
 		// Recuperando informações da memória Heap
-		String cmdMemory = "ls /host=" + ambiente.getAmbiente().getHost() + "/aplicacao=" + aplicacao.getNome()
+		String cmdMemory = "ls /host=" + aplicacao.getHost() + "/server=" + aplicacao.getNome()
 				+ "/core-service=platform-mbean/type=memory";
 		List<String> memory = parseResult(cmdMemory);
 		jvm.setHeapUsage(getMegaByte(memory.get(0)));
