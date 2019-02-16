@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import br.com.sga.monitoramento.enumeration.TiposGC;
-import br.com.sga.monitoramento.model.Aplicacao;
+import br.com.sga.monitoramento.model.Server;
 import br.com.sga.monitoramento.model.GC;
 import br.com.sga.monitoramento.model.Jvm;
 
@@ -19,23 +19,23 @@ public class JvmServices {
 	private final String MIN_GC_SCAVENGE = "PS_Scavenge";
 	AmbienteServices ambiente = new AmbienteServices();
 
-	public Jvm getJvmInformations(Aplicacao aplicacao) {
+	public Jvm getJvmInformations(Server server) {
 
 		Jvm jvm = new Jvm();
 
 		// Recuperando valores dos scripts do GC
-		String cmdGetScripts = "ls /host=" + aplicacao.getHost() + "/server=" + aplicacao.getNome()
+		String cmdGetScripts = "ls /host=" + server.getHost() + "/server=" + server.getNome()
 				+ "/core-service=platform-mbean/" + "type=garbage-collector/name";
 
 		List<String> scriptsGC = getScriptsGC(cmdGetScripts);
 		List<GC> gc = new ArrayList<GC>();
 		for (String script : scriptsGC) {
 			GC item = new GC();
-			String cmdGetCount = "/host=" + aplicacao.getHost() + "/server=" + aplicacao.getNome()
+			String cmdGetCount = "/host=" + server.getHost() + "/server=" + server.getNome()
 					+ "/core-service=platform-mbean/" + "type=garbage-collector/name=" + script
 					+ ":read-attribute(name=collection-count)";
 
-			String cmdGetTime = "/host=" + aplicacao.getHost() + "/server=" + aplicacao.getNome()
+			String cmdGetTime = "/host=" + server.getHost() + "/server=" + server.getNome()
 					+ "/core-service=platform-mbean/" + "type=garbage-collector/name=" + script
 					+ ":read-attribute(name=collection-time)";
 
@@ -56,7 +56,7 @@ public class JvmServices {
 		jvm.setInfoGC(gc);
 
 		// Recuperando informações da memória Heap
-		String cmdMemory = "ls /host=" + aplicacao.getHost() + "/server=" + aplicacao.getNome()
+		String cmdMemory = "ls /host=" + server.getHost() + "/server=" + server.getNome()
 				+ "/core-service=platform-mbean/type=memory";
 		List<String> memory = parseResult(cmdMemory);
 		jvm.setHeapUsage(getMegaByte(memory.get(0)));

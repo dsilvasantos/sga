@@ -7,7 +7,7 @@ import org.jboss.as.cli.scriptsupport.CLI;
 import org.jboss.dmr.ModelNode;
 
 import br.com.sga.monitoramento.enumeration.LogLevel;
-import br.com.sga.monitoramento.model.Aplicacao;
+import br.com.sga.monitoramento.model.Server;
 import br.com.sga.monitoramento.model.Log;
 
 public class LogService {
@@ -17,9 +17,9 @@ public class LogService {
 	
 	private ServicosCLI service = new ServicosCLI();
 
-	public List<Log> getLogs(Aplicacao aplicacao, int linhas) {
+	public List<Log> getLogs(Server server, int linhas) {
 		
-		String comando = "/host=" + aplicacao.getHost() + "/server=" + aplicacao.getNome()
+		String comando = "/host=" + server.getHost() + "/server=" + server.getNome()
 				+ "/subsystem=logging/log-file=aplicacao.log:read-log-file(tail=true,lines=" + linhas + ")";
 
 		List<ModelNode> lista = service.executeCommandList(comando);

@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	 <p:dialog  header="#{rotulos.dialog_resultadoOperacao_header}" widgetVar="resultDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" 
+	           closable="false" draggable="false" >
+		<p:panel>
+		
+		<h:panelGrid columns="1" styleClass="center-table" style="text-align:center;">
+			<h:outputLabel value="#{gerencia.msg}"  id="msgInfo"/>
+		
+			<p:commandButton ajax="true"  update=":form:growl" onstart="PF('resultDialog').hide()" onclick="PF('statusDialog').show()"
+			                 oncomplete="window.location.reload()" value="#{rotulos.dialog_resultadoOperacao_botao}" style="height: 20px; width: 50px; horizontal-align:center;"/>
+		</h:panelGrid>
+		</p:panel>
+    </p:dialog>
+	
+	</ui:composition>

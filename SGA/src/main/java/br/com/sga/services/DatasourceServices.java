@@ -3,7 +3,7 @@ package br.com.sga.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.sga.monitoramento.model.Aplicacao;
+import br.com.sga.monitoramento.model.Server;
 import br.com.sga.monitoramento.model.Datasource;
 
 public class DatasourceServices {
@@ -16,7 +16,7 @@ public class DatasourceServices {
 	 * @param aplicacao
 	 * @return
 	 */
-	public boolean testConnect(String cmd, Aplicacao aplicacao) throws IllegalStateException {
+	public boolean testConnect(String cmd, Server aplicacao) throws IllegalStateException {
 
 		try {
 			String resultado = service.readAttribute(cmd);
@@ -54,7 +54,7 @@ public class DatasourceServices {
 		return datas;
 	}
 
-	public String getProfile(String cmd, Aplicacao aplicacao) {
+	public String getProfile(String cmd, Server server) {
 		
 		try {
 			return service.readAttribute(cmd);
@@ -66,7 +66,7 @@ public class DatasourceServices {
 		} 
 	}
 
-	public List<String> getProperty(String cmd, Aplicacao aplicacao, String perfil) {
+	public List<String> getProperty(String cmd, String perfil) {
 
 		try {
 			List<String> propertys = new ArrayList<String>();
@@ -85,7 +85,7 @@ public class DatasourceServices {
 	public List<String> getPropertyDS(String profile, List<String> propertys) {
 		List<String> ds = new ArrayList<String>();
 		for (String property : propertys) {
-			if (property.contains("sutec." + profile + ".ds")) {
+			if (property.contains("global." + profile + ".ds")) {
 				ds.add(getDS(property));
 			}
 		}
@@ -103,13 +103,13 @@ public class DatasourceServices {
 		return ds.toLowerCase();
 	}
 
-	public List<Datasource> getDataSource(Aplicacao aplicacao) {
+	public List<Datasource> getDataSource(Server server) {
 		List<Datasource> dataSources = new ArrayList<Datasource>();
 
 		List<String> lsDataSource = new ArrayList<String>();
 		List<String> lsDataSourceXA = new ArrayList<String>();
 
-		lsDataSource = getDataSources(aplicacao);
+		lsDataSource = getDataSources();
 
 		if (lsDataSource.get(0).isEmpty()) {
 
@@ -122,7 +122,7 @@ public class DatasourceServices {
 			}
 		}
 
-		lsDataSourceXA = getDataSourcesXA(aplicacao);
+		lsDataSourceXA = getDataSourcesXA(server);
 		if (lsDataSourceXA.get(0).isEmpty()) {
 
 		} else {
@@ -136,11 +136,11 @@ public class DatasourceServices {
 		return dataSources;
 	}
 
-	public List<Datasource> globais(List<Datasource> dataSources, Aplicacao aplicacao) {
+	public List<Datasource> globais(List<Datasource> dataSources, Server server) {
 		List<Datasource> dataSourcesGlobais = new ArrayList<Datasource>();
 		Boolean retorno;
 		for (Datasource datasource : dataSources) {
-			retorno = getDataSourcesGlobais(datasource, aplicacao);
+			retorno = getDataSourcesGlobais(datasource, server);
 			if (retorno == true) {
 				datasource.setRestricao("Global");
 				dataSourcesGlobais.add(datasource);
@@ -151,7 +151,7 @@ public class DatasourceServices {
 		return dataSourcesGlobais;
 	}
 
-	public List<String> getDataSources(Aplicacao aplicacao) {
+	public List<String> getDataSources() {
 
 		String cmd = "ls /subsystem=datasources/data-source";
 		try {
@@ -164,8 +164,8 @@ public class DatasourceServices {
 		} 
 	}
 
-	public List<String> getDataSourcesXA(Aplicacao aplicacao) {
-		String cmd = "ls /host=" + aplicacao.getHost() + "/server=" + aplicacao.getNome()
+	public List<String> getDataSourcesXA(Server server) {
+		String cmd = "ls /host=" + server.getHost() + "/server=" + server.getNome()
 				+ "/subsystem=datasources/xa-data-source";
 
 		try {
@@ -178,14 +178,14 @@ public class DatasourceServices {
 		}
 	}
 
-	public boolean getDataSourcesGlobais(Datasource data, Aplicacao aplicacao) {
+	public boolean getDataSourcesGlobais(Datasource data, Server server) {
 
-		String cmd = "/host=" + aplicacao.getHost() + "/server=" + aplicacao.getNome() + "/subsystem=datasources/"
+		String cmd = "/host=" + server.getHost() + "/server=" + server.getNome() + "/subsystem=datasources/"
 				+ data.getTipo() + "=" + data.getNome() + ":read-attribute(name=user-name)";
 
 		try {
 			String user = service.readAttribute(cmd);
-			if (user.contains("sutec")) {
+			if (user.contains("global")) {
 				return false;
 			} else {
 				return true;

@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	 <p:dialog  header="JVM" widgetVar="jvmDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		<p:panel>
+		
+		<p:chart  id="jvmDetail" type="metergauge" model="#{gerencia.chart}" style="width:500px;height:300px" />
+		
+		<p:dataTable id="gcDetail"  style="text-align: center;width: 500px;" var="gc" value="#{gerencia.jvm.infoGC}">
+	        <f:facet name="header">
+	            <p:outputLabel value=" #{rotulos.dialog_jvm_gcInfo} (#{gerencia.serverInf.nomeServer})"/>
+	        </f:facet>
+	        <p:column headerText="#{rotulos.dialog_jvm_tipoGC}" width="30">
+	            <h:outputText value="#{gc.tipo}" />
+	        </p:column>
+	        <p:column headerText="#{rotulos.dialog_jvm_scriptGC}" width="40">
+	            <h:outputText value="#{gc.nomeScript}" />
+	        </p:column>
+	        <p:column headerText="#{rotulos.dialog_jvm_tempoGC}" width="20">
+	            <h:outputText value="#{gc.tempo}" />
+	        </p:column>
+	        <p:column headerText="#{rotulos.dialog_jvm_countGC}" width="20">
+	            <h:outputText value="#{gc.count}" />
+	        </p:column>
+        </p:dataTable>
+		</p:panel>
+    </p:dialog>
+	
+	</ui:composition>

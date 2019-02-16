@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+		<p:commandButton ajax="true" update=":form:serverDetail,:form:deploymentsDetail"  
+				onstart="PF('statusDialog').show()" oncomplete="PF('serverDialog').show(),PF('statusDialog').hide()" 
+				icon="infoButton" title="#{rotulos.tituloinformacoes}" actionListener="#{gerencia.informations(srv)}"  rendered="true"/>
+							
+		<p:commandButton ajax="true" update=":form:jvmDetail,:form:gcDetail"  
+				onstart="PF('statusDialog').show()" oncomplete="PF('jvmDialog').show(),PF('statusDialog').hide()" 
+				icon="memoryButton" title="#{rotulos.titulojvm}" actionListener="#{gerencia.getJvmInformations(srv)}" rendered="true">
+		</p:commandButton>
+		
+		<p:commandButton ajax="true" update=":form:logDetail,:form:export" 
+						onstart="PF('statusDialog').show()" oncomplete="PF('logDialog').show(),PF('statusDialog').hide()" 
+						icon="logButton" title="Log" actionListener="#{gerencia.generateLog(srv,1000)}" rendered="true">
+		</p:commandButton>
+		
+		<p:commandButton ajax="true" update=":form:DatasourceDetail" 
+						onstart="PF('statusDialog').show()" oncomplete="PF('dataSourcesDialog').show(),PF('statusDialog').hide()" 
+						icon="databaseButton" title="#{rotulos.titulodatabases}" actionListener="#{gerencia.database(srv)}" rendered="true">
+		</p:commandButton>
+		
+				
+		<p:commandButton ajax="true" update=":form:stopDetail" disabled="#{!gerencia.permissao}"
+				onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide(),PF('stopJbossDialog').show()"
+				value="#{rotulos.botaoStopJboss}" title="#{rotulos.tituloStopJboss}" actionListener="#{gerencia.stop(srv)}" rendered="true" styleClass="stopButton">
+		</p:commandButton>
+		
+		<p:commandButton ajax="true"   disabled="#{!gerencia.permissao}"
+				onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide(),PF('resultDialog').show()" 
+				value="#{rotulos.botaoStartJboss}" title="#{rotulos.tituloStartJboss}"  actionListener="#{gerencia.startJboss(srv)}" rendered="true" styleClass="startButton">
+		<!--  	<p:confirm header="#{rotulos.dialog_confirmacao_header}" message="#{rotulos.messageStartJboss}"  icon="ui-icon-alert"/> -->
+		</p:commandButton>
+					    					
+	
+		 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		        <p:commandButton value="#{rotulos.dialog_confirmacao_sim}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		        <p:commandButton value="#{rotulos.dialog_confirmacao_nao}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+   		 </p:confirmDialog>
+		
+		
+	
+</ui:composition>

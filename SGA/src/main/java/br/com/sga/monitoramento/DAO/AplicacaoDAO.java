@@ -1,5 +1,6 @@
 package br.com.sga.monitoramento.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,22 +8,22 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import br.com.sga.monitoramento.model.Celula;
+import br.com.sga.monitoramento.model.Aplicacao;
 
-public class CelulaDAO {
+public class AplicacaoDAO {
 
-	private static CelulaDAO instance;
+	private static AplicacaoDAO instance;
 	protected EntityManager entityManager;
 
-	public static CelulaDAO getInstance() {
+	public static AplicacaoDAO getInstance() {
 		if (instance == null) {
-			instance = new CelulaDAO();
+			instance = new AplicacaoDAO();
 		}
 
 		return instance;
 	}
 
-	private CelulaDAO() {
+	private AplicacaoDAO() {
 		entityManager = getEntityManager();
 	}
 
@@ -35,14 +36,14 @@ public class CelulaDAO {
 		return entityManager;
 	}
 
-	public Celula getById(final int id) {
-		return entityManager.find(Celula.class, id);
+	public Aplicacao getById(final int id) {
+		return entityManager.find(Aplicacao.class, id);
 	}
 
-	public void persist(Celula Celula) {
+	public void persist(Aplicacao Aplicacao) {
 		try {
 			entityManager.getTransaction().begin();
-			entityManager.persist(Celula);
+			entityManager.persist(Aplicacao);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -50,10 +51,10 @@ public class CelulaDAO {
 		}
 	}
 
-	public void merge(Celula Celula) {
+	public void merge(Aplicacao Aplicacao) {
 		try {
 			entityManager.getTransaction().begin();
-			entityManager.merge(Celula);
+			entityManager.merge(Aplicacao);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -61,11 +62,11 @@ public class CelulaDAO {
 		}
 	}
 
-	public void remove(Celula Celula) {
+	public void remove(Aplicacao Aplicacao) {
 		try {
 			entityManager.getTransaction().begin();
-			Celula = entityManager.find(Celula.class, Celula.getId());
-			entityManager.remove(Celula);
+			Aplicacao = entityManager.find(Aplicacao.class, Aplicacao.getId());
+			entityManager.remove(Aplicacao);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -75,18 +76,19 @@ public class CelulaDAO {
 
 	public void removeById(final int id) {
 		try {
-			Celula Celula = getById(id);
-			remove(Celula);
+			Aplicacao Aplicacao = getById(id);
+			remove(Aplicacao);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
-	public List<String> recupear(String departamento){
-			Query query = entityManager.createNativeQuery("Select celula.nome from departamento,celula where celula.departamento = "
-					+ "departamento.id and departamento.nome=?1");
-			query.setParameter(1, departamento);
-			List<String> result = query.getResultList();
-			return result;
+	public List<Aplicacao> recupear(String celula) {
+		Query query = entityManager.createNativeQuery(
+				"Select aplicacao.id,aplicacao.nome,aplicacao.status from aplicacao,celula where aplicacao.celula = "
+						+ "celula.id and celula.nome=?1",Aplicacao.class);
+		query.setParameter(1, celula);
+		List<Aplicacao> aplicaocoes = query.getResultList();
+		return aplicaocoes;
 	}
 }

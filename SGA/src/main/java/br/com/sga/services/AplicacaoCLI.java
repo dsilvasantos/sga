@@ -7,6 +7,7 @@ import org.jboss.logging.Logger;
 
 import br.com.sga.monitoramento.enumeration.StatusServer;
 import br.com.sga.monitoramento.model.Aplicacao;
+import br.com.sga.monitoramento.model.Server;
 
 public class AplicacaoCLI {
 	public static Logger LOGGER = Logger.getLogger(AplicacaoCLI.class.getName());
@@ -20,16 +21,29 @@ public class AplicacaoCLI {
 		if(host.isEmpty()) {
 			return null;
 		}
-		aplicacao.setHost(host);
 		aplicacao.setNome(nome);
-		aplicacao.setStatus(service.readAttribute("/host="+aplicacao.getHost()+"/server="+aplicacao.getNome()+":read-attribute(name=server-state)"));
-		aplicacao.setImagem(getImagem(aplicacao.getStatus()));
-		aplicacao.setDescricaoImagem(aplicacao.getStatus());
+		Server server = new Server();
+		server.setNome(nome);
+		server.setHost(host);
+		server.setStatus(service.readAttribute("/host="+server.getHost()+"/server="+aplicacao.getNome()+":read-attribute(name=server-state)"));
+		server.setImagem(getImagem(server.getStatus()));
+		server.setDescricaoImagem(server.getStatus());
+		aplicacao.setServer(server);
 		return aplicacao;
 	}
 	
-	public boolean startAplicacao(Aplicacao aplicacao) throws Exception {
-		String cmdStart = "/host=" + aplicacao.getHost() + "/server-config=" + aplicacao.getNome() + ":start()";
+	public void recuperarServer(Aplicacao aplicacao) {
+		String host = getHost(aplicacao.getNome());
+		Server server = new Server();
+		server.setHost(host);
+		server.setStatus(service.readAttribute("/host="+server.getHost()+"/server="+aplicacao.getNome()+":read-attribute(name=server-state)"));
+		server.setImagem(getImagem(server.getStatus()));
+		server.setDescricaoImagem(server.getStatus());
+		aplicacao.setServer(server);
+	}
+	
+	public boolean startAplicacao(Server server) throws Exception {
+		String cmdStart = "/host=" + server.getHost() + "/server-config=" + server.getNome() + ":start()";
 		String result = service.executeCommand(cmdStart);
 		if (result.contains("success")) {
 			LOGGER.info("Comando START executado com sucesso no CLI.");
@@ -40,8 +54,8 @@ public class AplicacaoCLI {
 		}
 	}
 
-	public boolean verifyAplicacao(Aplicacao aplicacao) throws Exception {
-		String comando = "/host=" + aplicacao.getHost() + "/server=" + aplicacao.getNome()
+	public boolean verifyAplicacao(Server server) throws Exception {
+		String comando = "/host=" + server.getHost() + "/server=" + server.getNome()
 				+ "/subsystem=logging/log-file=aplicacao.log:read-log-file(tail=true,lines=100)";
 		List<ModelNode> lista = service.executeCommandList(comando);
 		if (lista.toString().contains("JBAS015874")) {
@@ -54,8 +68,8 @@ public class AplicacaoCLI {
 	}
 
 	
-	public boolean killAplicacao(Aplicacao aplicacao) throws Exception {
-		String cmdStop = "/host=" + aplicacao.getHost() + "/server-config=" + aplicacao.getNome() + ":kill()";
+	public boolean killAplicacao(Server server) throws Exception {
+		String cmdStop = "/host=" + server.getHost() + "/server-config=" + server.getNome() + ":kill()";
 		String result = service.executeCommand(cmdStop);
 		if (result.contains("success")) {
 			LOGGER.info("Comando KILL executado com sucesso no CLI.");
@@ -67,9 +81,9 @@ public class AplicacaoCLI {
 	}
 
 	
-	public boolean stopAplicacao(Aplicacao aplicacao) throws Exception {
+	public boolean stopAplicacao(Server server) throws Exception {
 		String cmdStop = null;
-		cmdStop = "/host=" + aplicacao.getHost() + "/server-config=" + aplicacao.getNome() + ":destroy()";
+		cmdStop = "/host=" + server.getHost() + "/server-config=" + server.getNome() + ":destroy()";
 		
 		String result = service.executeCommand(cmdStop);
 		if (result.contains("success")) {
@@ -88,11 +102,11 @@ public class AplicacaoCLI {
 	 */
 	private String getImagem(String status){
 		if(status.equals(StatusServer.running.getValor())){
-			return "../../imagens/ok-16.png";
+			return "../imagens/warning-16.png";
 		}else if(status.equals(StatusServer.restartrequired.getValor())){
-			return "../../imagens/warning-16.png";
+			return "../imagens/warning-16.png";
 		}else{
-			return "../../imagens/error-16.png";
+			return "../imagens/error-16.png";
 		}
 	}
 	

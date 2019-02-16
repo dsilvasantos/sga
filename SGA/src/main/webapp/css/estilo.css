@@ -1,0 +1,37 @@
+
+
+#page {
+	width: 1360px;
+	margin: 0 auto;
+	background: #FFFFFF;
+}
+
+#menu {
+	float: center;
+	width: 80%;
+}
+
+#sidebar1 {	
+	width: 80%;
+	margin: 0 auto;
+	float: center
+}
+
+#content {
+	margin: 0 auto;
+	width: 75%;
+}
+
+#footer {
+	width: 80%;
+	margin: 0 auto;
+	float: center;
+}
+
+#footer p {
+	width: 80%;
+	margin: 0;
+	padding: 15px 0px 0 0;
+	text-align: center;
+	font-size: smaller;
+}

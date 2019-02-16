@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<p:dialog header="#{rotulos.dialoginformationsheader3}"
+		widgetVar="dataSourcesDialog" modal="true" showEffect="fade"
+		hideEffect="fade" resizable="false">
+
+		<p:panel id="DatasourceDetail" header="#{rotulos.dialog_informations_dataSources} (#{gerencia.serverInf.nomeServer})">
+	  			<p:dataTable style="text-align: center;width: 900px;"  scrollable="true" scrollHeight="500"  liveResize="true" 
+	  						var="dataSources" value="#{gerencia.serverInf.datasources}">
+	  			 <f:facet name="header">
+	            <p:outputLabel value=" #{rotulos.dialog_informations_dataSources}  (#{gerencia.serverInf.nomeServer})"/>
+	        	</f:facet>
+				    <p:column headerText="Nome" sortBy="#{dataSources.nome}">
+				        <h:outputText value="#{dataSources.nome}" />
+				    </p:column>
+				 
+				    <p:column headerText="Tipo" sortBy="#{dataSources.tipo}">
+				        <h:outputText value="#{dataSources.tipo}" />
+				    </p:column>
+				    
+				      <p:column headerText="Restrição" sortBy="#{dataSources.restricao}">
+				        <h:outputText value="#{dataSources.restricao}" />
+				    </p:column>				    
+				    
+				    <p:column headerText="Status" sortBy="#{dataSources.status}">
+			     	<font color="red"><h:outputText value="#{dataSources.status}" rendered="#{!dataSources.valid}"/></font>
+			     	<font color="blue"><h:outputText value="#{dataSources.status}" rendered="#{dataSources.valid}"/></font>
+			   		</p:column>		    
+				    
+				</p:dataTable>
+        </p:panel>
+
+	</p:dialog>
+
+</ui:composition>

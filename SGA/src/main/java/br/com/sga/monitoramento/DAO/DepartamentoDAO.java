@@ -7,22 +7,21 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import br.com.sga.monitoramento.model.Celula;
+import br.com.sga.monitoramento.model.Departamento;
 
-public class CelulaDAO {
-
-	private static CelulaDAO instance;
+public class DepartamentoDAO {
+	private static DepartamentoDAO instance;
 	protected EntityManager entityManager;
 
-	public static CelulaDAO getInstance() {
+	public static DepartamentoDAO getInstance() {
 		if (instance == null) {
-			instance = new CelulaDAO();
+			instance = new DepartamentoDAO();
 		}
 
 		return instance;
 	}
 
-	private CelulaDAO() {
+	private DepartamentoDAO() {
 		entityManager = getEntityManager();
 	}
 
@@ -35,14 +34,14 @@ public class CelulaDAO {
 		return entityManager;
 	}
 
-	public Celula getById(final int id) {
-		return entityManager.find(Celula.class, id);
+	public Departamento getById(final int id) {
+		return entityManager.find(Departamento.class, id);
 	}
 
-	public void persist(Celula Celula) {
+	public void persist(Departamento Departamento) {
 		try {
 			entityManager.getTransaction().begin();
-			entityManager.persist(Celula);
+			entityManager.persist(Departamento);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -50,10 +49,10 @@ public class CelulaDAO {
 		}
 	}
 
-	public void merge(Celula Celula) {
+	public void merge(Departamento Departamento) {
 		try {
 			entityManager.getTransaction().begin();
-			entityManager.merge(Celula);
+			entityManager.merge(Departamento);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -61,11 +60,11 @@ public class CelulaDAO {
 		}
 	}
 
-	public void remove(Celula Celula) {
+	public void remove(Departamento Departamento) {
 		try {
 			entityManager.getTransaction().begin();
-			Celula = entityManager.find(Celula.class, Celula.getId());
-			entityManager.remove(Celula);
+			Departamento = entityManager.find(Departamento.class, Departamento.getId());
+			entityManager.remove(Departamento);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -75,18 +74,16 @@ public class CelulaDAO {
 
 	public void removeById(final int id) {
 		try {
-			Celula Celula = getById(id);
-			remove(Celula);
+			Departamento Departamento = getById(id);
+			remove(Departamento);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-
-	public List<String> recupear(String departamento){
-			Query query = entityManager.createNativeQuery("Select celula.nome from departamento,celula where celula.departamento = "
-					+ "departamento.id and departamento.nome=?1");
-			query.setParameter(1, departamento);
-			List<String> result = query.getResultList();
-			return result;
+	
+	public List<String> recuperar(){
+		Query query = entityManager.createNativeQuery("Select nome from departamento");
+		List<String> result = query.getResultList();
+		return result;
 	}
 }
