@@ -14,8 +14,8 @@
 		            </p:inputTextarea>
 		        </h:panelGrid>
 		        <h:panelGrid id="action" columns="2">
-		        	<p:commandButton ajax="true" update=":form:msgInfo" id="stopButton" value="Parar JVM" actionListener="#{server.stopJboss(aplicacao.server)}" onstart="PF('statusDialog').show(),PF('stopJbossDialog').hide()" 
-		            				oncomplete="PF('statusDialog').hide(),PF('resultDialog').show()" disabled="#{empty server.justificativa}"/>
+		        	<p:commandButton ajax="true" update=":form:msgInfo" id="stopButton" value="Parar JVM" actionListener="#{server.stopJboss()}" onstart="PF('statusDialog').show(),PF('stopJbossDialog').hide()" 
+		            				oncomplete="PF('statusDialog').hide(),PF('resultDialog').show()"/>
 		            <p:commandButton value="Cancelar" onclick="PF('stopJbossDialog').hide()"/>
 		        </h:panelGrid>
 			</p:panel>

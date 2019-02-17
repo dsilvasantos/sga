@@ -151,12 +151,16 @@ public class ServerController {
 					+ ". Por favor, verifique se o PID ainda está ativo.";
 		}
 	}
+	
+	
+	public void stop(Server server){
+		serverInfo = server;
+	}
 
 	public void stopJboss(Server server) {
 		AplicacaoCLI aplicacaoCli = new AplicacaoCLI();
 		int cont = 0;
-		String user = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-
+		String user = null;
 		System.out.println("Usuário: " + user + " solicitou STOP do server: " + server.getNome() + " do host "
 				+ server.getHost() + " com a justificativa: [" + justificativa + "].");
 
@@ -165,8 +169,8 @@ public class ServerController {
 			boolean resultDestroy = aplicacaoCli.destroyAplicacao(server);
 			if (resultDestroy) {
 				while (true) {
-					if (aplicacaoCli.statusAplicacao(server).equals("STOPPED")
-							|| aplicacaoCli.statusAplicacao(server).equals("DISABLED")) {
+					if (aplicacaoCli.statusAplicacaoStop(server).equals("STOPPED")
+							|| aplicacaoCli.statusAplicacaoStop(server).equals("DISABLED")) {
 						System.out.println("Server " + server.getNome() + " finalizado com sucesso pelo DESTROY.");
 						msg = "Server " + server.getNome() + " finalizado com sucesso.";
 						break;
@@ -185,8 +189,8 @@ public class ServerController {
 						boolean resultKill = aplicacaoCli.killAplicacao(server);
 						if (resultKill) {
 							while (aux < 5) {
-								if (aplicacaoCli.statusAplicacao(server).equals("STOPPED")
-										|| aplicacaoCli.statusAplicacao(server).equals("DISABLED")) {
+								if (aplicacaoCli.statusAplicacaoStop(server).equals("STOPPED")
+										|| aplicacaoCli.statusAplicacaoStop(server).equals("DISABLED")) {
 									System.out.println(
 											"Server " + server.getNome() + " finalizado com sucesso pelo KILL.");
 									msg = "Server " + server.getNome()
