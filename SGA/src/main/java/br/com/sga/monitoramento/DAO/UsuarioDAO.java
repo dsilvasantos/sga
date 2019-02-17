@@ -19,7 +19,6 @@ import br.com.sga.monitoramento.model.Usuario;
 		if (instance == null) {
 			instance = new UsuarioDAO();
 		}
-
 		return instance;
 	}
 
@@ -34,7 +33,6 @@ import br.com.sga.monitoramento.model.Usuario;
 		if (entityManager == null) {
 			entityManager = factory.createEntityManager();
 		}
-
 		return entityManager;
 	}
 	
