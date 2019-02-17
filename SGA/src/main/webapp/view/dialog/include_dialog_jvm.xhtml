@@ -8,22 +8,22 @@
 	 <p:dialog  header="JVM" widgetVar="jvmDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
 		<p:panel>
 		
-		<p:chart  id="jvmDetail" type="metergauge" model="#{gerencia.chart}" style="width:500px;height:300px" />
+		<p:chart  id="jvmDetail" type="metergauge" model="#{server.chart}" style="width:500px;height:300px" />
 		
-		<p:dataTable id="gcDetail"  style="text-align: center;width: 500px;" var="gc" value="#{gerencia.jvm.infoGC}">
+		<p:dataTable id="gcDetail"  style="text-align: center;width: 500px;" var="gc" value="#{server.serverInfo.jvm.infoGC}">
 	        <f:facet name="header">
-	            <p:outputLabel value=" #{rotulos.dialog_jvm_gcInfo} (#{gerencia.serverInf.nomeServer})"/>
+	            <p:outputLabel value=" Estatísticas do GC (#{server.serverInfo.nome})"/>
 	        </f:facet>
-	        <p:column headerText="#{rotulos.dialog_jvm_tipoGC}" width="30">
+	        <p:column headerText="Tipo GC" width="30">
 	            <h:outputText value="#{gc.tipo}" />
 	        </p:column>
-	        <p:column headerText="#{rotulos.dialog_jvm_scriptGC}" width="40">
+	        <p:column headerText="Nome Script GC" width="40">
 	            <h:outputText value="#{gc.nomeScript}" />
 	        </p:column>
-	        <p:column headerText="#{rotulos.dialog_jvm_tempoGC}" width="20">
+	        <p:column headerText="Tempo Coleta" width="20">
 	            <h:outputText value="#{gc.tempo}" />
 	        </p:column>
-	        <p:column headerText="#{rotulos.dialog_jvm_countGC}" width="20">
+	        <p:column headerText="Quantidade Coletas" width="20">
 	            <h:outputText value="#{gc.count}" />
 	        </p:column>
         </p:dataTable>

@@ -5,15 +5,15 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 	
-	 <p:dialog  header="#{rotulos.dialog_resultadoOperacao_header}" widgetVar="resultDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" 
+	 <p:dialog  header="Resultado da Operação" widgetVar="resultDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" 
 	           closable="false" draggable="false" >
 		<p:panel>
 		
 		<h:panelGrid columns="1" styleClass="center-table" style="text-align:center;">
-			<h:outputLabel value="#{gerencia.msg}"  id="msgInfo"/>
+			<h:outputLabel value="#{server.msg}"  id="msgInfo"/>
 		
 			<p:commandButton ajax="true"  update=":form:growl" onstart="PF('resultDialog').hide()" onclick="PF('statusDialog').show()"
-			                 oncomplete="window.location.reload()" value="#{rotulos.dialog_resultadoOperacao_botao}" style="height: 20px; width: 50px; horizontal-align:center;"/>
+			                 oncomplete="window.location.reload()" value="OK" style="height: 20px; width: 50px; horizontal-align:center;"/>
 		</h:panelGrid>
 		</p:panel>
     </p:dialog>

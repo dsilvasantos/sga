@@ -5,61 +5,60 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 	
-	 <p:dialog header="#{rotulos.dialoginformationsheader1}" widgetVar="serverDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+	 <p:dialog header="Informações" widgetVar="serverDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
 	  	
 	  	<h:panelGrid columns="2">
 	  		<h:column>
-	  		<p:panel id="serverDetail"  header="#{rotulos.dialoginformationsheader2} (#{gerencia.serverInf.nomeServer})">
+	  		<p:panel id="serverDetail"  header="Informações do server (#{server.serverInfo.nome})">
              <p:panelGrid columns="2" cellpadding="1" style="text-align: center;width: 300px;">
-    		 	<p:outputLabel value="#{rotulos.dialoginformationsjbossversion}"/>
-    		 	<p:outputLabel value="#{gerencia.serverInf.jbossVersion}"/>
+    		 <p:outputLabel value="Versão do JBoss"/>
+    		 	<p:outputLabel value="#{server.serverInfo.jbossVersion}"/>
     		 	
-    		 	<p:outputLabel value="#{rotulos.dialoginformationsnomeserver}"/>
-    		 	<p:outputLabel value="#{gerencia.serverInf.nomeServer}"/>
+    		 	<p:outputLabel value="Nome do Server"/>
+    		 	<p:outputLabel value="#{server.serverInfo.nome}"/>
     		 	
-    		 	<p:outputLabel value="#{rotulos.dialoginformationsnomehost}"/>
-    		 	<p:outputLabel value="#{gerencia.serverInf.nomeHost}"/>
+    		 	<p:outputLabel value="Nome do Host"/>
+    		 	<p:outputLabel value="#{server.serverInfo.host}"/>
     		 	
-    		 	<p:outputLabel value="#{rotulos.dialoginformationsportoffset}"/>
+    		 	<p:outputLabel value="Port-offSet"/>
     		 	<p:outputLabel value="#{gerencia.serverInf.portOffset}"/>
     		 	
-    		 	<p:outputLabel value="#{rotulos.dialog_informations_socket}"/>
-    		 	<p:outputLabel value="#{gerencia.serverInf.socketBindingGroup}"/>
+    		 	<p:outputLabel value="Socket-Binding-Group"/>
+    		 	<p:outputLabel value="#{server.serverInfo.socketBindingGroup}"/>
     		 	
-    		 	<p:outputLabel value="#{rotulos.dialoginformationsprofile}"/>
-    		 	<p:outputLabel value="#{gerencia.serverInf.profile}"/>
+    		 	<p:outputLabel value="Profile"/>
+    		 	<p:outputLabel value="#{server.serverInfo.profile}"/>
     		 	
-    		 	<p:outputLabel value="#{rotulos.dialoginformationsservergroup}"/>
-    		 	<p:outputLabel value="#{gerencia.serverInf.serverGroup}"/>
+    		 	<p:outputLabel value="Server Group"/>
+    		 	<p:outputLabel value="#{server.serverInfo.serverGroup}"/>
     		 	
-    		 	<p:outputLabel value="#{rotulos.dialoginformationsstatus}"/>
-    		 	<p:outputLabel value="#{gerencia.serverInf.status}"/>
+    		 	<p:outputLabel value="Status"/>
+    		 	<p:outputLabel value="#{server.serverInfo.status}"/>
     		 	
-    		 	<p:outputLabel value="#{rotulos.dialog_informations_uptime}"/>
-    		 	<p:outputLabel value="#{gerencia.serverInf.serverUptime} Hora(s)"/>
-    		 	
-    		 	
+    		 	<p:outputLabel value="Tempo de inicialização"/>
+    		 	<p:outputLabel value="#{server.serverInfo.serverUptime} Hora(s)"/>
+    		 
     		 </p:panelGrid>
 	  	</p:panel>
 	  	</h:column>
 	  	<h:column>
 	  		<p:panel id="deploymentsDetail" >
 	  			<p:dataTable style="text-align: center;width: 500px;"  scrollable="true" scrollHeight="200"  liveResize="true" 
-	  						var="deploy" value="#{gerencia.serverInf.version}">
+	  						var="deploy" value="#{server.serverInfo.version}">
 	  			 <f:facet name="header">
-	            <p:outputLabel value=" #{rotulos.dialog_informations_deployInfo} (#{gerencia.serverInf.nomeServer})"/>
+	            <p:outputLabel value=" Informações do Deploy (#{server.serverInfo.nome})"/>
 	        	</f:facet>
-				    <p:column headerText="#{rotulos.dialog_informations_nomeApp}">
+				    <p:column headerText="Nome da Aplicação">
 				        <h:outputText value="#{deploy.nomeAplicacao}" />
 				    </p:column>
-				 
+				 	<!-- 
 				    <p:column headerText="#{rotulos.dialog_informations_dependencias}">
 				    <p:commandButton ajax="true"  update=":form:EJBDetail,:form:serverDetail" value="Consultar"
 							onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide(),PF('EJBDialog').show()" 
 						    title="#{rotulos.titulojvm}" actionListener="#{ejb.carregarEJB(deploy.nomeAplicacao,gerencia.serverInf)}" rendered="#{gerencia.VereficarDeploy(deploy)}">
 					</p:commandButton>			    
 				    </p:column>	
-				    
+				     -->
 				</p:dataTable>
         </p:panel>
         </h:column>
