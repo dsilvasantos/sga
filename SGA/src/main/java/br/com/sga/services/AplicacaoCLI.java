@@ -131,6 +131,14 @@ public class AplicacaoCLI {
 		return result;
 	}
 
+	public String statusAplicacaoStop(Server server) throws Exception {
+
+		String cmdStatus = "/host=" + server.getHost() + "/server-config=" + server.getNome()
+				+ ":read-attribute(name=status)";
+		return service.readAttribute(cmdStatus);
+
+	}
+
 	/**
 	 * Atribui uma imagem de acordo com o status identificado no server
 	 * 

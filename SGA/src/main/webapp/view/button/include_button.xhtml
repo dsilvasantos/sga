@@ -28,9 +28,10 @@
 		</p:commandButton>
 		
 				
-		<p:commandButton ajax="true" update=":form:stopDetail" disabled="false" 
-				onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide(),PF('stopJbossDialog').show()"
-				value="STOP" title="STOP"  rendered="#{aplicacao.server.valid}" styleClass="stopButton">
+		<p:commandButton ajax="true" update=":form:msgInfo" disabled="false" 
+				onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide(),PF('resultDialog').show()" 
+				value="STOP" title="STOP" actionListener="#{server.stopJboss(aplicacao.server)}" rendered="#{aplicacao.server.valid}" styleClass="stopButton">
+				<p:confirm header="Confirmação" message="Tem certeza que deseja parar este server ?"  icon="ui-icon-alert"/>
 		</p:commandButton>
 		
 		<p:commandButton ajax="true" update=":form:msgInfo" disabled="false" 
