@@ -90,5 +90,4 @@ import br.com.sga.monitoramento.model.Usuario;
 		List<String> result = query.getResultList();
 		return result;
 	}
-
 }
