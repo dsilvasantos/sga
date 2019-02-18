@@ -89,6 +89,6 @@ import br.com.sga.monitoramento.model.Usuario;
 		query.setParameter(1, departamento);
 		List<String> result = query.getResultList();
 		return result;
-}
+	}
 
 }
