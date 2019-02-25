@@ -3,8 +3,8 @@ package br.com.sga.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.sga.monitoramento.model.Server;
 import br.com.sga.monitoramento.model.Datasource;
+import br.com.sga.monitoramento.model.Server;
 
 public class DatasourceServices {
 
@@ -55,7 +55,7 @@ public class DatasourceServices {
 	}
 
 	public String getProfile(String cmd, Server server) {
-		
+
 		try {
 			return service.readAttribute(cmd);
 
@@ -63,7 +63,7 @@ public class DatasourceServices {
 			System.out.println("Erro ao carregar as propriedades !");
 			return null;
 
-		} 
+		}
 	}
 
 	public List<String> getProperty(String cmd, String perfil) {
@@ -79,7 +79,7 @@ public class DatasourceServices {
 		} catch (Exception e) {
 			System.out.println("Erro ao carregar as propriedades !");
 			return null;
-		} 
+		}
 	}
 
 	public List<String> getPropertyDS(String profile, List<String> propertys) {
@@ -109,7 +109,7 @@ public class DatasourceServices {
 		List<String> lsDataSource = new ArrayList<String>();
 		List<String> lsDataSourceXA = new ArrayList<String>();
 
-		lsDataSource = getDataSources();
+		lsDataSource = getDataSources(server);
 
 		if (lsDataSource.get(0).isEmpty()) {
 
@@ -151,9 +151,10 @@ public class DatasourceServices {
 		return dataSourcesGlobais;
 	}
 
-	public List<String> getDataSources() {
+	public List<String> getDataSources(Server server) {
 
-		String cmd = "ls /subsystem=datasources/data-source";
+		String cmd = "ls /host=" + server.getHost() + "/server=" + server.getNome()
+				+ "/subsystem=datasources/data-source";
 		try {
 			return service.readList(cmd);
 
@@ -161,7 +162,7 @@ public class DatasourceServices {
 			System.out.println("Erro ao carregar as propriedades !");
 			return null;
 
-		} 
+		}
 	}
 
 	public List<String> getDataSourcesXA(Server server) {
@@ -195,6 +196,25 @@ public class DatasourceServices {
 			System.out.println("Erro ao carregar as propriedades !");
 			return false;
 
+		}
+	}
+
+	public void getDataSourcesValidos(Server server) {
+		List<Datasource> datasourceServer = new ArrayList<Datasource>();
+		List<Datasource> lista = getDataSource(server);
+		for (Datasource data : lista) {
+			String cmd = "/host=" + server.getHost() + "/server=" + server.getNome() + "/subsystem=datasources/"
+					+ data.getTipo() + "=" + data.getNome() + ":test-connection-in-pool";
+			boolean resultado = testConnect(cmd, server);
+			if (resultado == true) {
+				data.setValid(true);
+				data.setStatus("OK");
+			} else {
+				data.setValid(false);
+				data.setStatus("NOK");
+			}
+			datasourceServer.add(data);
+			server.setDatasources(datasourceServer);
 		}
 	}
 }

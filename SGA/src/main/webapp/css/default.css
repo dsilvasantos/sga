@@ -177,78 +177,78 @@ img.right {
 }
 
 .infoButton {
-	background-image: url("../images/info-16.png") !important;
+	background-image: url("../imagens/info-16.png") !important;
 }
 
 .removeButton{
-	background-image: url("../images/remove_15x15.jpg") !important;
+	background-image: url("../imagens/remove_15x15.jpg") !important;
 }
 
 .limparButton {
-	background-image: url("../images/limpar_16x16.png") !important;
+	background-image: url("../imagens/limpar_16x16.png") !important;
 }
 
 .memoryButton {
-	background-image: url("../images/memory-16.png") !important;
+	background-image: url("../imagens/memory-16.png") !important;
 }
 
 .logButton {
-	background-image: url("../images/log-16.png") !important;
+	background-image: url("../imagens/log-16.png") !important;
 }
 
 .databaseButton {
-	background-image: url("../images/database-16.png") !important;
+	background-image: url("../imagens/database-16.png") !important;
 
 }
 
 .threadButton {
-	background-image: url("../images/threads-16.png") !important;
+	background-image: url("../imagens/threads-16.png") !important;
 }
 
 .excelIcon {
-	background-image: url("../images/excel-32.png") !important;
+	background-image: url("../imagens/excel-32.png") !important;
 }
 
 .ui-datatable .ui-datatable-data .interno td {
 
-	background-image: url("../images/Interno.png") !important;
+	background-image: url("../imagens/Interno.png") !important;
 }
 
 .ui-datatable .ui-datatable-data .mercado td{
 
-	background-image: url("../images/Mercado.png") !important;
+	background-image: url("../imagens/Mercado.png") !important;
 
 }
 
 .ui-datatable .ui-datatable-data .publico td {
 
-	background-image: url("../images/Publico.png") !important;
+	background-image: url("../imagens/Publico.png") !important;
 }
 
 
 
 .ui-datatable .ui-datatable-data .mensageria td {
-	background-image: url("../images/Mensageria.png") !important;
+	background-image: url("../imagens/Mensageria.png") !important;
 }
 
 .ui-datatable .ui-datatable-data .int-seg-etl td {
-	background-image: url("../images/ExtratoInterno.png") !important;
+	background-image: url("../imagens/ExtratoInterno.png") !important;
 }
 
 .ui-datatable .ui-datatable-data .extratoInterno td {
-	background-image: url("../images/ExtratoInterno.png") !important;
+	background-image: url("../imagens/ExtratoInterno.png") !important;
 }
 
 .ui-datatable .ui-datatable-data .extratoInternet td {
-	background-image: url("../images/ExtratoInternet.png") !important;
+	background-image: url("../imagens/ExtratoInternet.png") !important;
 }
 
 .ui-datatable .ui-datatable-data .cont td {
-	background-image: url("../images/Cont.png") !important;
+	background-image: url("../imagens/Cont.png") !important;
 }
 
 .ui-datatable .ui-datatable-data .internetDMZ td {
-	background-image: url("../images/InternetDMZ.png") !important;
+	background-image: url("../imagens/InternetDMZ.png") !important;
 }
 
 td.bts_start button.stopButton {
@@ -372,7 +372,7 @@ td.bts_start .ui-button-icon-only {
 	height: 40px;
 	margin: 0 0 0 0;
 	padding: 20px 15px 0px 65px;
-	background: url(../images/img04.jpg) no-repeat left top;
+	background: url(../imagens/img04.jpg) no-repeat left top;
 	letter-spacing: -1px;
 	font-size: 16px;
 	font-weight: normal;

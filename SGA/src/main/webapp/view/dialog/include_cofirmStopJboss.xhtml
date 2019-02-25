@@ -6,16 +6,16 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 		 <p:dialog  header="Stop JVM" widgetVar="stopJbossDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
 			<p:panel id="stopDetail">
-				<p:outputLabel value="Justificativa para encerrar o server #{gerencia.serverInf.nomeServer}"/>
+				<p:outputLabel value="Justificativa para encerrar o server #{aplicacao.server.nome}"/>
 				<h:panelGrid id="stopDetail1" columns="2">
 		            <p:outputLabel value="Justificativa:"/>
-		            <p:inputTextarea rows="10" cols="30" value="#{gerencia.justificativa}">
+		            <p:inputTextarea rows="10" cols="30" value="#{server.justificativa}">
 		            	<p:ajax event="keyup" update="stopButton" />
 		            </p:inputTextarea>
 		        </h:panelGrid>
 		        <h:panelGrid id="action" columns="2">
-		        	<p:commandButton ajax="true" update=":form:msgInfo" id="stopButton" value="Parar JVM" actionListener="#{gerencia.stopJboss()}" onstart="PF('statusDialog').show(),PF('stopJbossDialog').hide()" 
-		            				oncomplete="PF('statusDialog').hide(),PF('resultDialog').show()" disabled="#{empty gerencia.justificativa}"/>
+		        	<p:commandButton ajax="true" update=":form:msgInfo" id="stopButton" value="Parar JVM" actionListener="#{server.stopJboss()}" onstart="PF('statusDialog').show(),PF('stopJbossDialog').hide()" 
+		            				oncomplete="PF('statusDialog').hide(),PF('resultDialog').show()"/>
 		            <p:commandButton value="Cancelar" onclick="PF('stopJbossDialog').hide()"/>
 		        </h:panelGrid>
 			</p:panel>

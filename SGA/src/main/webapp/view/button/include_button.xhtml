@@ -7,39 +7,43 @@
 	
 		<p:commandButton ajax="true" update=":form:serverDetail,:form:deploymentsDetail"  
 				onstart="PF('statusDialog').show()" oncomplete="PF('serverDialog').show(),PF('statusDialog').hide()" 
-				icon="infoButton" title="#{rotulos.tituloinformacoes}" actionListener="#{gerencia.informations(srv)}"  rendered="true"/>
-							
+				icon="infoButton" title="Informações" actionListener="#{server.recuperarInformacoesServer(aplicacao.server)}"  rendered="#{aplicacao.server.valid}"/>
+			
+				
 		<p:commandButton ajax="true" update=":form:jvmDetail,:form:gcDetail"  
 				onstart="PF('statusDialog').show()" oncomplete="PF('jvmDialog').show(),PF('statusDialog').hide()" 
-				icon="memoryButton" title="#{rotulos.titulojvm}" actionListener="#{gerencia.getJvmInformations(srv)}" rendered="true">
+				icon="memoryButton" title="JVM" actionListener="#{server.recuperarJvmInformacoes(aplicacao.server)}" rendered="#{aplicacao.server.valid}">
+				 <ui:include src="../dialog/include_dialog_jvm.xhtml">
+				 </ui:include>
 		</p:commandButton>
 		
-		<p:commandButton ajax="true" update=":form:logDetail,:form:export" 
+		<p:commandButton ajax="true" update=":form:logDetail" 
 						onstart="PF('statusDialog').show()" oncomplete="PF('logDialog').show(),PF('statusDialog').hide()" 
-						icon="logButton" title="Log" actionListener="#{gerencia.generateLog(srv,1000)}" rendered="true">
+						icon="logButton" title="Log" actionListener="#{server.generateLog(aplicacao.server,1000)}" rendered="#{aplicacao.server.valid}">
 		</p:commandButton>
 		
 		<p:commandButton ajax="true" update=":form:DatasourceDetail" 
 						onstart="PF('statusDialog').show()" oncomplete="PF('dataSourcesDialog').show(),PF('statusDialog').hide()" 
-						icon="databaseButton" title="#{rotulos.titulodatabases}" actionListener="#{gerencia.database(srv)}" rendered="true">
+						icon="databaseButton" title="DataSources" actionListener="#{server.dataBase(aplicacao.server)}" rendered="#{aplicacao.server.valid}">
 		</p:commandButton>
 		
 				
-		<p:commandButton ajax="true" update=":form:stopDetail" disabled="#{!gerencia.permissao}"
-				onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide(),PF('stopJbossDialog').show()"
-				value="#{rotulos.botaoStopJboss}" title="#{rotulos.tituloStopJboss}" actionListener="#{gerencia.stop(srv)}" rendered="true" styleClass="stopButton">
+		<p:commandButton ajax="true" update=":form:msgInfo" disabled="false" 
+				onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide(),PF('resultDialog').show()" 
+				value="STOP" title="STOP" actionListener="#{server.stopJboss(aplicacao.server)}" rendered="#{aplicacao.server.valid}" styleClass="stopButton">
+				<p:confirm header="Confirmação" message="Tem certeza que deseja parar este server ?"  icon="ui-icon-alert"/>
 		</p:commandButton>
 		
-		<p:commandButton ajax="true"   disabled="#{!gerencia.permissao}"
+		<p:commandButton ajax="true" update=":form:msgInfo" disabled="false" 
 				onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide(),PF('resultDialog').show()" 
-				value="#{rotulos.botaoStartJboss}" title="#{rotulos.tituloStartJboss}"  actionListener="#{gerencia.startJboss(srv)}" rendered="true" styleClass="startButton">
-		<!--  	<p:confirm header="#{rotulos.dialog_confirmacao_header}" message="#{rotulos.messageStartJboss}"  icon="ui-icon-alert"/> -->
+				value="START" title="START"  actionListener="#{server.startJboss(aplicacao.server)}" rendered="#{!aplicacao.server.valid}" styleClass="startButton">
+	  	<p:confirm header="Confirmação" message="Tem certeza que deseja inicializar este server ?"  icon="ui-icon-alert"/>
 		</p:commandButton>
 					    					
 	
 		 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-		        <p:commandButton value="#{rotulos.dialog_confirmacao_sim}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-		        <p:commandButton value="#{rotulos.dialog_confirmacao_nao}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
    		 </p:confirmDialog>
 		
 		

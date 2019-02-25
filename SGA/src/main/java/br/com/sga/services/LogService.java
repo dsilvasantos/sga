@@ -20,7 +20,7 @@ public class LogService {
 	public List<Log> getLogs(Server server, int linhas) {
 		
 		String comando = "/host=" + server.getHost() + "/server=" + server.getNome()
-				+ "/subsystem=logging/log-file=aplicacao.log:read-log-file(tail=true,lines=" + linhas + ")";
+				+ "/subsystem=logging/log-file=server.log:read-log-file(tail=true,lines=" + linhas + ")";
 
 		List<ModelNode> lista = service.executeCommandList(comando);
 		List<Log> logs = new ArrayList<Log>();
