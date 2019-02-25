@@ -82,7 +82,7 @@ import br.com.sga.monitoramento.model.Usuario;
 			ex.printStackTrace();
 		}
 	}
-	//teste
+
 	public List<String> recupear(String departamento){
 		Query query = entityManager.createNativeQuery("Select usuario.nome from departamento,usuario where usuario.departamento = "
 				+ "departamento.id and departamento.nome=?1");
