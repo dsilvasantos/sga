@@ -12,19 +12,22 @@
 
 		<div class="entry" style="line-height: 200%">
 			<h:form id="form">
+				<br />
+				<script type="text/javascript"
+					src="#{request.contextPath}/js/counterdown.js"></script>
+			Próximo refresh em: <span id="countdown"></span>
+				<p:separator>
+				</p:separator>
 				<p:treeTable value="#{monitoramento.root}" var="aplicacao">
-					<f:facet name="header">
-            Monitoramento
-        </f:facet>
+					<f:facet name="header">Monitoramento</f:facet>
 					<p:column headerText="Nome">
 						<h:outputText value="#{aplicacao.nome}" />
 					</p:column>
 					<p:column headerText="Status">
-						<h:graphicImage value="#{aplicacao.status}"/>
+						<h:graphicImage value="#{aplicacao.status}" />
 					</p:column>
 				</p:treeTable>
 			</h:form>
 		</div>
-
 	</ui:define>
 </ui:composition>
