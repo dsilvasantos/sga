@@ -20,7 +20,7 @@ public class Aplicacao {
 	private String nome;
 	
 	@Column(name = "status",nullable=false)
-	private String status;
+	private Integer status;
 	
 	@Transient
 	private Server server;
@@ -46,11 +46,11 @@ public class Aplicacao {
 		this.id = id;
 	}
 	
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 	
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 	
@@ -59,7 +59,7 @@ public class Aplicacao {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Aplicacao(int id, String nome, String status, Server server) {
+	public Aplicacao(int id, String nome, Integer status, Server server) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -67,7 +67,7 @@ public class Aplicacao {
 		this.server = server;
 	}
 	
-	public Aplicacao(int id, String nome, String status) {
+	public Aplicacao(int id, String nome, Integer status) {
 		super();
 		this.id = id;
 		this.nome = nome;

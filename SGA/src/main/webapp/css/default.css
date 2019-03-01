@@ -14,7 +14,6 @@ body {
 	padding: 0;
 	font-size: 12px;
 	color: #616161;
-	
 }
 
 h1, h2, h3 {
@@ -149,7 +148,7 @@ img.right {
 }
 
 #page {
-	width:auto;
+	width: auto;
 	height: auto;
 	margin: 0 auto;
 	padding: 20px 5px;
@@ -180,7 +179,7 @@ img.right {
 	background-image: url("../imagens/info-16.png") !important;
 }
 
-.removeButton{
+.removeButton {
 	background-image: url("../imagens/remove_15x15.jpg") !important;
 }
 
@@ -198,7 +197,6 @@ img.right {
 
 .databaseButton {
 	background-image: url("../imagens/database-16.png") !important;
-
 }
 
 .threadButton {
@@ -210,22 +208,16 @@ img.right {
 }
 
 .ui-datatable .ui-datatable-data .interno td {
-
 	background-image: url("../imagens/Interno.png") !important;
 }
 
-.ui-datatable .ui-datatable-data .mercado td{
-
+.ui-datatable .ui-datatable-data .mercado td {
 	background-image: url("../imagens/Mercado.png") !important;
-
 }
 
 .ui-datatable .ui-datatable-data .publico td {
-
 	background-image: url("../imagens/Publico.png") !important;
 }
-
-
 
 .ui-datatable .ui-datatable-data .mensageria td {
 	background-image: url("../imagens/Mensageria.png") !important;
@@ -532,7 +524,7 @@ td.bts_start .ui-button-icon-only {
 	text-decoration: none !important;
 }
 
-.dp-xml { 
+.dp-xml {
 	width: 1000px;
 }
 
@@ -555,7 +547,7 @@ td.bts_start .ui-button-icon-only {
 	text-align: center;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
 	border-radius: 4px;
-	border: 1px solid ;
+	border: 1px solid;
 	background-color: #98AFC7;
 	color: #ffffff;
 }
@@ -575,5 +567,18 @@ td.bts_start .ui-button-icon-only {
 	font-size: 24px;
 	font-weight: bold;
 	color: #816A51;
+}
+
+.ui-treetable table {
+	table-layout: fixed
+}
+
+.value {
+	font-weight: bold
+}
+
+.ui-dialog table {
+	margin-left: auto;
+	margin-right: auto;
 }
 }

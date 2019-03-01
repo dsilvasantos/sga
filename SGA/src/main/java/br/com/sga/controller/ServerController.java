@@ -6,16 +6,23 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.primefaces.model.CheckboxTreeNode;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 import org.primefaces.model.chart.MeterGaugeChartModel;
 
+import br.com.sga.monitoramento.DAO.AplicacaoDAO;
+import br.com.sga.monitoramento.DAO.CelulaDAO;
+import br.com.sga.monitoramento.DAO.DepartamentoDAO;
+import br.com.sga.monitoramento.model.Aplicacao;
 import br.com.sga.monitoramento.model.Log;
 import br.com.sga.monitoramento.model.Server;
+import br.com.sga.services.AmbienteServices;
 import br.com.sga.services.AplicacaoCLI;
 import br.com.sga.services.DatasourceServices;
 import br.com.sga.services.JvmServices;
@@ -34,7 +41,73 @@ public class ServerController {
 	private String msg = "Não foi possível executar esta operação. Clique em OK e tente novamente.";
 
 	private String justificativa;
+	
+	private AplicacaoCLI aplicacaoCLI = new AplicacaoCLI();
 
+	
+	public TreeNode createAplicacoes() {
+		AmbienteServices ambiente = new AmbienteServices();
+		ambiente.selecionarAmbiente(1);
+		Server rootServer = new Server();
+		rootServer.setNome("Aplicações");
+		rootServer.setStatus("../imagens/vazio.png");
+		TreeNode root = new DefaultTreeNode(rootServer,null);
+		
+		List<String> departamentos = new ArrayList<>();
+		departamentos = DepartamentoDAO.getInstance().recuperar();
+		for(String departamento:departamentos) {
+			Server departamentoServer = new Server();
+			departamentoServer.setNome(departamento);
+			departamentoServer.setStatus("../imagens/vazio.png");
+			TreeNode rootDepartamento = new DefaultTreeNode(departamentoServer,root);
+			List<String> celulas = CelulaDAO.getInstance().recupear(departamento);
+			for(String celula : celulas) {
+				Server celulaServer = new Server();
+				celulaServer.setNome(celula);
+				celulaServer.setStatus("../imagens/vazio.png");
+				TreeNode rootCelula = new DefaultTreeNode(celulaServer,rootDepartamento);
+				List<Aplicacao> aplicacoes = AplicacaoDAO.getInstance().recupear(celula);
+				for(Aplicacao aplicacao : aplicacoes) {
+					aplicacaoCLI.recuperarServer(aplicacao);
+					Server serverAplicacao = new Server();
+					serverAplicacao.setNome(aplicacao.getNome());
+					serverAplicacao.setStatus(aplicacao.getServer().getImagem());
+					new DefaultTreeNode("aplicação",serverAplicacao,rootCelula);
+				}
+			}
+		}
+		return root;
+	}
+	
+	public TreeNode createCheckBoxAplicacoes() {
+		
+		Server rootServer = new Server();
+		rootServer.setNome("Aplicações");
+		rootServer.setStatus("-");
+		TreeNode root = new CheckboxTreeNode(rootServer,null);
+		
+		List<String> departamentos = new ArrayList<>();
+		departamentos = DepartamentoDAO.getInstance().recuperar();
+		for(String departamento:departamentos) {
+			Server departamentoServer = new Server();
+			departamentoServer.setNome(departamento);
+			departamentoServer.setStatus("-");
+			TreeNode rootDepartamento = new CheckboxTreeNode(departamentoServer,root);
+			List<String> celulas = CelulaDAO.getInstance().recupear(departamento);
+			for(String celula : celulas) {
+				Server celulaServer = new Server();
+				celulaServer.setNome(celula);
+				celulaServer.setStatus("-");
+				TreeNode rootCelula = new CheckboxTreeNode(celulaServer,rootDepartamento);
+				List<Aplicacao> aplicacoes = AplicacaoDAO.getInstance().recupear(celula);
+				for(Aplicacao aplicacao : aplicacoes) {
+					aplicacaoCLI.recuperarServer(aplicacao);
+					new CheckboxTreeNode("aplicação",aplicacao,rootCelula);
+				}
+			}
+		}
+		return root;
+	}
 	public void recuperarInformacoesServer(Server server) {
 		JvmServices jvmServices = new JvmServices();
 		jvmServices.getServerInformations(server);

@@ -28,7 +28,7 @@ public class Usuario {
 	private String email;
 			
 	@Column(name = "status",nullable=false)
-	private String status;
+	private int status;
 	
 	
 
@@ -80,13 +80,13 @@ public class Usuario {
 
 
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
 
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
@@ -99,7 +99,7 @@ public class Usuario {
 
 
 
-	public Usuario(int id, String login, String senha, String nome, String email, String status) {
+	public Usuario(int id, String login, String senha, String nome, String email, int status) {
 		super();
 		this.id = id;
 		this.login = login;
