@@ -1,6 +1,5 @@
 package br.com.sga.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.dmr.ModelNode;

@@ -85,7 +85,7 @@ public class AplicacaoDAO {
 
 	public List<Aplicacao> recupear(String celula) {
 		Query query = entityManager.createNativeQuery(
-				"Select aplicacao.id,aplicacao.nome,aplicacao.status from aplicacao,celula where aplicacao.celula = "
+				"Select aplicacao.id,aplicacao.nome,aplicacao.status from aplicacao,celula where aplicacao.ID_CELULA = "
 						+ "celula.id and celula.nome=?1",Aplicacao.class);
 		query.setParameter(1, celula);
 		List<Aplicacao> aplicaocoes = query.getResultList();
