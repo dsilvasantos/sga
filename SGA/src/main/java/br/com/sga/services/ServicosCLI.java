@@ -24,6 +24,10 @@ public class ServicosCLI {
 	public List<ModelNode> executeCommandList(String cmd){
 		return cli.cmd(cmd).getResponse().get("result").asList();
 	}
+	
+	public String executeCommandListValue(String cmd,String value) {
+		return cli.cmd(cmd).getResponse().get("result").get(value).asString();
+	}
 
 	public String readValor(String cmd) {
 		String attribute = cli.cmd(cmd).getResponse().toString();

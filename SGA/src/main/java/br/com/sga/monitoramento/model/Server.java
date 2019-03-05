@@ -27,6 +27,9 @@ public class Server{
 	private List<Datasource> datasources;
 	private Jvm jvm;
 	private int thread;
+	private String maxMetaspace;
+	private String usedMetaspace;
+	private boolean ativo;
 	
 	public Server() {
 		// TODO Auto-generated constructor stub
@@ -196,4 +199,35 @@ public class Server{
 	public void setHost(String host) {
 		this.host = host;
 	}
+
+	public String getMaxMetaspace() {
+		return maxMetaspace;
+	}
+
+	public void setMaxMetaspace(String maxMetaspace) {
+		this.maxMetaspace = maxMetaspace;
+	}
+
+	public String getUsedMetaspace() {
+		return usedMetaspace;
+	}
+
+	public void setUsedMetaspace(String usedMetaspace) {
+		this.usedMetaspace = usedMetaspace;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+	
+	public String getMetaspaceUsedMB(){
+		int used = Integer.parseInt(this.usedMetaspace);
+		int usedMB = used/1024/1024;
+		return usedMB+"";
+	}
+	
 }

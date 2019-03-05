@@ -1,5 +1,8 @@
 package br.com.sga.monitoramento.enumeration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum AmbienteEnum {
 	PRODUCAO("Produção", "192.168.1.188", "sga", "sga.1234", 9999);
 
@@ -44,5 +47,11 @@ public enum AmbienteEnum {
 		default:
 			return PRODUCAO;
 		}
+	}
+	
+	public static List<AmbienteEnum> getAmbientes() {
+		List<AmbienteEnum> ambientes = new ArrayList<>();
+		ambientes.add(PRODUCAO);
+		return ambientes;
 	}
 }

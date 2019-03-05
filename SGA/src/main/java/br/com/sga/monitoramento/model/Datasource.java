@@ -15,6 +15,9 @@ public class Datasource {
 	private String nomeServer;
 	private String jta;
 	private String restricao;
+	private String maxCount;
+	private String activeCount;
+	private String maxInUseCount;
 
 	public Datasource() {
 		// TODO Auto-generated constructor stub
@@ -127,6 +130,37 @@ public class Datasource {
 
 	public void setJta(String jta) {
 		this.jta = jta;
+	}
+
+	public String getMaxCount() {
+		return maxCount;
+	}
+
+	public void setMaxCount(String maxCount) {
+		this.maxCount = maxCount;
+	}
+
+	public String getActiveCount() {
+		return activeCount;
+	}
+
+	public void setActiveCount(String activeCount) {
+		this.activeCount = activeCount;
+	}
+
+	public String getMaxInUseCount() {
+		return maxInUseCount;
+	}
+
+	public void setMaxInUseCount(String maxInUseCount) {
+		this.maxInUseCount = maxInUseCount;
+	}
+	
+	public String getPercentUsage(){
+		Long v1 = Long.parseLong(this.activeCount.trim());
+		Long v2 = Long.parseLong(this.maxCount.trim());
+		Long total = v1*100/v2;
+		return total+"";
 	}
 
 }

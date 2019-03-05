@@ -57,6 +57,12 @@ public class Jvm {
 		this.infoGC = infoGC;
 	}
 	
+	public String getPercentUseHeap() {
+		Long v1 = Long.parseLong(this.heapUsage.trim());
+		Long v2 = Long.parseLong(this.maxHeap.trim());
+		Long total = v1*100/v2;
+		return total+"";
+	}
 	
 	
 }

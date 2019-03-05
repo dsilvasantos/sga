@@ -15,24 +15,6 @@ public class AplicacaoCLI {
 	private ServicosCLI service = new ServicosCLI();
 	AmbienteServices ambiente = new AmbienteServices();
 
-	public Aplicacao recuperarAplicacao(String nome) {
-		Aplicacao aplicacao = new Aplicacao();
-		String host = getHost(nome);
-		if (host.isEmpty()) {
-			return null;
-		}
-		aplicacao.setNome(nome);
-		Server server = new Server();
-		server.setNome(nome);
-		server.setHost(host);
-		server.setStatus(service.readAttribute(
-				"/host=" + server.getHost() + "/server=" + aplicacao.getNome() + ":read-attribute(name=server-state)"));
-		server.setImagem(getImagem(server.getStatus()));
-		server.setDescricaoImagem(server.getStatus());
-		aplicacao.setServer(server);
-		return aplicacao;
-	}
-
 	public void recuperarServer(Aplicacao aplicacao) {
 		String host = getHost(aplicacao.getNome());
 		Server server = new Server();
