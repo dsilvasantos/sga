@@ -87,7 +87,15 @@ public class AplicacaoDAO {
 				"Select aplicacao.id,aplicacao.nome,aplicacao.status from aplicacao,celula where aplicacao.ID_CELULA = "
 						+ "celula.id and celula.nome=?1",Aplicacao.class);
 		query.setParameter(1, celula);
-		List<Aplicacao> aplicaocoes = query.getResultList();
-		return aplicaocoes;
+		List<Aplicacao> aplicacoes = query.getResultList();
+		return aplicacoes;
+	}
+	
+	public Aplicacao recupearAplicacao(String nome) {
+		Query query = entityManager.createNativeQuery(
+				"Select * from aplicacao where aplicacao.nome=?1",Aplicacao.class);
+		query.setParameter(1, nome);
+		Aplicacao aplicacao = (Aplicacao) query.getSingleResult();
+		return aplicacao;
 	}
 }

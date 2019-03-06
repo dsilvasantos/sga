@@ -12,7 +12,8 @@
 		<class>br.com.sga.monitoramento.model.Departamento</class>
 		<class>br.com.sga.monitoramento.model.Aplicacao</class>
 		<class>br.com.sga.monitoramento.model.Usuario</class>
-		<class>br.com.sga.monitoramento.model.RecursosAplicacao</class> 
+		<class>br.com.sga.monitoramento.model.RecursosAplicacao</class>
+		<class>br.com.sga.monitoramento.model.Erro</class> 
 		<properties>
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.MySQL5InnoDBDialect" />

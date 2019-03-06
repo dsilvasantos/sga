@@ -9,13 +9,13 @@ import java.util.TimerTask;
 import org.jboss.logging.Logger;
 
 import br.com.sga.coletor.model.Ambiente;
-import br.com.sga.coletor.model.NagiosModel;
 import br.com.sga.monitoramento.DAO.AplicacaoDAO;
 import br.com.sga.monitoramento.DAO.CelulaDAO;
 import br.com.sga.monitoramento.DAO.DepartamentoDAO;
 import br.com.sga.monitoramento.enumeration.AmbienteEnum;
 import br.com.sga.monitoramento.model.Aplicacao;
 import br.com.sga.monitoramento.model.Datasource;
+import br.com.sga.monitoramento.model.Erro;
 import br.com.sga.monitoramento.model.Server;
 import br.com.sga.services.AmbienteServices;
 import br.com.sga.services.AplicacaoCLI;
@@ -29,9 +29,8 @@ public class ColetorService extends TimerTask {
 	private ColetorAnalyze analyze;
 	private static final Logger LOGGER = Logger.getLogger(ColetorService.class);
 	List<AmbienteEnum> lista;
-	public static Map<String, String[]> alertas = new HashMap<String, String[]>();
-	public static Map<String, String[]> coletas = new HashMap<String, String[]>();
-	public static List<NagiosModel> listaEmail = new ArrayList<NagiosModel>();
+	public static Map<String, Erro> alertas = new HashMap<String, Erro>();
+	public static Map<String, Erro> coletas = new HashMap<String, Erro>();
 	int contador;
 	boolean sendAll;
 	int enviarNagios;
@@ -53,7 +52,6 @@ public class ColetorService extends TimerTask {
 		contador++;
 		analyze = new ColetorAnalyze();
 		ambiente = new Ambiente();
-		listaEmail.clear();
 		if (contador == enviarNagios) {
 			sendAll = true;
 			contador = 0;
