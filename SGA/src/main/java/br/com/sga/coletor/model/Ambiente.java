@@ -37,4 +37,6 @@ public class Ambiente {
 	public void setAplicacaos(List<Aplicacao> aplicacoes) {
 		this.aplicacoes = aplicacoes;
 	}
+
+
 }

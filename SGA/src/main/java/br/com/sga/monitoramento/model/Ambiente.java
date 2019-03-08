@@ -1,17 +1,44 @@
 package br.com.sga.monitoramento.model;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class Ambiente {
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@Column(name = "ambiente",nullable=false)
 	private String ambiente;
+	
+	@Column(name = "host",nullable=false)
 	private String host;
+	
+	@Column(name = "usuario",nullable=false)
 	private String usuario;
+	
+	@Column(name = "senha",nullable=false)
 	private String senha;
+	
+	@Column(name = "porta",nullable=false)
 	private int porta;
-
+	
+	
+	public int getId(){
+		return id;
+	}
+	
+	public void setId(int id){
+		this.id = id;
+	}
+	
 	public String getAmbiente() {
 		return ambiente;
 	}
-
+	
 	public void setAmbiente(String ambiente) {
 		this.ambiente = ambiente;
 	}

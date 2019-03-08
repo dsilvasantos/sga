@@ -2,11 +2,28 @@ package br.com.sga.monitoramento.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
 public class Jvm {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@Column(name = "heapUsage",nullable=false)
 	private String heapUsage;
+	
+	@Column(name = "percentUse",nullable=false)
 	private String percentUse;
+	
+	@Column(name = "maxHeap",nullable=false)
 	private String maxHeap;
+	
+	@Transient
 	private List<GC> infoGC;
 	
 	
@@ -15,8 +32,14 @@ public class Jvm {
 	public Jvm() {
 		// TODO Auto-generated constructor stub
 	}
-
-
+	
+	public int getId(){
+		return id;
+	}
+	
+	public void setId(int id){
+		this.id = id;
+	}	
 	public String getHeapUsage() {
 		return heapUsage;
 	}
