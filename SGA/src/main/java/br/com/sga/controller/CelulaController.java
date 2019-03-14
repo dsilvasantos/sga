@@ -16,8 +16,8 @@ import br.com.sga.services.AplicacaoCLI;
 @ViewScoped
 public class CelulaController {
 
-	private CelulaDAO celulaDao = CelulaDAO.getInstance();
-	private AplicacaoDAO aplicacaoDao = AplicacaoDAO.getInstance();
+	private CelulaDAO celulaDao = new CelulaDAO();
+	private AplicacaoDAO aplicacaoDao = new AplicacaoDAO();
 	
 	private AplicacaoCLI aplicacaoCLI = new AplicacaoCLI();
 	

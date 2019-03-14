@@ -23,8 +23,8 @@ public class ColetorRoles {
 
 	public static Logger LOGGER = Logger.getLogger(ColetorRoles.class);
 	private SimpleDateFormat sdt = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-	private RecursosAplicacaoDAO recursosAplicacaoDAO = RecursosAplicacaoDAO.getInstance();
-
+	private RecursosAplicacaoDAO recursosAplicacaoDAO = new RecursosAplicacaoDAO();
+	private AplicacaoDAO aplicacaoDAO = new AplicacaoDAO();
 	String ok = "1";
 	String warning = "2";
 	String critical = "3";
@@ -37,16 +37,15 @@ public class ColetorRoles {
 
 	/**
 	 * Identifica o tipo de alerta, armazena em um MAP global. Caso este alerta
-	 * sofra mudança de STATUS, notificar. A lista de
-	 * alertas e global e esta
+	 * sofra mudança de STATUS, notificar. A lista de alertas e global e esta
 	 * definidas na classe ColetorService
 	 */
 	private void identificarAlertas(TipoAlerta alerta, String recurso, String key, String descricao, boolean sendAll,
 			String serverNome) {
-		ErroDAO erroDAO = ErroDAO.getInstance();
-		Aplicacao aplicacao = AplicacaoDAO.getInstance().recupearAplicacao(serverNome);
+		ErroDAO erroDAO = new ErroDAO();
+		Aplicacao aplicacao = aplicacaoDAO.recupearAplicacao(serverNome);
 
-		Erro erro = new Erro(alerta.getValor(), descricao, aplicacao.getId(), new Date(),"Aberto");
+		Erro erro = new Erro(alerta.getValor(), descricao, aplicacao.getId(), new Date(), "Aberto");
 		key = key + "_" + recurso;
 
 		ColetorService.coletas.put(key, erro);
@@ -59,6 +58,9 @@ public class ColetorRoles {
 					// atualizar o alerta
 					erro.setPrioridade(TipoAlerta.CRITICAL.getValor());
 					erro.setDescricao(descricao);
+					ColetorService.alertas.put(key, erro);
+					erroDAO.merge(erro);
+				} else {
 					ColetorService.alertas.put(key, erro);
 					erroDAO.merge(erro);
 				}
@@ -106,27 +108,30 @@ public class ColetorRoles {
 	 * definidos em propriedades
 	 */
 	public void tratarAlertas(String host, Server server, boolean sendAll) throws MissingResourceException {
-		String key = server.getHost();
+		String key = server.getNome();
 		String mensagem = TipoAlerta.OK.getValor().toUpperCase() + " Host Controller " + server.getHost()
 				+ " em funcionamento|status=" + ok + ";" + warning + ";" + critical + ";" + minGRafico + ";"
 				+ maxGrafico + ";";
 		mensagem += "\n Host Controller em execução.";
 		identificarAlertas(TipoAlerta.OK, TipoRecurso.STATUS.toString().toLowerCase(), key, mensagem, sendAll,
 				server.getNome());
-
+		String versaoJboss = null;
 		// Tratando Versao Jboss
-		String versaoJboss = recursosAplicacaoDAO.recupear(server.getNome(), "versao-jboss").getValor();
+		try {
+			versaoJboss = recursosAplicacaoDAO.recupear(server.getNome(), "versao-jboss").getValor();
+		} catch (Exception e) {
+			LOGGER.error("Falha ao recuperar informações das Threads em: " + key);
+		}
 		if (server.getJbossVersion().equals(versaoJboss)) {
 			mensagem = TipoAlerta.OK.getValor().toUpperCase() + " Versão do JBoss OK = " + server.getJbossVersion()
-					+ "|versao-jboss=" + ok + ";" + warning + ";" + critical + ";" + minGRafico + ";" + maxGrafico
-					+ ";";
+					+ "|versao-jboss=" + versaoJboss;
+
 			mensagem += "\n Versão do JBoss OK.";
 			identificarAlertas(TipoAlerta.OK, TipoRecurso.VERSAOJBOSS.toString().toLowerCase(), key, mensagem, sendAll,
 					server.getNome());
 		} else {
 			mensagem = TipoAlerta.CRITICAL.getValor().toUpperCase() + " Versão do JBoss está diferente = "
-					+ server.getJbossVersion() + "|versao-jboss=" + critical + ";" + warning + ";" + critical + ";"
-					+ minGRafico + ";" + maxGrafico + ";";
+					+ server.getJbossVersion() + "|versao-jboss=" + versaoJboss;
 			mensagem += "\n Versão do JBoss está diferente.";
 			identificarAlertas(TipoAlerta.CRITICAL, TipoRecurso.VERSAOJBOSS.toString().toLowerCase(), key, mensagem,
 					sendAll, server.getNome());
@@ -148,12 +153,13 @@ public class ColetorRoles {
 	 * propriedades
 	 */
 	private void tratarrAlertaHeap(Server server, String key, boolean sendAll) {
-		RecursosAplicacao recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "heap");
+
 		String maxGrafico = "100";
 		String minGrafico = "0";
 		String mensagem;
 
 		try {
+			RecursosAplicacao recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "heap");
 			int NumWarning = recursosAplicacao.getQuantidadeMaxima();
 			int NumCritical = recursosAplicacao.getQuantiodadeCritica();
 
@@ -200,12 +206,13 @@ public class ColetorRoles {
 	// TODO aguardar a definição do limite do metaspace para calcular o percentual
 	// de uso, por enquanto, apenas é informado a quantidade de uso em MB
 	private void tratarrAlertaMetaspace(Server server, String key, boolean sendAll) {
-		RecursosAplicacao recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "metaspace");
+
 		String maxGrafico = "600";
 		String minGrafico = "0";
 		int warning = 0;
 		int critical = 0;
 		try {
+			RecursosAplicacao recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "metaspace");
 			critical = recursosAplicacao.getQuantiodadeCritica();
 			warning = recursosAplicacao.getQuantidadeMaxima();
 		} catch (Exception e) {
@@ -245,7 +252,7 @@ public class ColetorRoles {
 	 * propriedades
 	 */
 	private void tratarAlertaThread(Server server, String key, boolean sendAll) {
-		RecursosAplicacao recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "thread");
+
 		String mensagem;
 		String minGrafico = "0";
 		String maxGrafico = "600";
@@ -253,6 +260,7 @@ public class ColetorRoles {
 		int critical = 0;
 
 		try {
+			RecursosAplicacao recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "thread");
 			critical = recursosAplicacao.getQuantiodadeCritica();
 			warning = recursosAplicacao.getQuantidadeMaxima();
 		} catch (Exception e) {
@@ -329,7 +337,7 @@ public class ColetorRoles {
 	 * propriedades
 	 */
 	private void tratarAlertaDatasources(Server server, String key, boolean sendAll) {
-		RecursosAplicacao recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "thread");
+
 		int warning = 0;
 		int critical = 0;
 		String mensagem;
@@ -337,6 +345,7 @@ public class ColetorRoles {
 		String maxGrafico = "100";
 
 		try {
+			RecursosAplicacao recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "data");
 			warning = recursosAplicacao.getQuantidadeMaxima();
 			critical = recursosAplicacao.getQuantiodadeCritica();
 		} catch (Exception e) {

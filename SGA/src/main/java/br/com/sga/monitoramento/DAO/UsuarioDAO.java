@@ -7,40 +7,26 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import br.com.sga.monitoramento.model.Celula;
 import br.com.sga.monitoramento.model.Usuario;
 
-	public class UsuarioDAO {
-	
-	private static UsuarioDAO instance;
-	protected EntityManager entityManager;
+public class UsuarioDAO {
 
-	public static UsuarioDAO getInstance() {
-		if (instance == null) {
-			instance = new UsuarioDAO();
-		}
-		return instance;
-	}
-
-
-	private UsuarioDAO() {
-		entityManager = getEntityManager();
-		
-	}
-	
 	private EntityManager getEntityManager() {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("SGA");
-		if (entityManager == null) {
+		EntityManagerFactory factory = null;
+		EntityManager entityManager = null;
+		
+			// Obtém o factory a partir da unidade de persistência.
+			factory = Persistence.createEntityManagerFactory("SGA");
+			// Cria um entity manager.
 			entityManager = factory.createEntityManager();
-		}
-		return entityManager;
+			// Fecha o factory para liberar os recursos utilizado.
+			return entityManager;
+		
+
 	}
-	
-	public Usuario getById(final int id) {
-		return entityManager.find(Usuario.class, id);
-	}
-	
+
 	public void persist(Usuario Usuario) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.persist(Usuario);
@@ -48,10 +34,13 @@ import br.com.sga.monitoramento.model.Usuario;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
 		}
 	}
-	
+
 	public void merge(Usuario Usuario) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(Usuario);
@@ -59,10 +48,13 @@ import br.com.sga.monitoramento.model.Usuario;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
 		}
 	}
-	
+
 	public void remove(Usuario Usuario) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			Usuario = entityManager.find(Usuario.class, Usuario.getId());
@@ -71,23 +63,28 @@ import br.com.sga.monitoramento.model.Usuario;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
-		}
-	}
-	
-	public void removeById(final int id) {
-		try {
-			Usuario Usuario = getById(id);
-			remove(Usuario);
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		}finally {
+			entityManager.close();
 		}
 	}
 
-	public List<String> recupear(String departamento){
-		Query query = entityManager.createNativeQuery("Select usuario.nome from departamento,usuario where usuario.departamento = "
-				+ "departamento.id and departamento.nome=?1");
-		query.setParameter(1, departamento);
-		List<String> result = query.getResultList();
-		return result;
+	public List<String> recupear(String departamento) {
+		EntityManager entityManager = getEntityManager();
+		try {
+
+			Query query = entityManager
+					.createNativeQuery("Select usuario.nome from departamento,usuario where usuario.departamento = "
+							+ "departamento.id and departamento.nome=?1");
+			query.setParameter(1, departamento);
+			List<String> result = query.getResultList();
+			return result;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
+		}
+		return null;
+
 	}
 }

@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	
+	<p:panel header="Consultar alertas do Coletor JBoss" style="margin-bottom:10px;">
+        <p:separator />
+        <p:commandButton value="Verificar Alertas" update=":form:result,:form:resultados" actionListener="#{coletor.carregarAlertas()}" icon="ui-icon-check" 
+        			onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
+       </p:panel>
+       <p:panel id="resultados" header="Resultados dos alertas">
+        <p:dataTable id="result" var="valor" value="#{coletor.alertas}" emptyMessage="Nenhum alerta foi encontrado" rendered="#{coletor.exibirResultados}">
+			 <p:column headerText="Prioridade">
+		        <h:outputText value="#{valor.prioridade}" />
+		    </p:column>
+		    <p:column headerText="Descrição">
+		        <h:outputText value="#{valor.descricao}" />
+		    </p:column>
+		    <p:column headerText="Aplicação">
+		        <h:outputText value="#{valor.aplicacao}" />
+		    </p:column> 
+		    <p:column headerText="Data de abertura">
+		        <h:outputText value="#{valor.dataAbertura}" />
+		    </p:column>
+		     <p:column headerText="Data de solução">
+		        <h:outputText value="#{valor.dataSolucao}" />
+		    </p:column>
+		     <p:column headerText="Status">
+		        <h:outputText value="#{valor.status}" />
+		    </p:column>
+		     <p:column headerText="Solução">
+		        <h:outputText value="#{valor.solucao}" />
+		    </p:column>
+		    <p:column headerText="Ação">
+		        <p:commandButton ajax="true" update=":form:result,:form:growl"  
+				onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" 
+				icon="limparButton" title="Limpar Alerta" actionListener="#{coletor.sendClean(valor)}" />
+		    </p:column>      
+		</p:dataTable>
+    </p:panel>
+</ui:composition>

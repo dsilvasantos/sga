@@ -12,35 +12,22 @@ import javax.persistence.Query;
 import br.com.sga.monitoramento.model.Ambiente;
 
 public class AmbienteDAO {
-	
-	private static AmbienteDAO instance;
-	protected EntityManager entityManager;
-	
-	
-	public static AmbienteDAO getInstance(){
-		if(instance == null){
-			instance = new AmbienteDAO();
-		}
-		return instance;
-	}
-	private AmbienteDAO() {
-		entityManager = getEntityManager();
-	}
 
 	private EntityManager getEntityManager() {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("SGA");
-		if (entityManager == null) {
-			entityManager = factory.createEntityManager();
-		}
+		EntityManagerFactory factory = null;
+		EntityManager entityManager = null;
 
+		// Obtém o factory a partir da unidade de persistência.
+		factory = Persistence.createEntityManagerFactory("SGA");
+		// Cria um entity manager.
+		entityManager = factory.createEntityManager();
+		// Fecha o factory para liberar os recursos utilizado.
 		return entityManager;
-	}
 
-	public Ambiente getById(final int id) {
-		return entityManager.find(Ambiente.class, id);
 	}
 
 	public void persist(Ambiente Ambiente) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.persist(Ambiente);
@@ -48,10 +35,13 @@ public class AmbienteDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
 		}
 	}
 
 	public void merge(Ambiente Ambiente) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(Ambiente);
@@ -59,10 +49,13 @@ public class AmbienteDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
 		}
 	}
 
 	public void remove(Ambiente Ambiente) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			Ambiente = entityManager.find(Ambiente.class, Ambiente.getId());
@@ -71,23 +64,24 @@ public class AmbienteDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
 		}
 	}
 
-	public void removeById(final int id) {
+	public Ambiente recupearAmbiente(String nome) {
+		EntityManager entityManager = getEntityManager();
 		try {
-			Ambiente Ambiente = getById(id);
-			remove(Ambiente);
+			Query query = entityManager.createNativeQuery("Select * from ambiente a where a.nome=?1", Ambiente.class);
+			query.setParameter(1, nome);
+			Ambiente ambiente = (Ambiente) query.getSingleResult();
+			return ambiente;
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
 		}
-	}
-	
-	public Ambiente recupearAmbiente(String nome) {
-		Query query = entityManager.createNativeQuery(
-				"Select * from ambiente a where a.nome=?1",Ambiente.class);
-		query.setParameter(1, nome);
-		Ambiente ambiente = (Ambiente) query.getSingleResult();
-		return ambiente;
+		return null;
 	}
 }

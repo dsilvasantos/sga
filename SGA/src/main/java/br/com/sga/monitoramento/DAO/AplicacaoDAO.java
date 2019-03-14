@@ -11,35 +11,23 @@ import br.com.sga.monitoramento.model.Aplicacao;
 
 public class AplicacaoDAO {
 
-	private static AplicacaoDAO instance;
-	protected EntityManager entityManager;
-
-	public static AplicacaoDAO getInstance() {
-		if (instance == null) {
-			instance = new AplicacaoDAO();
-		}
-
-		return instance;
-	}
-
-	private AplicacaoDAO() {
-		entityManager = getEntityManager();
-	}
-
 	private EntityManager getEntityManager() {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("SGA");
-		if (entityManager == null) {
+		EntityManagerFactory factory = null;
+		EntityManager entityManager = null;
+	
+			// Obtém o factory a partir da unidade de persistência.
+			factory = Persistence.createEntityManagerFactory("SGA");
+			// Cria um entity manager.
 			entityManager = factory.createEntityManager();
-		}
+			// Fecha o factory para liberar os recursos utilizado.
+			return entityManager;
+		
 
-		return entityManager;
 	}
 
-	public Aplicacao getById(final int id) {
-		return entityManager.find(Aplicacao.class, id);
-	}
 
 	public void persist(Aplicacao Aplicacao) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.persist(Aplicacao);
@@ -47,10 +35,13 @@ public class AplicacaoDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
 		}
 	}
 
 	public void merge(Aplicacao Aplicacao) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(Aplicacao);
@@ -58,10 +49,13 @@ public class AplicacaoDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
 		}
 	}
 
 	public void remove(Aplicacao Aplicacao) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			Aplicacao = entityManager.find(Aplicacao.class, Aplicacao.getId());
@@ -70,32 +64,43 @@ public class AplicacaoDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
-		}
-	}
-
-	public void removeById(final int id) {
-		try {
-			Aplicacao Aplicacao = getById(id);
-			remove(Aplicacao);
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		}finally {
+			entityManager.close();
 		}
 	}
 
 	public List<Aplicacao> recupear(String celula) {
+		EntityManager entityManager = getEntityManager();
+		try {
 		Query query = entityManager.createNativeQuery(
 				"Select aplicacao.id,aplicacao.nome,aplicacao.status from aplicacao,celula where aplicacao.ID_CELULA = "
 						+ "celula.id and celula.nome=?1",Aplicacao.class);
 		query.setParameter(1, celula);
 		List<Aplicacao> aplicacoes = query.getResultList();
 		return aplicacoes;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
+		}
+		return null;
 	}
 	
 	public Aplicacao recupearAplicacao(String nome) {
+		EntityManager entityManager = getEntityManager();
+		try {
 		Query query = entityManager.createNativeQuery(
 				"Select * from aplicacao where aplicacao.nome=?1",Aplicacao.class);
 		query.setParameter(1, nome);
 		Aplicacao aplicacao = (Aplicacao) query.getSingleResult();
 		return aplicacao;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
+		}
+		return null;
 	}
 }

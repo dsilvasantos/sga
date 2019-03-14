@@ -11,35 +11,21 @@ import br.com.sga.monitoramento.model.Celula;
 
 public class CelulaDAO {
 
-	private static CelulaDAO instance;
-	protected EntityManager entityManager;
-
-	public static CelulaDAO getInstance() {
-		if (instance == null) {
-			instance = new CelulaDAO();
-		}
-
-		return instance;
-	}
-
-	private CelulaDAO() {
-		entityManager = getEntityManager();
-	}
-
 	private EntityManager getEntityManager() {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("SGA");
-		if (entityManager == null) {
+		EntityManagerFactory factory = null;
+		EntityManager entityManager = null;
+	
+			// Obtém o factory a partir da unidade de persistência.
+			factory = Persistence.createEntityManagerFactory("SGA");
+			// Cria um entity manager.
 			entityManager = factory.createEntityManager();
-		}
-
-		return entityManager;
-	}
-
-	public Celula getById(final int id) {
-		return entityManager.find(Celula.class, id);
+			// Fecha o factory para liberar os recursos utilizado.
+			return entityManager;
+		
 	}
 
 	public void persist(Celula Celula) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.persist(Celula);
@@ -47,10 +33,13 @@ public class CelulaDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
 		}
 	}
 
 	public void merge(Celula Celula) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(Celula);
@@ -58,10 +47,13 @@ public class CelulaDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
 		}
 	}
 
 	public void remove(Celula Celula) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			Celula = entityManager.find(Celula.class, Celula.getId());
@@ -70,23 +62,26 @@ public class CelulaDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
 		}
 	}
 
-	public void removeById(final int id) {
-		try {
-			Celula Celula = getById(id);
-			remove(Celula);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
 
 	public List<String> recupear(String departamento){
+		EntityManager entityManager = getEntityManager();
+		try {
 			Query query = entityManager.createNativeQuery("Select celula.nome from departamento,celula where celula.ID_DEPARTAMENTO = "
 					+ "departamento.id and departamento.nome=?1");
 			query.setParameter(1, departamento);
 			List<String> result = query.getResultList();
 			return result;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
+		}
+		return null;
 	}
 }

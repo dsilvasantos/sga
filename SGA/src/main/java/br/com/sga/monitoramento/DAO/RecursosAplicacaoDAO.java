@@ -1,46 +1,31 @@
 package br.com.sga.monitoramento.DAO;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import br.com.sga.monitoramento.model.Aplicacao;
 import br.com.sga.monitoramento.model.RecursosAplicacao;
 
 public class RecursosAplicacaoDAO {
 
-	private static RecursosAplicacaoDAO instance;
-	protected EntityManager entityManager;
-
-	public static RecursosAplicacaoDAO getInstance() {
-		if (instance == null) {
-			instance = new RecursosAplicacaoDAO();
-		}
-
-		return instance;
-	}
-
-	private RecursosAplicacaoDAO() {
-		entityManager = getEntityManager();
-	}
-
 	private EntityManager getEntityManager() {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("SGA");
-		if (entityManager == null) {
+		EntityManagerFactory factory = null;
+		EntityManager entityManager = null;
+		
+			// Obtém o factory a partir da unidade de persistência.
+			factory = Persistence.createEntityManagerFactory("SGA");
+			// Cria um entity manager.
 			entityManager = factory.createEntityManager();
-		}
+			// Fecha o factory para liberar os recursos utilizado.
+			return entityManager;
+		
 
-		return entityManager;
 	}
 
-	public RecursosAplicacao getById(final int id) {
-		return entityManager.find(RecursosAplicacao.class, id);
-	}
 
 	public void persist(RecursosAplicacao recursosAplicacao) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.persist(recursosAplicacao);
@@ -48,10 +33,13 @@ public class RecursosAplicacaoDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
 		}
 	}
 
 	public void merge(RecursosAplicacao recursosAplicacao) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(recursosAplicacao);
@@ -59,10 +47,13 @@ public class RecursosAplicacaoDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
 		}
 	}
 
 	public void remove(RecursosAplicacao recursosAplicacao) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			recursosAplicacao = entityManager.find(RecursosAplicacao.class, recursosAplicacao.getId());
@@ -71,26 +62,28 @@ public class RecursosAplicacaoDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
-		}
-	}
-
-	public void removeById(final int id) {
-		try {
-			RecursosAplicacao recursosAplicacao = getById(id);
-			remove(recursosAplicacao);
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		}finally {
+			entityManager.close();
 		}
 	}
 
 	public RecursosAplicacao recupear(String aplicacao,String recurso) {
+		EntityManager entityManager = getEntityManager();
+		try {
 		Query query = entityManager.createNativeQuery(
-				"Select ID_APLICACAO,ID_RECURSOS,quantidade_minima,quantidade_maxima,quantidade_critica,valor from recursos_aplicacao,recursos,aplicacao WHERE recursos_aplicacao.ID_APLICACAO = aplicacao.id and"
-					    + "aplicacao.nome = ?1 and"
+				"Select recursos_aplicacao.id,ID_APLICACAO,ID_RECURSOS,quantidade_minima,quantidade_maxima,quantidade_critica,valor from recursos_aplicacao,recursos,aplicacao WHERE recursos_aplicacao.ID_APLICACAO = aplicacao.id and "
+					    + "aplicacao.nome = ?1 and "
 						+ "recursos_aplicacao.ID_RECURSOS = recursos.id and recursos.nome=?2",RecursosAplicacao.class);
 		query.setParameter(1, aplicacao);
 		query.setParameter(2, recurso);
 		RecursosAplicacao recursosAplicacao = (RecursosAplicacao) query.getSingleResult();
 		return recursosAplicacao;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
+		}
+		return null;
 	}
 }

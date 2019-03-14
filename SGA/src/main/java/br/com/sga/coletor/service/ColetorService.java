@@ -30,6 +30,15 @@ public class ColetorService extends TimerTask {
 	private static final Logger LOGGER = Logger.getLogger(ColetorService.class);
 	List<AmbienteEnum> lista;
 	public static Map<String, Erro> alertas = new HashMap<String, Erro>();
+	
+	public static Map<String, Erro> getAlertas() {
+		return alertas;
+	}
+
+	public static void setAlertas(Map<String, Erro> alertas) {
+		ColetorService.alertas = alertas;
+	}
+
 	public static Map<String, Erro> coletas = new HashMap<String, Erro>();
 	int contador;
 	boolean sendAll;
@@ -40,6 +49,9 @@ public class ColetorService extends TimerTask {
 
 	private AplicacaoCLI aplicacaoCLI = new AplicacaoCLI();
 
+	private DepartamentoDAO departamentoDAO = new DepartamentoDAO();
+	private CelulaDAO celulaDAO = new CelulaDAO();
+	private AplicacaoDAO aplicacaoDAO  = new AplicacaoDAO();
 	public ColetorService() {
 		lista = AmbienteEnum.getAmbientes();
 		//enviarNagios = Integer.parseInt(LoadBundle.getValue("intervalo-envio-nagios", PropertiesFile.COLETOR));
@@ -89,14 +101,14 @@ public class ColetorService extends TimerTask {
 		}
 
 		List<String> departamentos = new ArrayList<>();
-		departamentos = DepartamentoDAO.getInstance().recuperar();
+		departamentos = departamentoDAO.recuperar();
 		for (String departamento : departamentos) {
-			List<String> celulas = CelulaDAO.getInstance().recupear(departamento);
+			List<String> celulas = celulaDAO.recupear(departamento);
 			for (String celula : celulas) {
-				List<Aplicacao> aplicacoes = AplicacaoDAO.getInstance().recupear(celula);
+				List<Aplicacao> aplicacoes = aplicacaoDAO.recupear(celula);
 				for (Aplicacao aplicacao : aplicacoes) {
 					aplicacaoCLI.recuperarServer(aplicacao);
-					if (aplicacao.getServer().getStatus().equals("STARTED")) {
+					if (aplicacao.getServer().getStatus().equals("running")) {
 						aplicacao.getServer().setAtivo(true);
 						jvmServices.getServerInformations(aplicacao.getServer());
 						jvmServices.getJvmInformations(aplicacao.getServer());

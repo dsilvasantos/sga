@@ -43,7 +43,10 @@ public class ServerController {
 	private String justificativa;
 	
 	private AplicacaoCLI aplicacaoCLI = new AplicacaoCLI();
-
+	
+	private DepartamentoDAO departamentoDAO = new DepartamentoDAO();
+	private CelulaDAO celulaDAO = new CelulaDAO();
+	private AplicacaoDAO aplicacaoDAO = new AplicacaoDAO();
 	
 	public TreeNode createAplicacoes() {
 		AmbienteServices ambiente = new AmbienteServices();
@@ -54,19 +57,19 @@ public class ServerController {
 		TreeNode root = new DefaultTreeNode(rootServer,null);
 		
 		List<String> departamentos = new ArrayList<>();
-		departamentos = DepartamentoDAO.getInstance().recuperar();
+		departamentos = departamentoDAO.recuperar();
 		for(String departamento:departamentos) {
 			Server departamentoServer = new Server();
 			departamentoServer.setNome(departamento);
 			departamentoServer.setStatus("../imagens/vazio.png");
 			TreeNode rootDepartamento = new DefaultTreeNode(departamentoServer,root);
-			List<String> celulas = CelulaDAO.getInstance().recupear(departamento);
+			List<String> celulas = celulaDAO.recupear(departamento);
 			for(String celula : celulas) {
 				Server celulaServer = new Server();
 				celulaServer.setNome(celula);
 				celulaServer.setStatus("../imagens/vazio.png");
 				TreeNode rootCelula = new DefaultTreeNode(celulaServer,rootDepartamento);
-				List<Aplicacao> aplicacoes = AplicacaoDAO.getInstance().recupear(celula);
+				List<Aplicacao> aplicacoes = aplicacaoDAO.recupear(celula);
 				for(Aplicacao aplicacao : aplicacoes) {
 					aplicacaoCLI.recuperarServer(aplicacao);
 					Server serverAplicacao = new Server();
@@ -87,19 +90,19 @@ public class ServerController {
 		TreeNode root = new CheckboxTreeNode(rootServer,null);
 		
 		List<String> departamentos = new ArrayList<>();
-		departamentos = DepartamentoDAO.getInstance().recuperar();
+		departamentos = departamentoDAO.recuperar();
 		for(String departamento:departamentos) {
 			Server departamentoServer = new Server();
 			departamentoServer.setNome(departamento);
 			departamentoServer.setStatus("-");
 			TreeNode rootDepartamento = new CheckboxTreeNode(departamentoServer,root);
-			List<String> celulas = CelulaDAO.getInstance().recupear(departamento);
+			List<String> celulas = celulaDAO.recupear(departamento);
 			for(String celula : celulas) {
 				Server celulaServer = new Server();
 				celulaServer.setNome(celula);
 				celulaServer.setStatus("-");
 				TreeNode rootCelula = new CheckboxTreeNode(celulaServer,rootDepartamento);
-				List<Aplicacao> aplicacoes = AplicacaoDAO.getInstance().recupear(celula);
+				List<Aplicacao> aplicacoes = aplicacaoDAO.recupear(celula);
 				for(Aplicacao aplicacao : aplicacoes) {
 					aplicacaoCLI.recuperarServer(aplicacao);
 					new CheckboxTreeNode("aplicação",aplicacao,rootCelula);

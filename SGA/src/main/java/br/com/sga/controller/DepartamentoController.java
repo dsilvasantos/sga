@@ -13,6 +13,7 @@ public class DepartamentoController {
 
 
 	public List<String> getDepartamentos() {
-		return DepartamentoDAO.getInstance().recuperar();
+		DepartamentoDAO departamentoDAO = new DepartamentoDAO();
+		return departamentoDAO.recuperar();
 	}
 }

@@ -9,35 +9,22 @@ import br.com.sga.monitoramento.model.Erro;
 
 public class ErroDAO {
 
-	private static ErroDAO instance;
-	protected EntityManager entityManager;
-
-	public static ErroDAO getInstance() {
-		if (instance == null) {
-			instance = new ErroDAO();
-		}
-
-		return instance;
-	}
-
-	private ErroDAO() {
-		entityManager = getEntityManager();
-	}
-
 	private EntityManager getEntityManager() {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("SGA");
-		if (entityManager == null) {
+		EntityManagerFactory factory = null;
+		EntityManager entityManager = null;
+	
+			// Obtém o factory a partir da unidade de persistência.
+			factory = Persistence.createEntityManagerFactory("SGA");
+			// Cria um entity manager.
 			entityManager = factory.createEntityManager();
-		}
+			// Fecha o factory para liberar os recursos utilizado.
+			return entityManager;
 
-		return entityManager;
+
 	}
-
-	public Erro getById(final int id) {
-		return entityManager.find(Erro.class, id);
-	}
-
+	
 	public void persist(Erro Erro) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.persist(Erro);
@@ -45,10 +32,13 @@ public class ErroDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
 		}
 	}
 
 	public void merge(Erro Erro) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(Erro);
@@ -56,10 +46,13 @@ public class ErroDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
 		}
 	}
 
 	public void remove(Erro Erro) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			Erro = entityManager.find(Erro.class, Erro.getId());
@@ -68,15 +61,8 @@ public class ErroDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
-		}
-	}
-
-	public void removeById(final int id) {
-		try {
-			Erro Erro = getById(id);
-			remove(Erro);
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		}finally {
+			entityManager.close();
 		}
 	}
 }

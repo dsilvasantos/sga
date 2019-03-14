@@ -10,35 +10,21 @@ import javax.persistence.Query;
 import br.com.sga.monitoramento.model.Departamento;
 
 public class DepartamentoDAO {
-	private static DepartamentoDAO instance;
-	protected EntityManager entityManager;
-
-	public static DepartamentoDAO getInstance() {
-		if (instance == null) {
-			instance = new DepartamentoDAO();
-		}
-
-		return instance;
-	}
-
-	private DepartamentoDAO() {
-		entityManager = getEntityManager();
-	}
-
 	private EntityManager getEntityManager() {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("SGA");
-		if (entityManager == null) {
+		EntityManagerFactory factory = null;
+		EntityManager entityManager = null;
+	
+			// Obtém o factory a partir da unidade de persistência.
+			factory = Persistence.createEntityManagerFactory("SGA");
+			// Cria um entity manager.
 			entityManager = factory.createEntityManager();
-		}
+			// Fecha o factory para liberar os recursos utilizado.
+			return entityManager;
 
-		return entityManager;
-	}
-
-	public Departamento getById(final int id) {
-		return entityManager.find(Departamento.class, id);
 	}
 
 	public void persist(Departamento Departamento) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.persist(Departamento);
@@ -46,10 +32,13 @@ public class DepartamentoDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
 		}
 	}
 
 	public void merge(Departamento Departamento) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(Departamento);
@@ -57,10 +46,13 @@ public class DepartamentoDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
 		}
 	}
 
 	public void remove(Departamento Departamento) {
+		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
 			Departamento = entityManager.find(Departamento.class, Departamento.getId());
@@ -69,21 +61,24 @@ public class DepartamentoDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
 		}
 	}
 
-	public void removeById(final int id) {
+	public List<String> recuperar() {
+		EntityManager entityManager = getEntityManager();
 		try {
-			Departamento Departamento = getById(id);
-			remove(Departamento);
+			entityManager.getTransaction().begin();
+			Query query = entityManager.createNativeQuery("Select nome from departamento");
+			List<String> result = query.getResultList();
+			return result;
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
 		}
-	}
-	
-	public List<String> recuperar(){
-		Query query = entityManager.createNativeQuery("Select nome from departamento");
-		List<String> result = query.getResultList();
-		return result;
+		return null;
 	}
 }
