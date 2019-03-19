@@ -13,11 +13,11 @@
 		<class>br.com.sga.monitoramento.model.Aplicacao</class>
 		<class>br.com.sga.monitoramento.model.Usuario</class>
 		<class>br.com.sga.monitoramento.model.RecursosAplicacao</class>
-		<class>br.com.sga.monitoramento.model.Erro</class> 
+		<class>br.com.sga.monitoramento.model.Erro</class>
+		<class>br.com.sga.monitoramento.model.Recursos</class> 
 		<properties>
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.MySQL5InnoDBDialect" />
-			<property name="hibernate.hbm2ddl.auto" value="none" />
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.cache.use_second_level_cache"

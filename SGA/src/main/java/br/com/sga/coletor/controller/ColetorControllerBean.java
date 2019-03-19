@@ -2,24 +2,32 @@ package br.com.sga.coletor.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.jboss.logging.Logger;
 
 import br.com.sga.coletor.model.Alertas;
+import br.com.sga.coletor.model.TipoAlerta;
+import br.com.sga.coletor.model.TipoRecurso;
+import br.com.sga.coletor.service.ColetorRoles;
 import br.com.sga.coletor.service.ColetorService;
+import br.com.sga.monitoramento.DAO.AplicacaoDAO;
+import br.com.sga.monitoramento.DAO.ErroDAO;
+import br.com.sga.monitoramento.DAO.RecursosDAO;
+import br.com.sga.monitoramento.model.Aplicacao;
 import br.com.sga.monitoramento.model.Erro;
+import br.com.sga.monitoramento.model.Recursos;
 
 @ManagedBean(name = "coletor")
 @ViewScoped
 public class ColetorControllerBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private boolean permissao = false;
 	public static Logger LOGGER = Logger.getLogger(ColetorControllerBean.class);
@@ -49,7 +57,6 @@ public class ColetorControllerBean implements Serializable {
 		exibirColetas = false;
 		alertas.clear();
 
-	
 		for (Erro valor : ColetorService.alertas.values()) {
 			alertas.add(valor);
 		}
@@ -60,60 +67,25 @@ public class ColetorControllerBean implements Serializable {
 		exibirResultados = false;
 		coletas.clear();
 
-
 		for (Erro valor : ColetorService.coletas.values()) {
 			coletas.add(valor);
 		}
 	}
 
-	public void sendClean(Alertas alerta) {
-		/*
+	public void sendClean(Erro erro) {
+
 		String key;
-		TipoRecurso recurso;
-		LOGGER.info("Usuário [" + user + "] solicitou clean do alrame: " + alerta.getKey());
+		LOGGER.info("Usuário [" + user + "] solicitou clean do alrame: ");
 
-		switch (alerta.getRecurso().toLowerCase()) {
-		case "heap":
-			recurso = TipoRecurso.HEAP;
-			key = alerta.getKey().replace("_" + TipoRecurso.HEAP.getValor().toLowerCase(), "");
-			break;
-		case "status":
-			recurso = TipoRecurso.STATUS;
-			key = alerta.getKey().replace("_" + TipoRecurso.STATUS.getValor().toLowerCase(), "");
-			break;
-		case "datasource":
-			recurso = TipoRecurso.DATASOURCE;
-			key = alerta.getKey().replace("_" + TipoRecurso.DATASOURCE.getValor().toLowerCase(), "");
-			break;
-		case "thread":
-			recurso = TipoRecurso.THREAD;
-			key = alerta.getKey().replace("_" + TipoRecurso.THREAD.getValor().toLowerCase(), "");
-			break;
-		case "metaspace":
-			recurso = TipoRecurso.METASPACE;
-			key = alerta.getKey().replace("_" + TipoRecurso.METASPACE.getValor().toLowerCase(), "");
-			break;
-		case "versao-java":
-			recurso = TipoRecurso.VERSAOJAVA;
-			key = alerta.getKey().replace("_" + TipoRecurso.VERSAOJAVA.getValor().toLowerCase(), "");
-			break;
-		case "versao-jboss":
-			recurso = TipoRecurso.VERSAOJBOSS;
-			key = alerta.getKey().replace("_" + TipoRecurso.VERSAOJBOSS.getValor().toLowerCase(), "");
-			break;
-		default:
-			recurso = null;
-			key = null;
-			break;
-		}
-
-		TipoAlerta tipoAlerta = TipoAlerta.OK;
-		String valor = "";
-		ColetorRoles roles = new ColetorRoles();
-		if (null != recurso) {
-			NagiosCheckResult clean = new NagiosCheckResult(key, recurso.getValor().toLowerCase(), State.OK, valor);
-			ColetorService.sendCleanFromMonitor(clean);
-			// roles.sendCleanFromMonitor(key, tipoAlerta, recurso, valor);
+		key = recuperarAplicacao(erro.getAplicacao()) + "_" + recuperarRecurso(erro.getRecurso());
+		ColetorService.alertas.remove(key);
+		erro.setDataSolucao(new Date());
+		erro.setStatus("Removido");
+		erro.setSolucao("Sem solução");
+		ErroDAO erroDAO = new ErroDAO();
+		erroDAO.merge(erro);
+		carregarColeta();
+		if (null != key) {
 			carregarAlertas();
 			FacesContext.getCurrentInstance().addMessage("Teste Sucesso",
 					new FacesMessage("Sucesso.", "A limpeza do alerta foi executada com sucesso."));
@@ -122,7 +94,6 @@ public class ColetorControllerBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage("Teste Falha",
 					new FacesMessage("Falha.", "Tipo de recurso naõ identificado. "));
 		}
-*/
 	}
 
 	public List<Erro> getAlertas() {
@@ -169,4 +140,18 @@ public class ColetorControllerBean implements Serializable {
 		this.coletorStatus = coletorStatus;
 	}
 
+	public String recuperarAplicacao(int id) {
+
+		AplicacaoDAO aplicacaoDAO = new AplicacaoDAO();
+		Aplicacao aplicacao = aplicacaoDAO.recupearAplicacaoID(id);
+		return aplicacao.getNome();
+
+	}
+
+	public String recuperarRecurso(int id) {
+
+		RecursosDAO recursosDAO = new RecursosDAO();
+		Recursos recursos = recursosDAO.recupear(id);
+		return recursos.getNome();
+	}
 }

@@ -111,7 +111,7 @@ public class ColetorService extends TimerTask {
 					if (aplicacao.getServer().getStatus().equals("running")) {
 						aplicacao.getServer().setAtivo(true);
 						jvmServices.getServerInformations(aplicacao.getServer());
-						jvmServices.getJvmInformations(aplicacao.getServer());
+						aplicacao.getServer().setJvm(jvmServices.getJvmInformations(aplicacao.getServer()));
 						dsInformations(data.getDataSource(aplicacao.getServer()),aplicacao.getServer());
 					} else {
 						aplicacao.getServer().setAtivo(false);
@@ -134,5 +134,6 @@ public class ColetorService extends TimerTask {
 			datasource.setMaxInUseCount(service.readAttribute(cmdDS + datasource.getTipo() + "=" + datasource.getNome()
 					+ "/statistics=pool:read-attribute(name=MaxUsedCount)"));
 		}
+		server.setDatasources(listaDatasources);
 	}
 }

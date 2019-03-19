@@ -26,7 +26,7 @@ public class ColetorAnalyze {
 		result.setNomeAmbiente(nomeAmbiente);
 		LOGGER.info("Tratando alertas do ambiente: " + ambiente.getNomeAmbiente());
 		for (Aplicacao s : ambiente.getAplicacaos()) {
-			roles.tratarAlertas(s.getServer().getHost(), s.getServer(), sendAll);
+			roles.tratarAlertas(s.getServer().getHost(), s.getServer());
 		}
 		LOGGER.info("Finalizando tratamento dos alertas do ambiente: " + ambiente.getNomeAmbiente());
 	}

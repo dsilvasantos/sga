@@ -37,6 +37,10 @@ public class Erro {
 	
 	@Column(name = "solucao",nullable=false)
 	private String solucao;
+	
+	@Column(name = "id_recurso",nullable=false)
+	private int recurso;
+
 
 	public int getId() {
 		return id;
@@ -102,8 +106,16 @@ public class Erro {
 		this.solucao = solucao;
 	}
 
+	public int getRecurso() {
+		return recurso;
+	}
+
+	public void setRecurso(int recurso) {
+		this.recurso = recurso;
+	}
+
 	public Erro(int id, String prioridade, String descricao, int aplicacao, Date dataAbertura, Date dataSolucao,
-			String status) {
+			String status,int recurso) {
 		super();
 		this.id = id;
 		this.prioridade = prioridade;
@@ -112,15 +124,17 @@ public class Erro {
 		this.dataAbertura = dataAbertura;
 		this.dataSolucao = dataSolucao;
 		this.status = status;
+		this.recurso = recurso;
 	}
 	
-	public Erro(String prioridade, String descricao, int aplicacao, Date dataAbertura,String status) {
+	public Erro(String prioridade, String descricao, int aplicacao, Date dataAbertura,String status,int recurso) {
 		super();
 		this.prioridade = prioridade;
 		this.descricao = descricao;
 		this.aplicacao = aplicacao;
 		this.dataAbertura = dataAbertura;
 		this.status = status;
+		this.recurso = recurso;
 	}
 
 	public Erro() {

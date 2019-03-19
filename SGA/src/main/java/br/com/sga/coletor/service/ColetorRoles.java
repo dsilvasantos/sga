@@ -18,6 +18,7 @@ import br.com.sga.monitoramento.model.Datasource;
 import br.com.sga.monitoramento.model.Erro;
 import br.com.sga.monitoramento.model.RecursosAplicacao;
 import br.com.sga.monitoramento.model.Server;
+import static br.com.sga.monitoramento.enumeration.Recursos.STATUS;
 
 public class ColetorRoles {
 
@@ -40,12 +41,12 @@ public class ColetorRoles {
 	 * sofra mudança de STATUS, notificar. A lista de alertas e global e esta
 	 * definidas na classe ColetorService
 	 */
-	private void identificarAlertas(TipoAlerta alerta, String recurso, String key, String descricao, boolean sendAll,
-			String serverNome) {
+	private void identificarAlertas(TipoAlerta alerta, String recurso, String key, String descricao,
+			int idRecurso,String serverNome) {
 		ErroDAO erroDAO = new ErroDAO();
 		Aplicacao aplicacao = aplicacaoDAO.recupearAplicacao(serverNome);
 
-		Erro erro = new Erro(alerta.getValor(), descricao, aplicacao.getId(), new Date(), "Aberto");
+		Erro erro = new Erro(alerta.getValor(), descricao, aplicacao.getId(), new Date(), "Aberto",idRecurso);
 		key = key + "_" + recurso;
 
 		ColetorService.coletas.put(key, erro);
@@ -107,18 +108,15 @@ public class ColetorRoles {
 	 * de todos os alertas de cada servidor deste Host Controller Niveis de alerta
 	 * definidos em propriedades
 	 */
-	public void tratarAlertas(String host, Server server, boolean sendAll) throws MissingResourceException {
+	public void tratarAlertas(String host, Server server) throws MissingResourceException {
 		String key = server.getNome();
-		String mensagem = TipoAlerta.OK.getValor().toUpperCase() + " Host Controller " + server.getHost()
-				+ " em funcionamento|status=" + ok + ";" + warning + ";" + critical + ";" + minGRafico + ";"
-				+ maxGrafico + ";";
-		mensagem += "\n Host Controller em execução.";
-		identificarAlertas(TipoAlerta.OK, TipoRecurso.STATUS.toString().toLowerCase(), key, mensagem, sendAll,
-				server.getNome());
+		String mensagem = null;
 		String versaoJboss = null;
+		RecursosAplicacao recursosAplicacao = new RecursosAplicacao();
 		// Tratando Versao Jboss
 		try {
-			versaoJboss = recursosAplicacaoDAO.recupear(server.getNome(), "versao-jboss").getValor();
+			recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "versao-jboss");
+			versaoJboss = recursosAplicacao.getValor();
 		} catch (Exception e) {
 			LOGGER.error("Falha ao recuperar informações das Threads em: " + key);
 		}
@@ -127,24 +125,23 @@ public class ColetorRoles {
 					+ "|versao-jboss=" + versaoJboss;
 
 			mensagem += "\n Versão do JBoss OK.";
-			identificarAlertas(TipoAlerta.OK, TipoRecurso.VERSAOJBOSS.toString().toLowerCase(), key, mensagem, sendAll,
+			identificarAlertas(TipoAlerta.OK, TipoRecurso.VERSAOJBOSS.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos(),
 					server.getNome());
 		} else {
 			mensagem = TipoAlerta.CRITICAL.getValor().toUpperCase() + " Versão do JBoss está diferente = "
 					+ server.getJbossVersion() + "|versao-jboss=" + versaoJboss;
 			mensagem += "\n Versão do JBoss está diferente.";
 			identificarAlertas(TipoAlerta.CRITICAL, TipoRecurso.VERSAOJBOSS.toString().toLowerCase(), key, mensagem,
-					sendAll, server.getNome());
+					recursosAplicacao.getRecursos(), server.getNome());
 		}
 
-		// Tratando alertas dos Servers
-		key = key + "_" + server.getNome();
-		tratarAlertaStatus(server, key, sendAll);
+		// Tratando alertas dos Server
+		tratarAlertaStatus(server, key);
 		if (server.isAtivo()) {
-			tratarrAlertaHeap(server, key, sendAll);
-			tratarAlertaThread(server, key, sendAll);
-			tratarAlertaDatasources(server, key, sendAll);
-			tratarrAlertaMetaspace(server, key, sendAll);
+			tratarrAlertaHeap(server, key);
+			tratarAlertaThread(server, key);
+			tratarAlertaDatasources(server, key);
+			tratarrAlertaMetaspace(server, key);
 		}
 	}
 
@@ -152,7 +149,7 @@ public class ColetorRoles {
 	 * Tratamento da memória Heap de cada JVM Niveis de alerta definidos em
 	 * propriedades
 	 */
-	private void tratarrAlertaHeap(Server server, String key, boolean sendAll) {
+	private void tratarrAlertaHeap(Server server, String key) {
 
 		String maxGrafico = "100";
 		String minGrafico = "0";
@@ -170,14 +167,14 @@ public class ColetorRoles {
 						+ minGrafico + ";" + maxGrafico + ";";
 				mensagem += "\n Uso da memória Heap superior a " + critical + "%";
 				identificarAlertas(TipoAlerta.CRITICAL, TipoRecurso.HEAP.toString().toLowerCase(), key, mensagem,
-						sendAll, server.getNome());
+						recursosAplicacao.getRecursos(), server.getNome());
 			} else if (Integer.parseInt(server.getJvm().getPercentUseHeap()) > NumWarning) {
 				mensagem = TipoAlerta.WARN.getValor().toUpperCase() + " Uso da memória heap="
 						+ server.getJvm().getPercentUseHeap() + "%";
 				mensagem += "|heap=" + server.getJvm().getPercentUseHeap() + ";" + warning + ";" + critical + ";"
 						+ minGrafico + ";" + maxGrafico + ";";
 				mensagem += "\n Uso da memória Heap superior a " + warning + "%";
-				identificarAlertas(TipoAlerta.WARN, TipoRecurso.HEAP.toString().toLowerCase(), key, mensagem, sendAll,
+				identificarAlertas(TipoAlerta.WARN, TipoRecurso.HEAP.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos(),
 						server.getNome());
 			} else {
 				mensagem = TipoAlerta.OK.getValor().toUpperCase() + " Uso da memória heap="
@@ -185,11 +182,11 @@ public class ColetorRoles {
 				mensagem += "|heap=" + server.getJvm().getPercentUseHeap() + ";" + warning + ";" + critical + ";"
 						+ minGrafico + ";" + maxGrafico + ";";
 				mensagem += "\n Uso da memória Heap inferior a " + warning + "%";
-				identificarAlertas(TipoAlerta.OK, TipoRecurso.HEAP.toString().toLowerCase(), key, mensagem, sendAll,
+				identificarAlertas(TipoAlerta.OK, TipoRecurso.HEAP.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos(),
 						server.getNome());
 			}
 		} catch (Exception e) {
-			LOGGER.error("Falha ao recuperar informações das Threads em: " + key);
+			LOGGER.error("Falha ao recuperar informações de Heap em: " + key);
 		}
 
 	}
@@ -201,18 +198,19 @@ public class ColetorRoles {
 	 * 
 	 * @param server
 	 * @param key
-	 * @param sendAll
+	 * @param recursosAplicacao.getRecursos()
 	 */
 	// TODO aguardar a definição do limite do metaspace para calcular o percentual
 	// de uso, por enquanto, apenas é informado a quantidade de uso em MB
-	private void tratarrAlertaMetaspace(Server server, String key, boolean sendAll) {
+	private void tratarrAlertaMetaspace(Server server, String key) {
 
 		String maxGrafico = "600";
 		String minGrafico = "0";
 		int warning = 0;
 		int critical = 0;
+		RecursosAplicacao recursosAplicacao = new RecursosAplicacao();
 		try {
-			RecursosAplicacao recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "metaspace");
+			recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "metaspace");
 			critical = recursosAplicacao.getQuantiodadeCritica();
 			warning = recursosAplicacao.getQuantidadeMaxima();
 		} catch (Exception e) {
@@ -227,14 +225,14 @@ public class ColetorRoles {
 					+ ";" + maxGrafico + ";";
 			mensagem += "\nValor do Metaspace superior a " + critical + "MB";
 			identificarAlertas(TipoAlerta.CRITICAL, TipoRecurso.METASPACE.toString().toLowerCase(), key, mensagem,
-					sendAll, server.getNome());
+					recursosAplicacao.getRecursos(), server.getNome());
 		} else if (metaSpaceUse > warning) {
 			String mensagem = TipoAlerta.WARN.getValor().toUpperCase() + " Memória Metaspace="
 					+ server.getMetaspaceUsedMB() + "MB";
 			mensagem += "|metaspace=" + server.getMetaspaceUsedMB() + ";" + warning + ";" + critical + ";" + minGrafico
 					+ ";" + maxGrafico + ";";
 			mensagem += "\nValor do Metaspace superior a " + warning + "MB";
-			identificarAlertas(TipoAlerta.WARN, TipoRecurso.METASPACE.toString().toLowerCase(), key, mensagem, sendAll,
+			identificarAlertas(TipoAlerta.WARN, TipoRecurso.METASPACE.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos(),
 					server.getNome());
 		} else if (metaSpaceUse < warning) {
 			String mensagem = TipoAlerta.OK.getValor().toUpperCase() + " Memória Metaspace="
@@ -242,7 +240,7 @@ public class ColetorRoles {
 			mensagem += "|metaspace=" + server.getMetaspaceUsedMB() + ";" + warning + ";" + critical + ";" + minGrafico
 					+ ";" + maxGrafico + ";";
 			mensagem += "\nValor do Metaspace inferior a " + warning + "MB";
-			identificarAlertas(TipoAlerta.OK, TipoRecurso.METASPACE.toString().toLowerCase(), key, mensagem, sendAll,
+			identificarAlertas(TipoAlerta.OK, TipoRecurso.METASPACE.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos(),
 					server.getNome());
 		}
 	}
@@ -251,16 +249,16 @@ public class ColetorRoles {
 	 * Tratamento das Threads específicas de cada JVM Niveis de alerta definidos em
 	 * propriedades
 	 */
-	private void tratarAlertaThread(Server server, String key, boolean sendAll) {
+	private void tratarAlertaThread(Server server, String key) {
 
 		String mensagem;
 		String minGrafico = "0";
 		String maxGrafico = "600";
 		int warning = 0;
 		int critical = 0;
-
+		RecursosAplicacao recursosAplicacao = new RecursosAplicacao();
 		try {
-			RecursosAplicacao recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "thread");
+			recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "thread");
 			critical = recursosAplicacao.getQuantiodadeCritica();
 			warning = recursosAplicacao.getQuantidadeMaxima();
 		} catch (Exception e) {
@@ -272,21 +270,21 @@ public class ColetorRoles {
 			mensagem += "|threads=" + server.getThread() + ";" + warning + ";" + critical + ";" + minGrafico + ";"
 					+ maxGrafico + ";";
 			mensagem += "\nValor das Threads superior a " + critical;
-			identificarAlertas(TipoAlerta.CRITICAL, TipoRecurso.THREAD.toString().toLowerCase(), key, mensagem, sendAll,
+			identificarAlertas(TipoAlerta.CRITICAL, TipoRecurso.THREAD.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos(),
 					server.getNome());
 		} else if (server.getThread() > warning) {
 			mensagem = TipoAlerta.WARN.getValor().toUpperCase() + " Quantidade de threads=" + server.getThread();
 			mensagem += "|threads=" + server.getThread() + ";" + warning + ";" + critical + ";" + minGrafico + ";"
 					+ maxGrafico + ";";
 			mensagem += "\nValor das Threads superior a " + warning;
-			identificarAlertas(TipoAlerta.WARN, TipoRecurso.THREAD.toString().toLowerCase(), key, mensagem, sendAll,
+			identificarAlertas(TipoAlerta.WARN, TipoRecurso.THREAD.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos(),
 					server.getNome());
 		} else {
 			mensagem = TipoAlerta.OK.getValor().toUpperCase() + " Quantidade de threads=" + server.getThread();
 			mensagem += "|threads=" + server.getThread() + ";" + warning + ";" + critical + ";" + minGrafico + ";"
 					+ maxGrafico + ";";
 			mensagem += "\nValor das Threads inferior a " + warning;
-			identificarAlertas(TipoAlerta.OK, TipoRecurso.THREAD.toString().toLowerCase(), key, mensagem, sendAll,
+			identificarAlertas(TipoAlerta.OK, TipoRecurso.THREAD.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos(),
 					server.getNome());
 		}
 	}
@@ -294,7 +292,7 @@ public class ColetorRoles {
 	/**
 	 * Tratamento do status de cada JVM Niveis de alerta definidos em propriedades
 	 */
-	private void tratarAlertaStatus(Server server, String key, boolean sendAll) {
+	private void tratarAlertaStatus(Server server, String key) {
 		String mensagem;
 		if (server.isAtivo()) {
 			if (server.getStatus().equals(StatusServer.running.getValor())) {
@@ -303,7 +301,7 @@ public class ColetorRoles {
 				mensagem += "|status=" + ok + ";" + warning + ";" + critical + ";" + minGRafico + ";" + maxGrafico
 						+ ";";
 				mensagem += "\n Instância JVM com funcionamento OK.";
-				identificarAlertas(TipoAlerta.OK, TipoRecurso.STATUS.toString().toLowerCase(), key, mensagem, sendAll,
+				identificarAlertas(TipoAlerta.OK, TipoRecurso.STATUS.toString().toLowerCase(), key, mensagem,STATUS.getValor(),
 						server.getNome());
 			} else if (server.getStatus().equals(StatusServer.restartrequired.getValor())) {
 				mensagem = TipoAlerta.WARN.getValor().toUpperCase() + " Status JVM " + server.getNome() + "="
@@ -311,7 +309,7 @@ public class ColetorRoles {
 				mensagem += "|status=" + warning + ";" + warning + ";" + critical + ";" + minGRafico + ";" + maxGrafico
 						+ ";";
 				mensagem += "\n Instância JVM solicitando restart.";
-				identificarAlertas(TipoAlerta.WARN, TipoRecurso.STATUS.toString().toLowerCase(), key, mensagem, sendAll,
+				identificarAlertas(TipoAlerta.WARN, TipoRecurso.STATUS.toString().toLowerCase(), key, mensagem, STATUS.getValor(),
 						server.getNome());
 			} else {
 				mensagem = TipoAlerta.CRITICAL.getValor().toUpperCase() + " Status JVM " + server.getNome() + "="
@@ -320,14 +318,14 @@ public class ColetorRoles {
 						+ ";";
 				mensagem += "\n Instância JVM em falha.";
 				identificarAlertas(TipoAlerta.CRITICAL, TipoRecurso.STATUS.toString().toLowerCase(), key, mensagem,
-						sendAll, server.getNome());
+						STATUS.getValor(), server.getNome());
 			}
 		} else {
 			mensagem = TipoAlerta.CRITICAL.getValor() + " Status JVM " + server.getNome() + "=" + server.getStatus();
 			mensagem += "|status=" + critical + ";" + warning + ";" + critical + ";" + minGRafico + ";" + maxGrafico
 					+ ";";
 			mensagem += "\n Não foi possível recuperar os valores da instância JVM.";
-			identificarAlertas(TipoAlerta.CRITICAL, TipoRecurso.STATUS.toString().toLowerCase(), key, mensagem, sendAll,
+			identificarAlertas(TipoAlerta.CRITICAL, TipoRecurso.STATUS.toString().toLowerCase(), key, mensagem, STATUS.getValor(),
 					server.getNome());
 		}
 	}
@@ -336,16 +334,16 @@ public class ColetorRoles {
 	 * Tratamento dos datasources específicos da JVM. Niveis de alerta definidos em
 	 * propriedades
 	 */
-	private void tratarAlertaDatasources(Server server, String key, boolean sendAll) {
+	private void tratarAlertaDatasources(Server server, String key) {
 
 		int warning = 0;
 		int critical = 0;
 		String mensagem;
 		String minGrafico = "0";
 		String maxGrafico = "100";
-
+		RecursosAplicacao recursosAplicacao = new RecursosAplicacao();
 		try {
-			RecursosAplicacao recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "data");
+			recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "data");
 			warning = recursosAplicacao.getQuantidadeMaxima();
 			critical = recursosAplicacao.getQuantiodadeCritica();
 		} catch (Exception e) {
@@ -364,7 +362,7 @@ public class ColetorRoles {
 							+ ds.getMaxCount();
 					identificarAlertas(TipoAlerta.CRITICAL,
 							TipoRecurso.DATASOURCE.toString().toLowerCase() + "_" + ds.getNome(), key, mensagem,
-							sendAll, server.getNome());
+							recursosAplicacao.getRecursos(), server.getNome());
 				} else if (Integer.parseInt(ds.getPercentUsage()) > warning) {
 					mensagem = TipoAlerta.WARN.getValor().toUpperCase() + " Datasource [" + ds.getNome()
 							+ "] com percentual de uso = " + ds.getPercentUsage() + "%";
@@ -375,7 +373,7 @@ public class ColetorRoles {
 							+ ds.getMaxCount();
 					identificarAlertas(TipoAlerta.WARN,
 							TipoRecurso.DATASOURCE.toString().toLowerCase() + "_" + ds.getNome(), key, mensagem,
-							sendAll, server.getNome());
+							recursosAplicacao.getRecursos(), server.getNome());
 				} else {
 					mensagem = TipoAlerta.OK.getValor().toUpperCase() + " Datasource [" + ds.getNome()
 							+ "] com percentual de uso = " + ds.getPercentUsage() + "%";
@@ -386,7 +384,7 @@ public class ColetorRoles {
 							+ ds.getMaxCount();
 					identificarAlertas(TipoAlerta.OK,
 							TipoRecurso.DATASOURCE.toString().toLowerCase() + "_" + ds.getNome(), key, mensagem,
-							sendAll, server.getNome());
+							recursosAplicacao.getRecursos(), server.getNome());
 				}
 
 				// Informar o Maximo utilizado em paralelo
@@ -399,7 +397,7 @@ public class ColetorRoles {
 						+ ds.getMaxCount();
 				identificarAlertas(TipoAlerta.OK,
 						TipoRecurso.DATASOURCE.toString().toLowerCase() + "_" + ds.getNome() + "_MaxInUse", key,
-						mensagem, sendAll, server.getNome());
+						mensagem, recursosAplicacao.getRecursos(), server.getNome());
 			}
 		} catch (Exception e) {
 			LOGGER.error("Falha ao recuperar informações dos Datasources: " + key);

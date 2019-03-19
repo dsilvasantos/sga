@@ -103,4 +103,21 @@ public class AplicacaoDAO {
 		}
 		return null;
 	}
+	
+	public Aplicacao recupearAplicacaoID(int id) {
+		EntityManager entityManager = getEntityManager();
+		try {
+		Query query = entityManager.createNativeQuery(
+				"Select * from aplicacao where aplicacao.id=?1",Aplicacao.class);
+		query.setParameter(1, id);
+		Aplicacao aplicacao = (Aplicacao) query.getSingleResult();
+		return aplicacao;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
+		}finally {
+			entityManager.close();
+		}
+		return null;
+	}
 }
