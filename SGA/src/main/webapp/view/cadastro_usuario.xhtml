@@ -10,8 +10,7 @@
 <h:body>
      <h:form>
           <p:messages id="messages" />
-          <p:panelGrid columns="2">
-                
+          <p:panelGrid columns="2">                
 				<p:outputLabel for="login" value="Login:" />
                 <p:inputText id="login" value="#{Usuario.user.login}" />	
 				
@@ -29,8 +28,7 @@
   
                 <p:commandButton  value="Cadastrar" icon="ui-icon-star" 
                  action="#{Usuario.cadastraUsuario}" update="messages">
-                </p:commandButton>
-  
+                </p:commandButton>  
           </p:panelGrid>
      </h:form>
 </h:body>
