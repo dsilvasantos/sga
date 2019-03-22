@@ -40,7 +40,9 @@ public class Erro {
 	
 	@Column(name = "id_recurso",nullable=false)
 	private int recurso;
-
+	
+	@Column(name = "id_usuario",nullable=true)
+	private int usuario;
 
 	public int getId() {
 		return id;
@@ -112,6 +114,14 @@ public class Erro {
 
 	public void setRecurso(int recurso) {
 		this.recurso = recurso;
+	}
+
+	public int getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(int usuario) {
+		this.usuario = usuario;
 	}
 
 	public Erro(int id, String prioridade, String descricao, int aplicacao, Date dataAbertura, Date dataSolucao,

@@ -12,10 +12,6 @@ import javax.faces.context.FacesContext;
 
 import org.jboss.logging.Logger;
 
-import br.com.sga.coletor.model.Alertas;
-import br.com.sga.coletor.model.TipoAlerta;
-import br.com.sga.coletor.model.TipoRecurso;
-import br.com.sga.coletor.service.ColetorRoles;
 import br.com.sga.coletor.service.ColetorService;
 import br.com.sga.monitoramento.DAO.AplicacaoDAO;
 import br.com.sga.monitoramento.DAO.ErroDAO;
@@ -71,7 +67,7 @@ public class ColetorControllerBean implements Serializable {
 			coletas.add(valor);
 		}
 	}
-
+	
 	public void sendClean(Erro erro) {
 
 		String key;
@@ -147,6 +143,7 @@ public class ColetorControllerBean implements Serializable {
 		return aplicacao.getNome();
 
 	}
+	
 
 	public String recuperarRecurso(int id) {
 

@@ -67,17 +67,21 @@ public class UsuarioDAO {
 			entityManager.close();
 		}
 	}
-
-	public List<String> recupear(String departamento) {
+	
+	public List<Usuario> recupearPorCelula(String celula) {
 		EntityManager entityManager = getEntityManager();
 		try {
 
 			Query query = entityManager
-					.createNativeQuery("Select usuario.nome from departamento,usuario where usuario.departamento = "
-							+ "departamento.id and departamento.nome=?1");
-			query.setParameter(1, departamento);
-			List<String> result = query.getResultList();
-			return result;
+					.createNativeQuery("Select usuario.id,usuario.login,usuario.senha,usuario.nome,usuario.email,usuario.status from "
+							+ "celula,usuario,trabalha where celula.nome= ?1 and trabalha.id_celula=celula.id and "
+							+ "usuario.id=trabalha.id_usuario",Usuario.class);
+			query.setParameter(1, celula);
+			if(query.getResultList().isEmpty()) {
+				return null;
+			}
+			List<Usuario> usuarios = query.getResultList();
+			return usuarios;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();

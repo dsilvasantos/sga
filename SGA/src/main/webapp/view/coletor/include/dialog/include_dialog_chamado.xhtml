@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	 <p:dialog header="Chamado" widgetVar="chamadoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+	 <h:form id="form">
+	  		<p:panel id="chamadoDetail"  header="Informações do server">
+	    		<h:panelGrid columns="2" cellpadding="5">
+						<p:outputLabel value="Departamento:" />
+					</h:panelGrid>
+					<h:selectOneMenu id="departamento" value="#{coletor.departamento}" valueChangeListener="#{coletor.celulas}"
+						style="width:150px">
+						<f:selectItem itemLabel="Selecionar departamento" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{departamento.departamentos}" />
+						<p:ajax update=":form:form,:form:form:celula" />
+					 </h:selectOneMenu>
+
+					<p:outputLabel for="celula" value="Célula: " />
+					<p:selectOneMenu id="celula" value="#{coletor.celula}"
+						style="width:150px">
+						<f:selectItem itemLabel="Selecionar célula" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{coletor.celulas}" listener="#{celula.carregarAplicacoes()}"/>
+						<p:ajax event="change"
+						update=":form:form,:form:form:dadosForm"  />
+					</p:selectOneMenu>
+	  		</p:panel>
+	  		
+	  			<h:form id="dadosForm" prependId="false">
+					
+				</h:form>
+	  	</h:form>
+    </p:dialog>
+	
+</ui:composition>

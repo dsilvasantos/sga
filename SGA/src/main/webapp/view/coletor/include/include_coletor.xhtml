@@ -32,13 +32,17 @@
 		        <h:outputText value="#{valor.status}" />
 		    </p:column>
 		    <p:column headerText="Ação">
-		        <p:commandButton ajax="true" update=":form:result,:form:growl"  
+		        <p:commandButton ajax="true"  
 				onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" 
 				title="Limpar Alerta" value="Limpar" actionListener="#{coletor.sendClean(valor)}" />
 		   		<p></p>
-		        <p:commandButton ajax="true" update=":form:result,:form:growl"  
-				onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" 
-				title="Abrir Chamado" value="Abrir Chamado" actionListener="#{coletor.sendClean(valor)}" />
+		          <p:commandButton ajax="true" 
+		        onstart="PF('statusDialog').show()" oncomplete="PF('chamadoDialog').show(),PF('statusDialog').hide()" 
+				 actionListener="#{chamado.sendErro(valor)}"
+				title="Abrir Chamado" value="Abrir Chamado"	>
+				<ui:include src="chamado.xhtml">
+				 </ui:include>
+				</p:commandButton>
 		    </p:column>      
 		</p:dataTable>
     </p:panel>

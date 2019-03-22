@@ -23,7 +23,7 @@ public class CelulaController {
 	
 	private String departamento;
 	private String celula;
-	private String teste;
+
 
 	private List<Aplicacao> aplicacoes = new ArrayList<>();
 

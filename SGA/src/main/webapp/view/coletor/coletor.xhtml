@@ -25,13 +25,14 @@
 		        <h:outputText value="Status do Coletor:" style="font-weight:bold;"/>
 		        <h:outputText rendered="#{coletor.coletorStatus}" value="Coletor ligado" style="color:blue;font-weight:bold;"/>
 		        <h:outputText  rendered="#{!coletor.coletorStatus}" value="Coletor desligado" style="color:red;font-weight:bold;"/>
-		     </h:panelGrid>
-			<ui:include src="include/include_coletor.xhtml" />					
+		     </h:panelGrid>					
 		</p:panel>
 		
 		<p:panel header="Coletor JBoss" rendered="false">
 			<p>Você não tem permissão para acessar esta página, entre em contato com o Administrador</p>					
 		</p:panel>
+		
+		<ui:include src="include/include_coletor.xhtml" />		
 	</h:form>
 	 </div>
 	
