@@ -18,6 +18,18 @@ public class Usuario {
 	@Column(name = "login",nullable=false)
 	private String login;
 	
+	public String getLogin() {
+		return login;
+	}
+
+
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+
+
 	@Column(name = "senha",nullable=false)
 	private String senha;
 	

@@ -21,7 +21,7 @@
                   <p:outputLabel for="senha" value="Senha:" style="text-align:center"/>
                   <p:password id="senha" value="#{usuarioController.user.senha}" />
                    
-                  <p:commandButton value="Enviar" icon="ui-icon-star" action="#{usuarioController.envia}" update="@form">
+                  <p:commandButton value="Enviar" icon="ui-icon-star" action="#{usuarioController.envia}" update=":form:growl">
                   </p:commandButton>
             </p:panelGrid>
             

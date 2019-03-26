@@ -6,11 +6,11 @@ import javax.faces.bean.ViewScoped;
 import br.com.sga.monitoramento.model.Usuario;
 import br.com.sga.services.ControladorMensagens;
 
-@ManagedBean(name = "usuario")
+@ManagedBean
 @ViewScoped
 public class UsuarioController {
 	
-	private ControladorMensagens cm = new ControladorMensagens();
+	ControladorMensagens cm = new ControladorMensagens();
 	private Usuario user = new Usuario();
 	
 	
@@ -23,8 +23,8 @@ public class UsuarioController {
 		this.user = user;
 	}
 	
-	 public String envia(String nome, String senha){
-		 if(this.user.getNome().equals("admin") && this.user.getSenha().equals("admin")){
+	 public String envia(){
+		 if("admin".equals(this.user.getLogin()) && "admin".equals(this.user.getSenha())){
 			 return "inicio.xhtml";
 		 }
 		 	cm.addMsgErro("login.incorreto");
