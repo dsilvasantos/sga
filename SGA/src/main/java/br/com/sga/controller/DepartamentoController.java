@@ -32,16 +32,16 @@ public class DepartamentoController {
 	
 	public void salvar(Departamento departamento){
 		FacesMessage face = null;
-		if(departamento == null){
+		if(departamento != null){
 		DepartamentoDAO dp = new DepartamentoDAO();
 		dp.persist(departamento);	
 		face = new FacesMessage("Departamento cadastro com Sucesso !");
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, face);
 		}
-			new FacesMessage("Probelma ao cadastrar Departamento !");
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, face);
+//			new FacesMessage("Probelma ao cadastrar Departamento !");
+//			FacesContext context = FacesContext.getCurrentInstance();
+//			context.addMessage(null, face);
 	
 	}		
 	

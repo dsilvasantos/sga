@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE HTML>
-<HTML>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	template="/template/template.xhtml">
+	<ui:define name="content" >
 	
 	
 		<h:head>
@@ -17,8 +18,13 @@
 		    	 <h:form>
 		    	 <p:messages id="messages" />
 		     		<p:panel id="basic" header="Cadastro de Departamento" style="margin-bottom:20px">
+			          		
+			          		<p:inputText id="pesquisa"/> <p:commandButton  value="Pesquisar" icon="ui-icon-star"
+			                 action="#{departamento.getDepartamentos()}" update="messages">
+			                </p:commandButton>
+			                
 			          		<p:panelGrid columns="2">
-			          	
+			          		
 							<p:outputLabel for="nome" value="Nome:" />
 			                <p:inputText id="nome" value="#{departamento.departamento.nome}" />
 			                 
@@ -35,6 +41,5 @@
 			        </h:form>
 				</div>
 			</h:body>
-	
-	</ui:composition>
-</HTML>
+	</ui:define>	
+</ui:composition>
