@@ -1,79 +1,45 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+	<ui:define name="content">
 
+		<h:head>
+			<link type="text/css" rel="stylesheet" href="../css/default.css" />
+		</h:head>
 
-	<h:head>
+		<h:body>
+			<div class="entry" style="line-height: 200%">
+				<h:form>
+					<p:messages id="messages" />
+					<p:panel id="basic" header="Cadastro de Usuário"
+						style="margin-bottom:20px">
+						<p:panelGrid columns="2">
+							<p:outputLabel for="login" value="Login:" />
+							<p:inputText id="login" value="#{Usuario.user.login}" />
 
-	</h:head>
+							<p:outputLabel for="senha" value="Senha:" />
+							<p:inputText id="senha" value="#{Usuario.user.senha}" />
 
-	<h:body>
+							<p:outputLabel for="nome" value="Nome:" />
+							<p:inputText id="nome" value="#{Usuario.user.nome}" />
 
+							<p:outputLabel for="email" value="Email:" />
+							<p:inputText id="email" value="#{Usuario.user.senha}" />
 
-		<h:form>
-			<p:menubar>
-				<p:menuitem value="Gerenciamento" icon="ui-icon-wrench"
-					url="/view/gerencia.jsf" />
+							<p:outputLabel for="status" value="Status:" />
+							<p:inputText id="status" value="#{Usuario.user.senha}" />
 
-				<p:menuitem>
-					<p:spacer width="1" height="15"
-						style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
-				</p:menuitem>
-
-				<p:menuitem value="Monitoramento" icon="ui-icon-clipboard"
-					url="/view/monitoramento.jsf" />
-
-				<p:menuitem>
-					<p:spacer width="1" height="15"
-						style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
-				</p:menuitem>
-
-				<p:menuitem value="Coleta" icon="ui-icon-clipboard"
-					url="/view/coletor/coletor.jsf" />
-
-				<p:menuitem>
-					<p:spacer width="1" height="15"
-						style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
-				</p:menuitem>
-
-				<p:menuitem value="Departamento" icon="ui-icon-clipboard"
-					url="/view/cadastro_departamento.jsf" />
-
-				<p:menuitem>
-					<p:spacer width="1" height="15"
-						style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
-				</p:menuitem>
-
-				<p:menuitem value="UsuÃ¡rio" icon="ui-icon-clipboard"
-					url="/view/cadastro_usuario.jsf" />
-
-			</p:menubar>
-
-			<p:panel id="painel-usuario" footer="Cadastro de Usuario">
-				<p:messages id="messages" />
-				<p:panelGrid columns="2">
-					<p:outputLabel for="login" value="Login:" />
-					<p:inputText id="login" value="#{Usuario.user.login}" />
-
-					<p:outputLabel for="senha" value="Senha:" />
-					<p:inputText id="senha" value="#{Usuario.user.senha}" />
-
-					<p:outputLabel for="nome" value="Nome:" />
-					<p:inputText id="nome" value="#{Usuario.user.nome}" />
-
-					<p:outputLabel for="email" value="Email:" />
-					<p:inputText id="email" value="#{Usuario.user.senha}" />
-
-					<p:outputLabel for="status" value="Status:" />
-					<p:inputText id="status" value="#{Usuario.user.senha}" />
-
-					<p:commandButton value="Cadastrar" icon="ui-icon-star"
-						action="#{Usuario.cadastraUsuario}" update="messages">
-					</p:commandButton>
-				</p:panelGrid>
-			</p:panel>
-		</h:form>
-	</h:body>
-</html>
+							<p:commandButton value="Cadastrar" icon="ui-icon-star"
+								action="#{Usuario.cadastraUsuario}" update="messages">
+							</p:commandButton>
+						</p:panelGrid>
+					</p:panel>
+				</h:form>
+			</div>
+		</h:body>
+	</ui:define>
+</ui:composition>
