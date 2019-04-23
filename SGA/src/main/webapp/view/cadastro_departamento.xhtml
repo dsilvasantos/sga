@@ -15,14 +15,9 @@
 		  
 		<h:body>
 			<div class="entry" style="line-height: 200%">
-		    	 <h:form>
+		    	 <h:form id = "form">
 		    	 <p:messages id="messages" />
 		     		<p:panel id="basic" header="Cadastro de Departamento" style="margin-bottom:20px">
-			          		
-			          		<p:inputText id="pesquisa"/> <p:commandButton  value="Pesquisar" icon="ui-icon-star"
-			                 action="#{departamento.getDepartamentos()}" update="messages">
-			                </p:commandButton>
-			                
 			          		<p:panelGrid columns="2">
 			          		
 							<p:outputLabel for="nome" value="Nome:" />
@@ -31,11 +26,19 @@
 			                <p:outputLabel for="localizacao" value="Localização:" />
 			                <p:inputText id="localizacao" value="#{departamento.departamento.localizacao}" />                                
 			  
-			                <p:commandButton  value="Cadastrar" icon="ui-icon-star"
-			                 action="#{departamento.salvar(departamento.departamento)}" update="messages">
+			                <p:commandButton  value="Cadastrar" icon="ui-icon-star"                      
+			                 action="#{departamento.salvar(departamento.departamento)}" update="messages basic">
 			                </p:commandButton>
-			  	
 			          </p:panelGrid>
+			          
+			           <p:dataTable id ="departamentosTable" value="#{departamento.listaDepartamentos}" var="dep">
+			          		<p:column headerText="Nome">
+			          			<h:outputText value="#{dep.nome}"/>
+			          		</p:column>
+			          		<p:column headerText="Localização">
+			          			<h:outputText value="#{dep.localizacao}"/>
+			          		</p:column>
+			          </p:dataTable>
 			         </p:panel>
 			         
 			        </h:form>
