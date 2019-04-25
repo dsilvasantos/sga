@@ -81,4 +81,21 @@ public class DepartamentoDAO {
 		}
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Departamento> listaDepartamentos() {
+		EntityManager entityManager = getEntityManager();
+		try {
+			entityManager.getTransaction().begin();
+			Query query = entityManager.createQuery("select d from Departamento d");
+			List<Departamento> result = query.getResultList();
+			return result;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
+		}
+		return null;
+	}
 }
