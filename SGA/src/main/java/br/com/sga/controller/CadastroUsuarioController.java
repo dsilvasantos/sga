@@ -24,12 +24,12 @@ private Usuario usuario = new Usuario();
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-
+/*
 	public List<Usuario> getUsuario() {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		return usuarioDAO.recupearPorCelula();
 	}
-	
+	*/
 	public void salvar(Usuario usuario){
 		FacesMessage face = null;
 		if(usuario != null){

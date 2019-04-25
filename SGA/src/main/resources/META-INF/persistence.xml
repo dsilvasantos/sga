@@ -14,7 +14,8 @@
 		<class>br.com.sga.monitoramento.model.Usuario</class>
 		<class>br.com.sga.monitoramento.model.RecursosAplicacao</class>
 		<class>br.com.sga.monitoramento.model.Erro</class>
-		<class>br.com.sga.monitoramento.model.Recursos</class> 
+		<class>br.com.sga.monitoramento.model.Recursos</class>
+		<class>br.com.sga.monitoramento.model.Coleta</class> 
 		<properties>
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.MySQL5InnoDBDialect" />

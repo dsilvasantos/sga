@@ -30,7 +30,7 @@ public class ColetorService extends TimerTask {
 	private static final Logger LOGGER = Logger.getLogger(ColetorService.class);
 	List<AmbienteEnum> lista;
 	public static Map<String, Erro> alertas = new HashMap<String, Erro>();
-	
+
 	public static Map<String, Erro> getAlertas() {
 		return alertas;
 	}
@@ -51,11 +51,10 @@ public class ColetorService extends TimerTask {
 
 	private DepartamentoDAO departamentoDAO = new DepartamentoDAO();
 	private CelulaDAO celulaDAO = new CelulaDAO();
-	private AplicacaoDAO aplicacaoDAO  = new AplicacaoDAO();
+	private AplicacaoDAO aplicacaoDAO = new AplicacaoDAO();
+
 	public ColetorService() {
 		lista = AmbienteEnum.getAmbientes();
-		//enviarNagios = Integer.parseInt(LoadBundle.getValue("intervalo-envio-nagios", PropertiesFile.COLETOR));
-		//contador = Integer.parseInt(LoadBundle.getValue("intervalo-envio-nagios", PropertiesFile.COLETOR)) - 1;
 
 	}
 
@@ -78,11 +77,11 @@ public class ColetorService extends TimerTask {
 				ambiente.setNomeAmbiente(ambienteEnum.getAmbiente());
 				coletarAmbiente(ambienteEnum);
 				analyze.processarAlertas(ambiente, ambiente.getNomeAmbiente(), sendAll);
-				LOGGER.info("###########  Finalizando coleta do ambiente:" + ambiente.getNomeAmbiente() + " ############");
+				LOGGER.info(
+						"###########  Finalizando coleta do ambiente:" + ambiente.getNomeAmbiente() + " ############");
 			} catch (Exception e) {
 				LOGGER.error(
-						"Falha ao recuperar dados. Coleta do dados será realizada no próximo ciclo. "
-								+ e.getMessage());
+						"Falha ao recuperar dados. Coleta do dados será realizada no próximo ciclo. " + e.getMessage());
 			}
 		}
 		LOGGER.info("Preparando envio para o Nagios via NRDP");
@@ -112,7 +111,7 @@ public class ColetorService extends TimerTask {
 						aplicacao.getServer().setAtivo(true);
 						jvmServices.getServerInformations(aplicacao.getServer());
 						aplicacao.getServer().setJvm(jvmServices.getJvmInformations(aplicacao.getServer()));
-						dsInformations(data.getDataSource(aplicacao.getServer()),aplicacao.getServer());
+						dsInformations(data.getDataSource(aplicacao.getServer()), aplicacao.getServer());
 					} else {
 						aplicacao.getServer().setAtivo(false);
 					}
@@ -123,7 +122,7 @@ public class ColetorService extends TimerTask {
 		ambiente.setAplicacaos(aplicacoesFinalizadas);
 	}
 
-	private void dsInformations(List<Datasource> listaDatasources,Server server) throws IllegalArgumentException {
+	private void dsInformations(List<Datasource> listaDatasources, Server server) throws IllegalArgumentException {
 		String cmdDS = "/host=" + server.getHost() + "/server=" + server.getNome() + "/subsystem=datasources/";
 
 		for (Datasource datasource : listaDatasources) {
