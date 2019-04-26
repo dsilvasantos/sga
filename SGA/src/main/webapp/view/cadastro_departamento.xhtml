@@ -32,15 +32,34 @@
 			          </p:panelGrid>
 			          
 			           <p:dataTable id ="departamentosTable" value="#{departamento.listaDepartamentos}" var="dep">
-			          		<p:column headerText="Nome">
+			          		
+			          		<p:column headerText="Nome" width="5.6%">
 			          			<h:outputText value="#{dep.nome}"/>
 			          		</p:column>
-			          		<p:column headerText="Localização">
+			          
+			          		<p:column headerText="Localização" width="5.6%">
 			          			<h:outputText value="#{dep.localizacao}"/>
 			          		</p:column>
+			          
+				          	<p:column headerText="Editar" width="1.2%" style="center">
+								<p:commandButton icon="ui-icon-pencil"
+									action="#{departamento.alterar()}"
+									styleClass="botoesIcones" style="center">
+									<f:param name="DepartamentoId" value="#{dep.id}" />
+								</p:commandButton>
+							</p:column>
+							
+							<p:column headerText="Excluir" width="1.2%" style="center">
+								<p:commandButton icon="ui-icon-trash"
+									action="#{departamento.remove()}"
+									styleClass="botoesIcones" style="center">
+									<f:param name="DepartamentoId" value="#{dep.id}" />
+								</p:commandButton>
+							</p:column>
+							
 			          </p:dataTable>
-			         </p:panel>
 			         
+			         </p:panel>
 			        </h:form>
 				</div>
 			</h:body>

@@ -57,14 +57,12 @@ public class DepartamentoController implements Serializable {
 	
 	}		
 	
-	public void remove(Departamento departamento){
-			DepartamentoDAO dp = new DepartamentoDAO();
-			dp.remove(departamento);	
+	public String remove(){
+		return "removeDepartamento.xhtml";
 	}
 	
-	public  void alterar(Departamento departamento){
-		DepartamentoDAO dp = new DepartamentoDAO();
-		dp.merge(departamento);
+	public String alterar(){
+		return "alteraDepartamento.xhtml";
 	}
 	
 	private List<Departamento> listaDepartamento(){
