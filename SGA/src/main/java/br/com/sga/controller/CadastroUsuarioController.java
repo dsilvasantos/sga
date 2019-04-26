@@ -33,8 +33,8 @@ private Usuario usuario = new Usuario();
 	public void salvar(Usuario usuario){
 		FacesMessage face = null;
 		if(usuario != null){
-		UsuarioDAO dp = new UsuarioDAO();
-		dp.persist(usuario);	
+		UsuarioDAO us = new UsuarioDAO();
+		us.persist(usuario);	
 		face = new FacesMessage("Usuário cadastrado com Sucesso !");
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, face);
