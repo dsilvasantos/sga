@@ -4,64 +4,65 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	template="/template/template.xhtml">
-	<ui:define name="content" >
-	
-	
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+	<ui:define name="content">
+
+
 		<h:head>
-		  <link type="text/css" rel="stylesheet" href="../css/default.css" />
+			<link type="text/css" rel="stylesheet" href="../css/default.css" />
 		</h:head>
-		  
+
 		<h:body>
 			<div class="entry" style="line-height: 200%">
-		    	 <h:form id = "form">
-		    	 <p:messages id="messages" />
-		     		<p:panel id="basic" header="Cadastro de Departamento" style="margin-bottom:20px">
-			          		<p:panelGrid columns="2">
-			          		
+				<h:form id="form">
+					<p:messages id="messages" />
+					<p:panel id="basic" header="Cadastro de Departamento"
+						style="margin-bottom:20px">
+						<p:panelGrid columns="2">
+
 							<p:outputLabel for="nome" value="Nome:" />
-			                <p:inputText id="nome" value="#{departamento.departamento.nome}" />
-			                 
-			                <p:outputLabel for="localizacao" value="Localização:" />
-			                <p:inputText id="localizacao" value="#{departamento.departamento.localizacao}" />                                
-			  
-			                <p:commandButton  value="Cadastrar" icon="ui-icon-star"                      
-			                 action="#{departamento.salvar(departamento.departamento)}" update="messages basic">
-			                </p:commandButton>
-			          </p:panelGrid>
-			          
-			           <p:dataTable id ="departamentosTable" value="#{departamento.listaDepartamentos}" var="dep">
-			          		
-			          		<p:column headerText="Nome" width="5.6%">
-			          			<h:outputText value="#{dep.nome}"/>
-			          		</p:column>
-			          
-			          		<p:column headerText="Localização" width="5.6%">
-			          			<h:outputText value="#{dep.localizacao}"/>
-			          		</p:column>
-			          
-				          	<p:column headerText="Editar" width="1.2%" style="center">
-								<p:commandButton icon="ui-icon-pencil"
-									action="#{departamento.alterar()}"
-									styleClass="botoesIcones" style="center">
-									<f:param name="DepartamentoId" value="#{dep.id}" />
-								</p:commandButton>
+							<p:inputText id="nome" value="#{departamento.departamento.nome}" />
+
+							<p:outputLabel for="localizacao" value="Localização:" />
+							<p:inputText id="localizacao"
+								value="#{departamento.departamento.localizacao}" />
+
+							<p:commandButton value="Cadastrar" icon="ui-icon-star"
+								action="#{departamento.salvar(departamento.departamento)}"
+								update="messages basic">
+							</p:commandButton>
+						</p:panelGrid>
+						<br />
+						<p:dataTable id="departamentosTable"
+							value="#{departamento.listaDepartamentos}" var="dep">
+
+							<p:column headerText="Nome" width="5.6%">
+								<h:outputText value="#{dep.nome}" />
 							</p:column>
-							
+
+							<p:column headerText="Localização" width="5.6%">
+								<h:outputText value="#{dep.localizacao}" />
+							</p:column>
+
+							<p:column headerText="Editar" width="1.2%" style="center">
+								<p:commandButton icon="ui-icon-pencil"
+									action="#{departamento.alterar(dep)}" styleClass="botoesIcones"
+									style="center"/>
+							</p:column>
+
 							<p:column headerText="Excluir" width="1.2%" style="center">
 								<p:commandButton icon="ui-icon-trash"
-									action="#{departamento.remove()}"
-									styleClass="botoesIcones" style="center">
+									action="#{departamento.remove()}" styleClass="botoesIcones"
+									style="center">
 									<f:param name="DepartamentoId" value="#{dep.id}" />
 								</p:commandButton>
 							</p:column>
-							
-			          </p:dataTable>
-			         
-			         </p:panel>
-			        </h:form>
-				</div>
-			</h:body>
-	</ui:define>	
+
+						</p:dataTable>
+
+					</p:panel>
+				</h:form>
+			</div>
+		</h:body>
+	</ui:define>
 </ui:composition>

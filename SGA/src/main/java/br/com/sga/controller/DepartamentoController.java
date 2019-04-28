@@ -34,7 +34,6 @@ public class DepartamentoController implements Serializable {
 	@PostConstruct
 	public void iniciar() {
 		listaDepartamentos = listaDepartamento();
-
 	}
 
 	public List<String> getDepartamentos() {
@@ -61,7 +60,8 @@ public class DepartamentoController implements Serializable {
 		return "removeDepartamento.xhtml";
 	}
 	
-	public String alterar(){
+	public String alterar(Departamento dp){
+		this.departamento = listaDepartamentos.get(listaDepartamentos.indexOf(dp));
 		return "alteraDepartamento.xhtml";
 	}
 	
@@ -76,5 +76,25 @@ public class DepartamentoController implements Serializable {
 
 	public void setListaDepartamentos(List<Departamento> listaDepartamentos) {
 		this.listaDepartamentos = listaDepartamentos;
+	}
+	
+	public String salvaAlteracao() {
+		try{
+//			if(!departamento.getNome().equals(dp.getNome()) || departamento.getLocalizacao().equals(dp.getLocalizacao())){
+				//FacesMessage face = new FacesMessage("Departamento não encontrado !");
+				//FacesContext context = FacesContext.getCurrentInstance();
+				//context.addMessage(null, face);
+//				return "cadastro_departamento.xhtml";
+//			}else {
+				DepartamentoDAO daoDepartamento = new DepartamentoDAO();
+				daoDepartamento.merge(departamento);
+				FacesMessage face = new FacesMessage("Departamento alterado com sucesso !");
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, face);
+//			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
