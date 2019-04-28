@@ -50,9 +50,9 @@
 									style="center"/>
 							</p:column>
 
-							<p:column headerText="Excluir" width="1.2%" style="center">
+							<p:column headerText="Excluir" width="1.2%">
 								<p:commandButton icon="ui-icon-trash"
-									action="#{departamento.remove()}" styleClass="botoesIcones"
+									action="#{departamento.remove(dep)}" styleClass="botoesIcones"
 									style="center">
 									<f:param name="DepartamentoId" value="#{dep.id}" />
 								</p:commandButton>

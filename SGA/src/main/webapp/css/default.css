@@ -581,4 +581,9 @@ td.bts_start .ui-button-icon-only {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+#footer{
+		position:absolute;
+}
+
 }

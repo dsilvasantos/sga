@@ -7,7 +7,9 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+//import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+//import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.com.sga.monitoramento.DAO.DepartamentoDAO;
@@ -15,7 +17,7 @@ import br.com.sga.monitoramento.model.Departamento;
 
 
 @ManagedBean(name = "departamento")
-@ViewScoped
+@SessionScoped
 public class DepartamentoController implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -34,6 +36,10 @@ public class DepartamentoController implements Serializable {
 	@PostConstruct
 	public void iniciar() {
 		listaDepartamentos = listaDepartamento();
+	}
+	
+	public String cancela() {
+		return "cadastro_departamento?faces-redirect=true";
 	}
 
 	public List<String> getDepartamentos() {
@@ -56,7 +62,8 @@ public class DepartamentoController implements Serializable {
 	
 	}		
 	
-	public String remove(){
+	public String remove(Departamento dp){
+		this.departamento = listaDepartamentos.get(listaDepartamentos.indexOf(dp));
 		return "removeDepartamento.xhtml";
 	}
 	
@@ -80,21 +87,32 @@ public class DepartamentoController implements Serializable {
 	
 	public String salvaAlteracao() {
 		try{
-//			if(!departamento.getNome().equals(dp.getNome()) || departamento.getLocalizacao().equals(dp.getLocalizacao())){
-				//FacesMessage face = new FacesMessage("Departamento não encontrado !");
-				//FacesContext context = FacesContext.getCurrentInstance();
-				//context.addMessage(null, face);
-//				return "cadastro_departamento.xhtml";
-//			}else {
-				DepartamentoDAO daoDepartamento = new DepartamentoDAO();
-				daoDepartamento.merge(departamento);
-				FacesMessage face = new FacesMessage("Departamento alterado com sucesso !");
-				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, face);
-//			}
+			DepartamentoDAO daoDepartamento = new DepartamentoDAO();
+			daoDepartamento.merge(departamento);
+			FacesMessage face = new FacesMessage("Departamento alterado com sucesso !");
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, face);
+			listaDepartamentos = daoDepartamento.listaDepartamentos();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return null;
 	}
+	
+	public String excluiDepartamento(){
+		try{
+			DepartamentoDAO dp = new DepartamentoDAO();
+			dp.remove(departamento);
+			FacesMessage face = new FacesMessage("Departamento excluído com sucesso !");
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, face);
+			listaDepartamentos.remove(departamento);
+			listaDepartamentos = dp.listaDepartamentos();
+			return "cadastro_departamento.xhtml";
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

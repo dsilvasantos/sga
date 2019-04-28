@@ -23,11 +23,11 @@ public class DepartamentoDAO {
 
 	}
 
-	public void persist(Departamento Departamento) {
+	public void persist(Departamento departamento) {
 		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
-			entityManager.persist(Departamento);
+			entityManager.persist(departamento);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -37,11 +37,11 @@ public class DepartamentoDAO {
 		}
 	}
 
-	public void merge(Departamento Departamento) {
+	public void merge(Departamento departamento) {
 		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
-			entityManager.merge(Departamento);
+			entityManager.merge(departamento);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -51,12 +51,12 @@ public class DepartamentoDAO {
 		}
 	}
 
-	public void remove(Departamento Departamento) {
+	public void remove(Departamento departamento) {
 		EntityManager entityManager = getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
-			Departamento = entityManager.find(Departamento.class, Departamento.getId());
-			entityManager.remove(Departamento);
+			departamento = entityManager.find(Departamento.class, departamento.getId());
+			entityManager.remove(departamento);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -11,12 +11,9 @@
 		<h:form>
 		<p:growl id="message" showDetail="true" />
 		
-			<p:panel header="Evento à deletar">
+			<p:panel header="Departamento à deletar">
 				<h:panelGrid columns="2">
-				
-					<p:outputLabel value="Id" />
-					<p:outputLabel value="#{departamento.departamento.id}" />
-					
+	
 					<p:outputLabel value="Nome" />
 					<p:outputLabel value="#{departamento.departamento.nome}" />
 				
@@ -27,7 +24,7 @@
 			
 			</p:panel>
 			<br/>
-			<p:commandButton value="Excluir" action="#"
+			<p:commandButton value="Excluir" action="#{departamento.excluiDepartamento}"
 					update="message">
 					<p:confirm header="Confirmação"
 						message="Tem certeza que deseja excluir o registro?"
@@ -44,7 +41,7 @@
 				</p:commandButton>
 
 				<p:commandButton value="Cancelar"
-					action="#" />
+					action="#{departamento.cancela()}" />
 		</h:form>
 	</ui:define>
 </ui:composition>
