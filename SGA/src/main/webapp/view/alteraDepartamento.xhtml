@@ -23,9 +23,9 @@
 
 						<p:outputLabel value="Nome" />
 						<p:inputText 
-							value="#{departamento.departamento.nome}" />
+							value="#{editarDepartamentoBean.departamento.nome}" />
 						<p:outputLabel value="Localização" />
-						<p:inputText value="#{departamento.departamento.localizacao}"/> 
+						<p:inputText value="#{editarDepartamentoBean.departamento.localizacao}"/> 
 						
 					</p:panelGrid>
 				</p:panel>
@@ -46,7 +46,7 @@
 			</p:panel>
 			
 			<p:commandButton value="Salvar"
-					action="#{departamento.salvaAlteracao}" update="growl">
+					action="#{editarDepartamentoBean.salvaAlteracao}" update="growl">
 					<p:confirm header="Confirmação"
 						message="Tem certeza que deseja salvar o registro?"
 						icon="ui-icon-alert" />
@@ -60,7 +60,7 @@
 				</p:commandButton>
 
 				<p:commandButton value="Cancelar"
-					action="#">
+					action="#{editarDepartamentoBean.cancela}">
 					<p:confirm header="Confirmação"
 						message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos."
 						icon="ui-icon-alert" />

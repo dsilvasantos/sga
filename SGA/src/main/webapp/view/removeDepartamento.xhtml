@@ -8,23 +8,23 @@
 	template="/template/template.xhtml">
 	
 	<ui:define name="content" >
-		<h:form>
+		<h:form id="form">
 		<p:growl id="message" showDetail="true" />
 		
 			<p:panel header="Departamento à deletar">
 				<h:panelGrid columns="2">
 	
 					<p:outputLabel value="Nome" />
-					<p:outputLabel value="#{departamento.departamento.nome}" />
+					<p:outputLabel value="#{removerDepartamentoBean.departamento.nome}" />
 				
 					<p:outputLabel value="Localização" />
-					<p:outputLabel value="#{departamento.departamento.localizacao}" />
+					<p:outputLabel value="#{removerDepartamentoBean.departamento.localizacao}" />
 					
 				</h:panelGrid>
 			
 			</p:panel>
 			<br/>
-			<p:commandButton value="Excluir" action="#{departamento.excluiDepartamento}"
+			<p:commandButton value="Excluir" action="#{removerDepartamentoBean.exclui}"
 					update="message">
 					<p:confirm header="Confirmação"
 						message="Tem certeza que deseja excluir o registro?"
@@ -41,7 +41,7 @@
 				</p:commandButton>
 
 				<p:commandButton value="Cancelar"
-					action="#{departamento.cancela()}" />
+					action="#{removerDepatamentoBean.cancela()}" />
 		</h:form>
 	</ui:define>
 </ui:composition>

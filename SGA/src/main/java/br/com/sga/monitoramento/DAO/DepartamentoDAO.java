@@ -98,4 +98,33 @@ public class DepartamentoDAO {
 		}
 		return null;
 	}
+	
+	public Departamento retornaDepartamento(Integer idDepartamento){
+		EntityManager entityManager = getEntityManager();
+		Departamento departamento = null;
+		try{
+			entityManager.getTransaction().begin();
+			departamento = (Departamento) entityManager.createQuery("select f from Departamento f where f.id = :idDepartamento")
+			.setParameter("idDepartamento", idDepartamento).getSingleResult();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			entityManager.close();
+		}
+		return departamento;
+	}
+	
+	public Departamento buscaDepartamento(Integer id){
+		EntityManager entityManager = getEntityManager();
+		Departamento departamento = null;
+		try{
+			entityManager.getTransaction().begin();
+			departamento = this.getEntityManager().find(Departamento.class, id);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			entityManager.close();
+		}
+		return departamento;
+	}
 }

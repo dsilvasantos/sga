@@ -15,26 +15,26 @@
 		<h:body>
 			<div class="entry" style="line-height: 200%">
 				<h:form id="form">
-					<p:messages id="messages" />
+					<p:growl id="growl" />
 					<p:panel id="basic" header="Cadastro de Departamento"
 						style="margin-bottom:20px">
 						<p:panelGrid columns="2">
 
 							<p:outputLabel for="nome" value="Nome:" />
-							<p:inputText id="nome" value="#{departamento.departamento.nome}" />
+							<p:inputText id="nome" value="#{cadastroDepartamentoBean.departamento.nome}" />
 
 							<p:outputLabel for="localizacao" value="Localização:" />
 							<p:inputText id="localizacao"
-								value="#{departamento.departamento.localizacao}" />
+								value="#{cadastroDepartamentoBean.departamento.localizacao}" />
 
 							<p:commandButton value="Cadastrar" icon="ui-icon-star"
-								action="#{departamento.salvar(departamento.departamento)}"
-								update="messages basic">
+								action="#{cadastroDepartamentoBean.salvar()}"
+								update="@form">
 							</p:commandButton>
 						</p:panelGrid>
 						<br />
 						<p:dataTable id="departamentosTable"
-							value="#{departamento.listaDepartamentos}" var="dep">
+							value="#{cadastroDepartamentoBean.listaDepartamentos}" var="dep">
 
 							<p:column headerText="Nome" width="5.6%">
 								<h:outputText value="#{dep.nome}" />
@@ -46,13 +46,15 @@
 
 							<p:column headerText="Editar" width="1.2%" style="center">
 								<p:commandButton icon="ui-icon-pencil"
-									action="#{departamento.alterar(dep)}" styleClass="botoesIcones"
-									style="center"/>
+									action="alteraDepartamento.xhtml" styleClass="botoesIcones"
+									style="center">
+								<f:param name="DepartamentoId" value="#{dep.id}" />
+									</p:commandButton>
 							</p:column>
 
-							<p:column headerText="Excluir" width="1.2%">
+							<p:column headerText="Excluir" width="1.2%" style="center">
 								<p:commandButton icon="ui-icon-trash"
-									action="#{departamento.remove(dep)}" styleClass="botoesIcones"
+									action="#{cadastroDepartamentoBean.remove()}" styleClass="botoesIcones"
 									style="center">
 									<f:param name="DepartamentoId" value="#{dep.id}" />
 								</p:commandButton>

@@ -3,9 +3,11 @@ package br.com.sga.services;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 
+import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+@Stateless
 public class ControladorMensagens implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -40,8 +42,8 @@ public class ControladorMensagens implements Serializable {
 	}
 
 	public void addMsgInfo(String msg) {
-		String summary = bundle.getString(msg);
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
+//		String summary = bundle.getString(msg);
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
 		adicionaMensagem(message);
 	}
 
