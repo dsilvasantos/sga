@@ -13,21 +13,24 @@
 		<div class="entry" style="line-height: 200%">
 			<h:form id="form">
 				<p:growl id="growl" showDetail="true" rendered="true" life="5000" />
-				<p:panel header="Emitir relatórios"
+				<p:panel header="Emitir relatórios uso de recursos por aplicação"
 					style="margin-bottom:10px;">
-					<p:selectOneMenu id="relatorio" value="#{celula.departamento}"
-						style="width:150px">
-						<f:selectItem itemLabel="Selecionar departamento" itemValue=""
-							noSelectionOption="true" />
-						<f:selectItems value="#{relatorio.departamentos}" />
-						<p:ajax update="celula" />
-					</p:selectOneMenu>
+
+
+
+
+					<p:outputLabel value="Data Inicial: " />
+					<p:calendar id="popup" value="#{relatorio.dataInicial}" />
+
+					<p:outputLabel value="Data Final: " />
+					<p:calendar id="popup2" value="#{relatorio.dataFinal}" />
+
+					<p:commandButton ajax="true" onstart="PF('statusDialog').show()"
+						oncomplete="PF('statusDialog').hide()" title="Gerar Relatório"
+						value="Gerar Relatório" actionListener="#{coletor.sendClean(valor)}" />
+
 				</p:panel>
-
-
-			
 			</h:form>
 		</div>
-
 	</ui:define>
 </ui:composition>
