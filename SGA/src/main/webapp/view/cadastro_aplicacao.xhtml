@@ -12,30 +12,41 @@
 			<link type="text/css" rel="stylesheet" href="../css/default.css" />
 		</h:head>
 
-		<h:body>
-			<div class="entry" style="line-height: 200%">
-				<h:form>
-					<p:messages id="messages" />
-					<p:panel id="basic" header="Cadastro de Aplicacao"
+		<div class="entry" style="line-height: 200%">
+		
+		<p:messages id="messages"/>
+		
+		<h:form>
+		
+		<p:panel id="basic" header="Cadastro de Aplicação"
 						style="margin-bottom:20px">
-						<p:panelGrid columns="2">
+		
+		<p:panelGrid columns="2">
+		
+		<p:outputLabel for="aplicacao" value="Nome da Aplicação:" />
+		<p:inputText id="aplicacao" value="#{Aplicacao.aplicacao.nome}" />
+		
+		<p:outputLabel for="status_aplicacao" value="Status da aplicação:" />
+		<h:selectOneMenu id="status_aplicacao" value="#{Aplicacao.aplicacao.status}">
+                  <f:selectItem itemValue="1" itemLabel="Ativa"/>
+                  <f:selectItem itemValue="2" itemLabel="Desativada"/>
+        </h:selectOneMenu>
+		
+		<p:outputLabel for="celula_aplicacao" value="Célula:" />
+		<h:selectOneMenu id="celula_aplicacao" value="#{Aplicacao.aplicacao.status}">
+        </h:selectOneMenu>
+		
+		<p:commandButton value="Cadastrar" icon="ui-icon-star"
+		action="#{Aplicacao.cadastraApl}" update="messages">
+		</p:commandButton>
+		
+		</p:panelGrid>
+		</p:panel>
+		</h:form>
+		
+		</div>
 
-							<p:outputLabel for="id" value="ID:" />
-							<p:inputText id="ID" value="#{Aplicacao.aplicacao.id}" />
-
-							<p:outputLabel for="nome" value="Nome:" />
-							<p:inputText id="nome" value="#{Aplicacao.aplicacao.nome}" />
-
-							<p:outputLabel for="status" value="Status:" />
-							<p:inputText id="status" value="#{Aplicacao.aplicacao.status}" />
-
-							<p:commandButton value="Cadastrar" icon="ui-icon-star"
-								action="#{Aplicacao.cadastraApl}" update="messages">
-							</p:commandButton>
-						</p:panelGrid>
-					</p:panel>
-				</h:form>
-			</div>
+		<h:body>
 		</h:body>
 	</ui:define>
 </ui:composition>
