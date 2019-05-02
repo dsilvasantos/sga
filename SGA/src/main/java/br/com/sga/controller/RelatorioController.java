@@ -36,7 +36,7 @@ public class RelatorioController {
 	private Date dataFinal;
 
 	private String msg;
-	
+
 	private String departamento;
 
 	public Date getDataInicial() {
@@ -62,7 +62,6 @@ public class RelatorioController {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	
 
 	public String getDepartamento() {
 		return departamento;
@@ -72,7 +71,7 @@ public class RelatorioController {
 		this.departamento = departamento;
 	}
 
-	public void gerarRecursosPorAplicacao() throws JRException, IOException, SQLException, NamingException {
+	public void gerarRecursosPorAplicacao() {
 		if (dataFinal == null || dataFinal == null) {
 			msg = "Valores informados inválidos";
 			return;
@@ -81,33 +80,16 @@ public class RelatorioController {
 			msg = "Data inicial superior a data final";
 			return;
 		}
-
-		String path = "/WEB-INF/reports/RecursosPorAplicacao.jrxml";
-		InputStream jasperTemplate = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(path);
-
-		JasperReport jasper = JasperCompileManager.compileReport(jasperTemplate);
-
+		
 		Map parametros = new HashMap<>();
 		parametros.put("dataInicial", dataInicial);
 		parametros.put("dataFinal", dataFinal);
-
-		InitialContext initialContext = new InitialContext();
-		DataSource dataSource = (DataSource)initialContext.lookup("java:jboss/datasources/sga");
-		Connection conexao = dataSource.getConnection();
-
-		JasperPrint jasperprint = JasperFillManager.fillReport(jasper, parametros, conexao);
-
-		 HttpServletResponse httpServletResponse=(HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();  
-	       httpServletResponse.addHeader("Content-disposition", "attachment; filename=relatorio.pdf");  
-	       ServletOutputStream servletOutputStream=httpServletResponse.getOutputStream();  
-	       JasperExportManager.exportReportToPdfStream(jasperprint, servletOutputStream);  
-	       servletOutputStream.flush();
-	       servletOutputStream.close(); 
-	       FacesContext.getCurrentInstance().responseComplete();  
+		
+		gerarRelatorio("RecursosPorAplicacao.jrxml",parametros,"RecursosPorAplicacao");
 	}
-	
+
 	public void gerarRecursosPorDepartamento() throws JRException, IOException, SQLException, NamingException {
-		if(departamento == null) {
+		if (departamento == null) {
 			msg = "Valores informados inválidos";
 			return;
 		}
@@ -119,32 +101,68 @@ public class RelatorioController {
 			msg = "Data inicial superior a data final";
 			return;
 		}
-		DepartamentoDAO departamentoDAO =  new DepartamentoDAO();
-		Departamento departamentoRec =  departamentoDAO.retornaDepartamento(departamento);
-		
-		String path = "/WEB-INF/reports/RecursosPorDepartamento.jrxml";
-		InputStream jasperTemplate = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(path);
-
-		JasperReport jasper = JasperCompileManager.compileReport(jasperTemplate);
+		DepartamentoDAO departamentoDAO = new DepartamentoDAO();
+		Departamento departamentoRec = departamentoDAO.retornaDepartamento(departamento);
 
 		Map parametros = new HashMap<>();
 		parametros.put("dataInicial", dataInicial);
 		parametros.put("dataFinal", dataFinal);
 		parametros.put("departamento", departamentoRec.getId());
-
-		InitialContext initialContext = new InitialContext();
-		DataSource dataSource = (DataSource)initialContext.lookup("java:jboss/datasources/sga");
-		Connection conexao = dataSource.getConnection();
-
-		JasperPrint jasperprint = JasperFillManager.fillReport(jasper, parametros, conexao);
-
-		 HttpServletResponse httpServletResponse=(HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();  
-	       httpServletResponse.addHeader("Content-disposition", "attachment; filename=relatorio.pdf");  
-	       ServletOutputStream servletOutputStream=httpServletResponse.getOutputStream();  
-	       JasperExportManager.exportReportToPdfStream(jasperprint, servletOutputStream);  
-	       servletOutputStream.flush();
-	       servletOutputStream.close(); 
-	       FacesContext.getCurrentInstance().responseComplete(); 
 		
+		gerarRelatorio("RecursosPorDepartamento.jrxml",parametros,"RecursosPorDepartamento");
+	}
+	
+	public void gerarErrosPorDepartamento() throws JRException, IOException, SQLException, NamingException {
+		if (departamento == null) {
+			msg = "Valores informados inválidos";
+			return;
+		}
+		if (dataFinal == null || dataFinal == null) {
+			msg = "Valores informados inválidos";
+			return;
+		}
+		if (dataInicial.after(dataFinal)) {
+			msg = "Data inicial superior a data final";
+			return;
+		}
+		DepartamentoDAO departamentoDAO = new DepartamentoDAO();
+		Departamento departamentoRec = departamentoDAO.retornaDepartamento(departamento);
+
+		Map parametros = new HashMap<>();
+		parametros.put("dataInicial", dataInicial);
+		parametros.put("dataFinal", dataFinal);
+		parametros.put("departamento", departamentoRec.getId());
+		
+		gerarRelatorio("ErroPorDepartamento.jrxml",parametros,"ErroPorDepartamento");
+	}
+
+	public void gerarRelatorio(String jasperRelatorio, Map parametros,String nomeRelatorio) {
+
+		try {
+
+			String path = "/WEB-INF/reports/" + jasperRelatorio;
+			InputStream jasperTemplate = FacesContext.getCurrentInstance().getExternalContext()
+					.getResourceAsStream(path);
+
+			JasperReport jasper = JasperCompileManager.compileReport(jasperTemplate);
+
+			InitialContext initialContext = new InitialContext();
+			DataSource dataSource = (DataSource) initialContext.lookup("java:jboss/datasources/sga");
+			Connection conexao = dataSource.getConnection();
+
+			JasperPrint jasperprint = JasperFillManager.fillReport(jasper, parametros, conexao);
+
+			HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance()
+					.getExternalContext().getResponse();
+			httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + nomeRelatorio + ".pdf");
+			ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
+			JasperExportManager.exportReportToPdfStream(jasperprint, servletOutputStream);
+			servletOutputStream.flush();
+			servletOutputStream.close();
+			FacesContext.getCurrentInstance().responseComplete();
+		} catch (Exception e) {
+			System.out.println("Erro ao emitir relatorio:" + nomeRelatorio);
+			System.out.println(e.getMessage());
+		}
 	}
 }

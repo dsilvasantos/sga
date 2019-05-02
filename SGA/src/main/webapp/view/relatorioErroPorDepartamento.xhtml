@@ -13,7 +13,7 @@
 		<div class="entry" style="line-height: 200%">
 			<h:form id="form">
 				<p:growl id="growl" showDetail="true" rendered="true" life="5000" />
-				<p:panel header="Emitir relatórios uso de recursos por departamento"
+				<p:panel header="Emitir relatórios de erros por departamento"
 					style="margin-bottom:10px;">
 
 					<p:outputLabel value="Departamento: " />
@@ -33,7 +33,7 @@
 					<p:commandButton update=":form:msgInfo"
 					    ajax="false"
 						id="gerarRelatorio" value="Gerar"
-						actionListener="#{relatorio.gerarRecursosPorDepartamento()}"
+						actionListener="#{relatorio.gerarErrosPorDepartamento()}"
 						onstart="PF('statusDialog').show()"
 						oncomplete="PF('statusDialog').hide(),PF('resultDialog').show()" />
 

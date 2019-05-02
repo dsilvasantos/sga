@@ -71,11 +71,11 @@ order by aplicacao.nome,recursos.NOME,coleta.data]]>
 		<groupHeader>
 			<band height="25">
 				<textField>
-					<reportElement x="50" y="6" width="100" height="14" uuid="0c8660e9-1eff-4ed9-a2c2-9abaef2065b6"/>
+					<reportElement x="50" y="4" width="100" height="14" uuid="0c8660e9-1eff-4ed9-a2c2-9abaef2065b6"/>
 					<textFieldExpression><![CDATA[$F{aplicacao}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="6" width="50" height="14" uuid="cb900653-72e1-4fed-980c-23b93a7c0a74"/>
+					<reportElement x="0" y="4" width="50" height="14" uuid="cb900653-72e1-4fed-980c-23b93a7c0a74"/>
 					<text><![CDATA[Aplicação:]]></text>
 				</staticText>
 			</band>
