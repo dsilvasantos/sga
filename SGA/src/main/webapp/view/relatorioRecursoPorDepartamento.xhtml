@@ -16,8 +16,13 @@
 				<p:panel header="Emitir relatórios uso de recursos por aplicação"
 					style="margin-bottom:10px;">
 
-
-
+					<p:outputLabel value="Departamento: " />
+					<p:selectOneMenu id="departamento" value="#{relatorio.departamento}"
+						style="width:150px">
+						<f:selectItem itemLabel="Selecionar departamento" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{departamento.departamentos}" />
+					</p:selectOneMenu>
 
 					<p:outputLabel value="Data Inicial: " />
 					<p:calendar id="popup" value="#{relatorio.dataInicial}" />
@@ -28,7 +33,7 @@
 					<p:commandButton update=":form:msgInfo"
 					    ajax="false"
 						id="gerarRelatorio" value="Gerar"
-						actionListener="#{relatorio.gerarRecursosPorAplicacao()}"
+						actionListener="#{relatorio.gerarRecursosPorDepartamento()}"
 						onstart="PF('statusDialog').show()"
 						oncomplete="PF('statusDialog').hide(),PF('resultDialog').show()" />
 
