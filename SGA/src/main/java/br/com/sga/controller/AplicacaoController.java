@@ -1,7 +1,5 @@
 package br.com.sga.controller;
 
-import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -11,7 +9,7 @@ import br.com.sga.monitoramento.DAO.AplicacaoDAO;
 import br.com.sga.monitoramento.model.Aplicacao;
 
 
-@ManagedBean(name = "aplicacao")
+@ManagedBean(name = "aplicacaoController")
 @ViewScoped
 public class AplicacaoController {
 	

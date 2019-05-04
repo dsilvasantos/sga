@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/template/template.xhtml">
+
+	<ui:define name="content">
+
+		<div class="entry" style="line-height: 200%">
+			<h:form id="form">
+				<p:growl id="growl" showDetail="true" rendered="true" life="5000" />
+				<p:panel header="Emitir relatórios uso de recursos por departamento"
+					style="margin-bottom:10px;">
+
+					<p:outputLabel value="Departamento: " />
+					<p:selectOneMenu id="departamento" value="#{relatorio.departamento}"
+						style="width:150px">
+						<f:selectItem itemLabel="Selecionar departamento" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{departamento.departamentos}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Data Inicial: " />
+					<p:calendar id="popup" value="#{relatorio.dataInicial}" />
+
+					<p:outputLabel value="Data Final: " />
+					<p:calendar id="popup2" value="#{relatorio.dataFinal}" />
+
+					<p:commandButton update=":form:msgInfo"
+					    ajax="false"
+						id="gerarRelatorio" value="Gerar"
+						actionListener="#{relatorio.gerarRecursosPorDepartamento()}"
+						onstart="PF('statusDialog').show()"
+						oncomplete="PF('statusDialog').hide(),PF('resultDialog').show()" />
+
+				</p:panel>
+				<ui:include src="dialog/statusRelatorio.xhtml"></ui:include>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

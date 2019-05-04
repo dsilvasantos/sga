@@ -114,6 +114,21 @@ public class DepartamentoDAO {
 		return departamento;
 	}
 	
+	public Departamento retornaDepartamento(String nomeDepartamento){
+		EntityManager entityManager = getEntityManager();
+		Departamento departamento = null;
+		try{
+			entityManager.getTransaction().begin();
+			departamento = (Departamento) entityManager.createQuery("select f from Departamento f where f.nome = :nomeDepartamento")
+			.setParameter("nomeDepartamento", nomeDepartamento).getSingleResult();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			entityManager.close();
+		}
+		return departamento;
+	}
+	
 	public Departamento buscaDepartamento(Integer id){
 		EntityManager entityManager = getEntityManager();
 		Departamento departamento = null;
