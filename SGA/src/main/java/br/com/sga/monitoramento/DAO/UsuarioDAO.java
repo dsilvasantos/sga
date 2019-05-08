@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import br.com.sga.monitoramento.model.Departamento;
 import br.com.sga.monitoramento.model.Usuario;
 
 public class UsuarioDAO {
@@ -90,5 +91,22 @@ public class UsuarioDAO {
 		}
 		return null;
 
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Usuario> listaUsuario() {		
+			EntityManager entityManager = getEntityManager();
+			try {
+				entityManager.getTransaction().begin();
+				Query query = entityManager.createQuery("select d from Usuario d");
+				List<Usuario> result = query.getResultList();
+				return result;
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				entityManager.getTransaction().rollback();
+			} finally {
+				entityManager.close();
+		}
+		return null;
 	}
 }

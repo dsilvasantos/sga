@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.sga.monitoramento.DAO.UsuarioDAO;
-
 import br.com.sga.monitoramento.model.Usuario;
+import br.com.sga.services.ControladorMensagens;
 
 @ManagedBean(name = "cadastroUsuarioBean")
 @ViewScoped
@@ -18,11 +20,16 @@ public class CadastroUsuarioBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Usuario usuario = new Usuario();
-	private UsuarioDAO userDAO = new UsuarioDAO();
 	private List<Usuario> listaUsuario = new ArrayList<Usuario>();
+	private UsuarioDAO userDAO = new UsuarioDAO();
 	
-	public String inicia(){
-		return null;
+	
+	@EJB
+	ControladorMensagens controladorMensagens;
+	
+	@PostConstruct
+	public void iniciar() {
+		this.listaUsuario = listaUsuario();
 	}
 	
 	public String remove(){
@@ -30,7 +37,7 @@ public class CadastroUsuarioBean implements Serializable{
 	}
 	
 	public String altera(){
-		return "altera_usuario.xhtml";
+		return "alteraUsuario.xhtml";
 	}
 	
 	public Usuario getUsuario() {
@@ -49,6 +56,30 @@ public class CadastroUsuarioBean implements Serializable{
 		this.userDAO = userDAO;
 	}
 	
+	public List<Usuario> getListaUsuario() {
+		return listaUsuario;
+	}
+
+	public void setListaUsuario(List<Usuario> listaUsuario) {
+		this.listaUsuario = listaUsuario;
+	}
+	
+	private List<Usuario> listaUsuario() {
+		UsuarioDAO user = new UsuarioDAO();
+		return user.listaUsuario();
+	}
+	
+	public String salvar(){
+		try{
+			userDAO.persist(usuario);
+			controladorMensagens.addMsgInfo("incluido.sucesso.usuario");
+			usuario = new Usuario();
+			return "cadastro_usuario.xhtml";
+		}catch(Exception e){
+			controladorMensagens.addMsgErro("erro.inclusao.usuario");
+		}
+		return null;
+	}
 	
 	
 }

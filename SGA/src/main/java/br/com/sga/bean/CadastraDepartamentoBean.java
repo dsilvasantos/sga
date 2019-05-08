@@ -13,29 +13,27 @@ import br.com.sga.monitoramento.DAO.DepartamentoDAO;
 import br.com.sga.monitoramento.model.Departamento;
 import br.com.sga.services.ControladorMensagens;
 
-
 @ManagedBean(name = "cadastroDepartamentoBean")
 @ViewScoped
-public class CadastraDepartamentoBean implements Serializable{
+public class CadastraDepartamentoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	private Departamento departamento = new Departamento();
-
 	private List<Departamento> listaDepartamentos = new ArrayList<Departamento>();
-	private DepartamentoDAO dpDAO = new DepartamentoDAO(); 
+	private DepartamentoDAO dpDAO = new DepartamentoDAO();
 
-	
 	@EJB
 	ControladorMensagens controladorMensagens;
-	
-	public String alterar(){
+
+	public String alterar() {
 		return "alteraDepartamento.xhtml";
 	}
-	
-	public String remove(){
+
+	public String remove() {
 		return "removeDepartamento.xhtml";
 	}
-	
+
 	public Departamento getDepartamento() {
 		return departamento;
 	}
@@ -69,25 +67,21 @@ public class CadastraDepartamentoBean implements Serializable{
 		listaDepartamentos = listaDepartamento();
 	}
 
-	private List<Departamento> listaDepartamento(){
+	private List<Departamento> listaDepartamento() {
 		DepartamentoDAO dp = new DepartamentoDAO();
 		return dp.listaDepartamentos();
 	}
-	
-	public String salvar( ) {
-		try{
-			dpDAO.persist( departamento );
+
+	public String salvar() {
+		try {
+			dpDAO.persist(departamento);
 			controladorMensagens.addMsgInfo("Derpartamento incluido com sucesso");
 			departamento = new Departamento();
 			return "cadastro_departamento.xhtml";
-		}
-		catch( Exception e )
-		{
-			controladorMensagens.addMsgErro("erro.inclusao");
+		} catch (Exception e) {
+			controladorMensagens.addMsgInfo("erro.inclusao.departamento");
 		}
 		return null;
 	}
 
 }
-
-
