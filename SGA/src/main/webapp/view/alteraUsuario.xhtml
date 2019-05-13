@@ -13,6 +13,22 @@
 		  <link type="text/css" rel="stylesheet" href="../css/default.css" />
 	</h:head>
 	
+	<h:body>
+		<h:form id="form">
+		<p:growl id="growl" />
+		<p:panel id="AlteraUser" header="Cadastro de Usário">
+			<p:panelGrid>
+				<br />
+				<p:outputLabel for="status_usuario" value="Status do Usuário:" />
+				<h:selectOneMenu id="status_usuario" value="#{editarUsuarioBean.}">
+		                  <f:selectItem itemValue="1" itemLabel="Ativa"/>
+		                  <f:selectItem itemValue="2" itemLabel="Desativada"/>
+		        </h:selectOneMenu>
+		     </p:panelGrid>
+        </p:panel>
+        </h:form>
+	</h:body>
+	
 	</ui:define>
 </ui:composition>
 	
