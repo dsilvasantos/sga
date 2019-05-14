@@ -15,8 +15,8 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
-	<parameter name="dataInicial" class="java.util.Date"/>
-	<parameter name="dataFinal" class="java.util.Date"/>
+	<parameter name="dataInicial" class="java.sql.Timestamp"/>
+	<parameter name="dataFinal" class="java.sql.Timestamp"/>
 	<parameter name="departamento" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT departamento.nome as departamento,celula.nome as celula,

@@ -60,34 +60,28 @@ public class ColetorService extends TimerTask {
 
 	@Override
 	public void run() {
-		contador++;
-		analyze = new ColetorAnalyze();
-		ambiente = new Ambiente();
-		if (contador == enviarNagios) {
-			sendAll = true;
-			contador = 0;
-			analyze.notificarNagios();
-		} else {
-			sendAll = false;
-		}
-		LOGGER.info("#########  Iniciando ciclo de coleta  ###########");
-		for (AmbienteEnum ambienteEnum : lista) {
-			LOGGER.info("###########  Iniciando coleta do ambiente:" + ambienteEnum.getAmbiente() + " ############");
-			try {
-				ambiente.setNomeAmbiente(ambienteEnum.getAmbiente());
-				coletarAmbiente(ambienteEnum);
-				analyze.processarAlertas(ambiente, ambiente.getNomeAmbiente(), sendAll);
-				LOGGER.info(
-						"###########  Finalizando coleta do ambiente:" + ambiente.getNomeAmbiente() + " ############");
-			} catch (Exception e) {
-				LOGGER.error(
-						"Falha ao recuperar dados. Coleta do dados será realizada no próximo ciclo. " + e.getMessage());
+			contador++;
+			analyze = new ColetorAnalyze();
+			ambiente = new Ambiente();
+			if (contador == enviarNagios) {
+				sendAll = true;
+				contador = 0;
+			} else {
+				sendAll = false;
 			}
-		}
-		LOGGER.info("Preparando envio para o Nagios via NRDP");
-		// enviar dados ao BDC - enviar lista coletas
-		LOGGER.info("Total de alertas armazenados: " + ColetorService.alertas.size());
-		LOGGER.info("#########  Finalizando ciclo de coleta  ###########");
+			LOGGER.info("#########  Iniciando ciclo de coleta  ###########");
+			for (AmbienteEnum ambienteEnum : lista) {
+				try {
+					ambiente.setNomeAmbiente(ambienteEnum.getAmbiente());
+					coletarAmbiente(ambienteEnum);
+					analyze.processarAlertas(ambiente, ambiente.getNomeAmbiente(), sendAll);
+				} catch (Exception e) {
+					LOGGER.error("Falha ao recuperar dados. Coleta do dados será realizada no próximo ciclo. "
+							+ e.getMessage());
+				}
+			}
+			LOGGER.info("Total de alertas armazenados: " + ColetorService.alertas.size());
+			LOGGER.info("#########  Finalizando ciclo de coleta  ###########");
 	}
 
 	private void coletarAmbiente(AmbienteEnum ambienteEnum) throws IllegalStateException, IllegalArgumentException {

@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="coleta")
@@ -26,7 +28,9 @@ public class Coleta {
 	@Column(name = "valor",nullable=false)
 	private int valor;
 	
-	@Column(name = "data",nullable=false)
+
+	@Column(name = "data",nullable=false, columnDefinition="DATE")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
 
 	public int getId() {

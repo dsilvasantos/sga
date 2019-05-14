@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="erros")
@@ -26,10 +28,13 @@ public class Erro {
 	@Column(name = "id_aplicacao",nullable=false)
 	private int aplicacao;
 	
-	@Column(name = "data_abertura",nullable=false)
+	@Column(name = "data_abertura",nullable=false,columnDefinition="DATETIME")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataAbertura;
 	
-	@Column(name = "data_solucao",nullable=true)
+	
+	@Column(name = "data_solucao",nullable=true,columnDefinition="DATETIME")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataSolucao;
 	
 	@Column(name = "status",nullable=false)

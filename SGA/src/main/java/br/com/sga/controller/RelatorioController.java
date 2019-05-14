@@ -3,8 +3,8 @@ package br.com.sga.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,11 +48,16 @@ public class RelatorioController {
 	}
 
 	public Date getDataFinal() {
-		return dataFinal;
+		return dataFinal;		
 	}
 
 	public void setDataFinal(Date dataFinal) {
-		this.dataFinal = dataFinal;
+		final Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dataFinal);
+		calendar.add(Calendar.HOUR, 23);
+		calendar.add(Calendar.MINUTE, 59);
+		calendar.add(Calendar.SECOND, 59);
+		this.dataFinal = calendar.getTime();
 	}
 
 	public String getMsg() {

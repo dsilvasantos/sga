@@ -20,18 +20,10 @@ public class ColetorAnalyze {
 
 	public void processarAlertas(Ambiente ambiente, String nomeAmbiente, boolean sendAll)
 			throws MissingResourceException {
-		LOGGER.info("Tratando alertas do ambiente: " + ambiente.getNomeAmbiente());
 		ColetorResult result = new ColetorResult();
-		LOGGER.info("Tratando nomeAmbiente: " + nomeAmbiente);
 		result.setNomeAmbiente(nomeAmbiente);
-		LOGGER.info("Tratando alertas do ambiente: " + ambiente.getNomeAmbiente());
 		for (Aplicacao s : ambiente.getAplicacaos()) {
 			roles.tratarAlertas(s.getServer().getHost(), s.getServer());
 		}
-		LOGGER.info("Finalizando tratamento dos alertas do ambiente: " + ambiente.getNomeAmbiente());
-	}
-
-	public void notificarNagios() {
-		LOGGER.info("Enviando stay alive para o Nagios.");
 	}
 }

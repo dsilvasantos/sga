@@ -17,18 +17,6 @@ public class Usuario {
 	
 	@Column(name = "login",nullable=false)
 	private String login;
-	
-	public String getLogin() {
-		return login;
-	}
-
-
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-
 
 	@Column(name = "senha",nullable=false)
 	private String senha;
@@ -40,21 +28,24 @@ public class Usuario {
 	private String email;
 			
 	@Column(name = "status",nullable=false)
-	private int status;
-	
-	
+	private String status;
 
+	
 	public int getId() {
 		return id;
 	}
-
-
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	public String getLogin() {
+		return login;
+	}
 
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
 	public String getSenha() {
 		return senha;
@@ -92,13 +83,13 @@ public class Usuario {
 
 
 
-	public int getStatus() {
+	public String  getStatus() {
 		return status;
 	}
 
 
 
-	public void setStatus(int status) {
+	public void setStatus(String  status) {
 		this.status = status;
 	}
 
@@ -111,7 +102,7 @@ public class Usuario {
 
 
 
-	public Usuario(int id, String login, String senha, String nome, String email, int status) {
+	public Usuario(int id, String login, String senha, String nome, String email, String status) {
 		super();
 		this.id = id;
 		this.login = login;

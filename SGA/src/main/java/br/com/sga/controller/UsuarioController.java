@@ -1,10 +1,12 @@
 package br.com.sga.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.sga.monitoramento.DAO.UsuarioDAO;
 import br.com.sga.monitoramento.model.Usuario;
 import br.com.sga.services.ControladorMensagens;
 
@@ -14,7 +16,7 @@ public class UsuarioController {
 	
 	ControladorMensagens cm = new ControladorMensagens();
 	private Usuario user = new Usuario();
-	
+	private UsuarioDAO userDAO = new UsuarioDAO();
 	
 	public Usuario getUsuario(){
 		if(this.user != null){
@@ -22,6 +24,7 @@ public class UsuarioController {
 		}
 		return user;
 	}
+	
 	
 	public Usuario getUser() {
 		return user;
@@ -38,5 +41,16 @@ public class UsuarioController {
 		 	cm.addMsgErro("login.incorreto");
 		 return "login.xhtml";
 	 }
+	 
+	 public Usuario retornaUsuario(Integer idUsuario){
+		 Usuario usuario = userDAO.retornaUsuario(idUsuario);
+		 return usuario;
+		 
+	 }
+	
+	public Usuario bucaUsuario(Integer idUsuario){
+		Usuario usuario = userDAO.buscaUsuario(idUsuario);
+		return usuario;
+	}
 	
 }
