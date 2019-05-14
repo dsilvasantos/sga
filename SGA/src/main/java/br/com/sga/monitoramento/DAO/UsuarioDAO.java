@@ -15,14 +15,13 @@ public class UsuarioDAO {
 	private EntityManager getEntityManager() {
 		EntityManagerFactory factory = null;
 		EntityManager entityManager = null;
-		
-			// Obtém o factory a partir da unidade de persistência.
-			factory = Persistence.createEntityManagerFactory("SGA");
-			// Cria um entity manager.
-			entityManager = factory.createEntityManager();
-			// Fecha o factory para liberar os recursos utilizado.
-			return entityManager;
-		
+
+		// Obtém o factory a partir da unidade de persistência.
+		factory = Persistence.createEntityManagerFactory("SGA");
+		// Cria um entity manager.
+		entityManager = factory.createEntityManager();
+		// Fecha o factory para liberar os recursos utilizado.
+		return entityManager;
 
 	}
 
@@ -35,7 +34,7 @@ public class UsuarioDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
-		}finally {
+		} finally {
 			entityManager.close();
 		}
 	}
@@ -49,7 +48,7 @@ public class UsuarioDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
-		}finally {
+		} finally {
 			entityManager.close();
 		}
 	}
@@ -64,21 +63,22 @@ public class UsuarioDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
-		}finally {
+		} finally {
 			entityManager.close();
 		}
 	}
-	
+
 	public List<Usuario> recupearPorCelula(String celula) {
 		EntityManager entityManager = getEntityManager();
 		try {
 
-			Query query = entityManager
-					.createNativeQuery("Select usuario.id,usuario.login,usuario.senha,usuario.nome,usuario.email,usuario.status from "
+			Query query = entityManager.createNativeQuery(
+					"Select usuario.id,usuario.login,usuario.senha,usuario.nome,usuario.email,usuario.status from "
 							+ "celula,usuario,trabalha where celula.nome= ?1 and trabalha.id_celula=celula.id and "
-							+ "usuario.id=trabalha.id_usuario",Usuario.class);
+							+ "usuario.id=trabalha.id_usuario",
+					Usuario.class);
 			query.setParameter(1, celula);
-			if(query.getResultList().isEmpty()) {
+			if (query.getResultList().isEmpty()) {
 				return null;
 			}
 			List<Usuario> usuarios = query.getResultList();
@@ -86,27 +86,72 @@ public class UsuarioDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
-		}finally {
+		} finally {
 			entityManager.close();
 		}
 		return null;
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Usuario> listaUsuario() {		
-			EntityManager entityManager = getEntityManager();
-			try {
-				entityManager.getTransaction().begin();
-				Query query = entityManager.createQuery("select d from Usuario d");
-				List<Usuario> result = query.getResultList();
-				return result;
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				entityManager.getTransaction().rollback();
-			} finally {
-				entityManager.close();
+	public List<Usuario> listaUsuario() {
+		EntityManager entityManager = getEntityManager();
+		try {
+			entityManager.getTransaction().begin();
+			Query query = entityManager.createQuery("select d from Usuario d");
+			List<Usuario> result = query.getResultList();
+			return result;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
 		}
 		return null;
 	}
+	
+	public Usuario retornaUsuario(Integer idUsuario){
+		EntityManager entityManager = getEntityManager();
+		Usuario usuario = null;
+		try{
+			entityManager.getTransaction().begin();
+			usuario = (Usuario) entityManager.createQuery("select f from Usuario f where f.id = :idUsuario")
+			.setParameter("idUsuario", idUsuario).getSingleResult();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			entityManager.close();
+		}
+		return usuario;
+	}
+	
+	public Usuario retornaUsuario(String nomeUsuario){
+		EntityManager entityManager = getEntityManager();
+		Usuario usuario = null;
+		try{
+			entityManager.getTransaction().begin();
+			usuario = (Usuario) entityManager.createQuery("select f from Usuario f where f.nome = :nomeUsuario")
+			.setParameter("nomeUsuario", nomeUsuario).getSingleResult();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			entityManager.close();
+		}
+		return usuario;
+	}
+	
+	public Usuario buscaUsuario(Integer id){
+		EntityManager entityManager = getEntityManager();
+		Usuario usuario = null;
+		try{
+			entityManager.getTransaction().begin();
+			usuario = this.getEntityManager().find(Usuario.class, id);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			entityManager.close();
+		}
+		return usuario;
+	}
+
 }

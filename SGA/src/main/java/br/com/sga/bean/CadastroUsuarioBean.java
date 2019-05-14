@@ -13,8 +13,8 @@ import br.com.sga.monitoramento.DAO.UsuarioDAO;
 import br.com.sga.monitoramento.model.Usuario;
 import br.com.sga.services.ControladorMensagens;
 
-@ManagedBean(name = "cadastroUsuarioBean")
 @ViewScoped
+@ManagedBean(name = "cadastroUsuarioBean")
 public class CadastroUsuarioBean implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -23,31 +23,34 @@ public class CadastroUsuarioBean implements Serializable{
 	private List<Usuario> listaUsuario = new ArrayList<Usuario>();
 	private UsuarioDAO userDAO = new UsuarioDAO();
 	
+	private String celula;
 	
 	@EJB
 	ControladorMensagens controladorMensagens;
 	
-	@PostConstruct
-	public void iniciar() {
-		this.listaUsuario = listaUsuario();
-	}
-	
-	public String remove(){
-		return "remove_usuario.xhtml";
-	}
-	
-	public String altera(){
-		return "alteraUsuario.xhtml";
-	}
-	
+	/*public List<Usuario> getUsuario() {
+		if(celula != null){
+			userDAO.recupearPorCelula(celula);
+		}
+		return new ArrayList<>();
+	}*/
+
 	public Usuario getUsuario() {
-		return usuario;
+		return this.usuario;
 	}
-	
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
+
+	public String getCelula() {
+		return celula;
+	}
+
+	public void setCelula(String celula) {
+		this.celula = celula;
+	}
+
 	public UsuarioDAO getUserDAO() {
 		return userDAO;
 	}
@@ -69,6 +72,19 @@ public class CadastroUsuarioBean implements Serializable{
 		return user.listaUsuario();
 	}
 	
+	@PostConstruct
+	public void iniciar() {
+		this.listaUsuario = listaUsuario();
+	}
+	
+	public String remove(){
+		return "remove_usuario.xhtml";
+	}
+	
+	public String altera(){
+		return "alteraUsuario.xhtml";
+	}
+	
 	public String salvar(){
 		try{
 			userDAO.persist(usuario);
@@ -80,6 +96,7 @@ public class CadastroUsuarioBean implements Serializable{
 		}
 		return null;
 	}
+	
 	
 	
 }

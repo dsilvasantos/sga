@@ -1,13 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE HTML>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template/template.xhtml">
 	<ui:define name="content">
 
 		<h:head>
+			
 			<link type="text/css" rel="stylesheet" href="../css/default.css" />
 			
 		</h:head>
@@ -18,8 +19,7 @@
 				<h:form id="form">
 				<p:growl id="growl" />
 					<p:messages id="messages" />
-					<p:panel id="basic" header="Cadastro de Usuário"
-						style="margin-bottom:20px">
+					<p:panel id="basic" header="Cadastro de UsuÃ¡rio" style="margin-bottom:20px">
 						<p:panelGrid columns="2">
 							<p:outputLabel for="login" value="Login:" />
 							<p:inputText id="login" value="#{cadastroUsuarioBean.usuario.login}" />
@@ -32,15 +32,19 @@
 
 							<p:outputLabel for="email" value="Email:" />
 							<p:inputText id="email" value="#{cadastroUsuarioBean.usuario.email}" />
-
+							
+							<p:outputLabel for="celula" value="CÃ©lula: " />
+							<p:selectOneMenu id="celula" value="#{celula.celula}" style="width:150px">
+							<f:selectItem itemLabel="Selecionar cÃ©lula" itemValue=""
+							noSelectionOption="true" />
+							<f:selectItems value="#{celula.celulas}" />
+							</p:selectOneMenu>	
+							
 							<p:commandButton value="Cadastrar" icon="ui-icon-star"
 								action="#{cadastroUsuarioBean.salvar()}" update="@form">
 							</p:commandButton>
 						</p:panelGrid>
-						</p:panel>
-						
-						<p:panel header="Usuários Cadastrados" style="margin-bottom:20px">
-						<p:panelGrid columns="2">
+						<br/>
 						<p:dataTable id="usuarioTable"
 							value="#{cadastroUsuarioBean.listaUsuario}" var="user">
 							
@@ -71,10 +75,7 @@
 									<f:param name="UsuarioId" value="#{user.id}" />
 								</p:commandButton>
 							</p:column>
-							
 						</p:dataTable>
-						</p:panelGrid>
-						
 					</p:panel>
 				</h:form>
 			</div>

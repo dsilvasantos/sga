@@ -17,18 +17,65 @@
 		<h:form id="form">
 		<p:growl id="growl" />
 		<p:panel id="AlteraUser" header="Cadastro de Usário">
-			<p:panelGrid>
-				<br />
-				<p:outputLabel for="status_usuario" value="Status do Usuário:" />
-				<h:selectOneMenu id="status_usuario" value="#{editarUsuarioBean.}">
-		                  <f:selectItem itemValue="1" itemLabel="Ativa"/>
-		                  <f:selectItem itemValue="2" itemLabel="Desativada"/>
-		        </h:selectOneMenu>
-		     </p:panelGrid>
+			
+				<p:panel header="Dados Usuario" styleClass="semBorda">
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Login " />
+					<p:inputText value="#{editarUsuarioBean.user.login}" />
+					
+					<p:outputLabel value="Nome " />
+					<p:inputText value="#{editarUsuarioBean.user.nome}" />
+					
+					<p:outputLabel value="Email:" />
+					<p:inputText id="email" value="#{editarUsuarioBean.user.email}" />
+								
+					<p:outputLabel for="celula" value="Célula: " />
+					<p:selectOneMenu id="celula" value="#{celula.celula}" style="width:150px">
+					<f:selectItem itemLabel="Selecionar célula" itemValue="" noSelectionOption="true" />
+					<f:selectItems value="#{celula.celulas}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="status_usuario" value="Status do Usuário:" />
+					<h:selectOneMenu id="status_usuario" value="#{editarUsuarioBean.user.status}">
+			        <f:selectItem itemValue="1" itemLabel="Ativo"/>
+			        <f:selectItem itemValue="2" itemLabel="Desativado"/>
+			        </h:selectOneMenu>
+			        
+		  		</p:panelGrid>
+		     </p:panel>
         </p:panel>
+        <p:commandButton value="Salvar"
+					action="#{editarUsuarioBean.salvaAlteracao()}" update="growl">
+					<p:confirm header="Confirmação"
+						message="Tem certeza que deseja salvar o registro?"
+						icon="ui-icon-alert" />
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</p:commandButton>
+
+				<p:commandButton value="Cancelar"
+					action="#{editarUsuarioBean.cancela()}">
+					<p:confirm header="Confirmação"
+						message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos."
+						icon="ui-icon-alert" />
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+						icon="ui-icon-cancel">
+
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</p:commandButton>
+
         </h:form>
 	</h:body>
 	
-	</ui:define>
+</ui:define>
 </ui:composition>
 	
