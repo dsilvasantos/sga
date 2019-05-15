@@ -9,68 +9,45 @@ import javax.persistence.Query;
 
 import br.com.sga.monitoramento.model.Aplicacao;
 
-public class AplicacaoDAO {
+public class AplicacaoDAO extends EntityManagerSingleton{
 
-	private EntityManager getEntityManager() {
-		EntityManagerFactory factory = null;
-		EntityManager entityManager = null;
 	
-			// Obtém o factory a partir da unidade de persistência.
-			factory = Persistence.createEntityManagerFactory("SGA");
-			// Cria um entity manager.
-			entityManager = factory.createEntityManager();
-			// Fecha o factory para liberar os recursos utilizado.
-			return entityManager;
-		
-
-	}
-
 
 	public void persist(Aplicacao Aplicacao) {
-		EntityManager entityManager = getEntityManager();
 		try {
-			entityManager.getTransaction().begin();
+			transaction.begin();
 			entityManager.persist(Aplicacao);
-			entityManager.getTransaction().commit();
+			 transaction.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}finally {
-			entityManager.close();
+			transaction.rollback();
 		}
 	}
 
 	public void merge(Aplicacao Aplicacao) {
-		EntityManager entityManager = getEntityManager();
 		try {
-			entityManager.getTransaction().begin();
+			transaction.begin();
 			entityManager.merge(Aplicacao);
-			entityManager.getTransaction().commit();
+			transaction.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}finally {
-			entityManager.close();
+			transaction.rollback();
 		}
 	}
 
 	public void remove(Aplicacao Aplicacao) {
-		EntityManager entityManager = getEntityManager();
 		try {
-			entityManager.getTransaction().begin();
+			transaction.begin();
 			Aplicacao = entityManager.find(Aplicacao.class, Aplicacao.getId());
 			entityManager.remove(Aplicacao);
-			entityManager.getTransaction().commit();
+			transaction.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}finally {
-			entityManager.close();
+			transaction.rollback();
 		}
 	}
 
 	public List<Aplicacao> recupear(String celula) {
-		EntityManager entityManager = getEntityManager();
 		try {
 		Query query = entityManager.createNativeQuery(
 				"Select aplicacao.id,aplicacao.nome,aplicacao.status from aplicacao,celula where aplicacao.ID_CELULA = "
@@ -80,15 +57,11 @@ public class AplicacaoDAO {
 		return aplicacoes;
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}finally {
-			entityManager.close();
 		}
 		return null;
 	}
 	
 	public Aplicacao recupearAplicacao(String nome) {
-		EntityManager entityManager = getEntityManager();
 		try {
 		Query query = entityManager.createNativeQuery(
 				"Select * from aplicacao where aplicacao.nome=?1",Aplicacao.class);
@@ -97,15 +70,11 @@ public class AplicacaoDAO {
 		return aplicacao;
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}finally {
-			entityManager.close();
 		}
 		return null;
 	}
 	
 	public Aplicacao recupearAplicacaoID(int id) {
-		EntityManager entityManager = getEntityManager();
 		try {
 		Query query = entityManager.createNativeQuery(
 				"Select * from aplicacao where aplicacao.id=?1",Aplicacao.class);
@@ -114,9 +83,6 @@ public class AplicacaoDAO {
 		return aplicacao;
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}finally {
-			entityManager.close();
 		}
 		return null;
 	}

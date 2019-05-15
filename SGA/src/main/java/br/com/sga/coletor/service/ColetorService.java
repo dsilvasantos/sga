@@ -63,12 +63,6 @@ public class ColetorService extends TimerTask {
 			contador++;
 			analyze = new ColetorAnalyze();
 			ambiente = new Ambiente();
-			if (contador == enviarNagios) {
-				sendAll = true;
-				contador = 0;
-			} else {
-				sendAll = false;
-			}
 			LOGGER.info("#########  Iniciando ciclo de coleta  ###########");
 			for (AmbienteEnum ambienteEnum : lista) {
 				try {

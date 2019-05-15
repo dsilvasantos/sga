@@ -17,7 +17,6 @@
 	</style>
 	<parameter name="dataInicial" class="java.sql.Timestamp"/>
 	<parameter name="dataFinal" class="java.sql.Timestamp"/>
-	<parameter name="departamento" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT aplicacao.nome as aplicacao,recursos.NOME as recurso,valor,data
 FROM coleta,aplicacao,recursos

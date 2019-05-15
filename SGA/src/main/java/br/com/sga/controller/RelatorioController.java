@@ -26,14 +26,15 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import java.sql.Timestamp;
 
 @ManagedBean(name = "relatorio")
 @ViewScoped
 public class RelatorioController {
 
-	private Date dataInicial;
+	private Timestamp dataInicial;
 
-	private Date dataFinal;
+	private Timestamp dataFinal;
 
 	private String msg;
 
@@ -44,11 +45,11 @@ public class RelatorioController {
 	}
 
 	public void setDataInicial(Date dataInicial) {
-		this.dataInicial = dataInicial;
+		this.dataInicial = getTimestamp(dataInicial);
 	}
 
 	public Date getDataFinal() {
-		return dataFinal;		
+		return dataFinal;
 	}
 
 	public void setDataFinal(Date dataFinal) {
@@ -57,7 +58,7 @@ public class RelatorioController {
 		calendar.add(Calendar.HOUR, 23);
 		calendar.add(Calendar.MINUTE, 59);
 		calendar.add(Calendar.SECOND, 59);
-		this.dataFinal = calendar.getTime();
+		this.dataFinal = getTimestamp(calendar.getTime());
 	}
 
 	public String getMsg() {
@@ -85,12 +86,12 @@ public class RelatorioController {
 			msg = "Data inicial superior a data final";
 			return;
 		}
-		
+
 		Map parametros = new HashMap<>();
 		parametros.put("dataInicial", dataInicial);
 		parametros.put("dataFinal", dataFinal);
-		
-		gerarRelatorio("RecursosPorAplicacao.jrxml",parametros,"RecursosPorAplicacao");
+
+		gerarRelatorio("RecursosPorAplicacao.jrxml", parametros, "RecursosPorAplicacao");
 	}
 
 	public void gerarRecursosPorDepartamento() throws JRException, IOException, SQLException, NamingException {
@@ -113,10 +114,10 @@ public class RelatorioController {
 		parametros.put("dataInicial", dataInicial);
 		parametros.put("dataFinal", dataFinal);
 		parametros.put("departamento", departamentoRec.getId());
-		
-		gerarRelatorio("RecursosPorDepartamento.jrxml",parametros,"RecursosPorDepartamento");
+
+		gerarRelatorio("RecursosPorDepartamento.jrxml", parametros, "RecursosPorDepartamento");
 	}
-	
+
 	public void gerarErrosPorDepartamento() throws JRException, IOException, SQLException, NamingException {
 		if (departamento == null) {
 			msg = "Valores informados inválidos";
@@ -137,11 +138,11 @@ public class RelatorioController {
 		parametros.put("dataInicial", dataInicial);
 		parametros.put("dataFinal", dataFinal);
 		parametros.put("departamento", departamentoRec.getId());
-		
-		gerarRelatorio("ErroPorDepartamento.jrxml",parametros,"ErroPorDepartamento");
+
+		gerarRelatorio("ErroPorDepartamento.jrxml", parametros, "ErroPorDepartamento");
 	}
 
-	public void gerarRelatorio(String jasperRelatorio, Map parametros,String nomeRelatorio) {
+	public void gerarRelatorio(String jasperRelatorio, Map parametros, String nomeRelatorio) {
 
 		try {
 
@@ -169,5 +170,9 @@ public class RelatorioController {
 			System.out.println("Erro ao emitir relatorio:" + nomeRelatorio);
 			System.out.println(e.getMessage());
 		}
+	}
+
+	public static Timestamp getTimestamp(Date date) {
+		return date == null ? null : new java.sql.Timestamp(date.getTime());
 	}
 }

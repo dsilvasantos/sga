@@ -9,7 +9,7 @@
 	template="/template/template.xhtml">
 
 	<ui:define name="content">
-	
+
 
 		<div class="entry" style="line-height: 200%">
 			<h:form id="form">
@@ -18,24 +18,25 @@
 					style="margin-bottom:10px;">
 					<h:panelGrid columns="2" cellpadding="5">
 						<p:outputLabel value="Departamento:" />
-					</h:panelGrid>
-					<p:selectOneMenu id="departamento" value="#{celula.departamento}"
-						style="width:150px">
-						<f:selectItem itemLabel="Selecionar departamento" itemValue=""
-							noSelectionOption="true" />
-						<f:selectItems value="#{departamento.departamentos}" />
-						<p:ajax update="celula" />
-					</p:selectOneMenu>
 
-					<p:outputLabel for="celula" value="Célula: " />
-					<p:selectOneMenu id="celula" value="#{celula.celula}"
-						style="width:150px">
-						<f:selectItem itemLabel="Selecionar célula" itemValue=""
-							noSelectionOption="true" />
-						<f:selectItems value="#{celula.celulas}" />
-						<p:ajax event="change" listener="#{celula.carregarAplicacoes()}"
-							update=":form,:form:dadosForm" />
-					</p:selectOneMenu>
+						<p:selectOneMenu id="departamento" value="#{celula.departamento}"
+							style="width:150px">
+							<f:selectItem itemLabel="Selecionar departamento" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{departamento.departamentos}" />
+							<p:ajax update="celula" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="celula" value="Célula: " />
+						<p:selectOneMenu id="celula" value="#{celula.celula}"
+							style="width:150px">
+							<f:selectItem itemLabel="Selecionar célula" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{celula.celulas}" />
+							<p:ajax event="change" listener="#{celula.carregarAplicacoes()}"
+								update=":form,:form:dadosForm" />
+						</p:selectOneMenu>
+					</h:panelGrid>
 				</p:panel>
 
 
@@ -59,10 +60,10 @@
 				<ui:include src="dialog/include_dialog_informations.xhtml" />
 				<ui:include src="dialog/include_dialog_jvm.xhtml" />
 				<ui:include src="dialog/include_dialog_log.xhtml" />
-				<ui:include src="dialog/include_dialog_dataSources.xhtml" />	
+				<ui:include src="dialog/include_dialog_dataSources.xhtml" />
 				<ui:include src="dialog/status.xhtml" />
 				<ui:include src="dialog/include_cofirmStopJboss.xhtml" />
-				
+
 			</h:form>
 		</div>
 

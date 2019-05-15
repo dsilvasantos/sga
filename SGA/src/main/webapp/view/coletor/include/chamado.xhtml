@@ -5,6 +5,18 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
+	<style type="text/css">
+.semBorda tr, .semBorda td {
+	border: none !important;
+	border-style: none !important;
+	border-width: 0px !important;
+}
+
+.firstColumn {
+	width: 60px;
+}
+
+</style>
 
 
 	<p:dialog header="Chamado" widgetVar="chamadoDialog" modal="true"
@@ -13,25 +25,27 @@
 
 		<p:panel header="Gerenciamento de aplicações"
 			style="margin-bottom:10px;">
-			<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid columns="2" styleClass="semBorda"
+				columnClasses="firstColumn">
 				<p:outputLabel value="Departamento:" />
-			</h:panelGrid>
-			<p:selectOneMenu id="departamento"
-				value="#{chamado.departamentoChamado}" style="width:150px">
-				<f:selectItem itemLabel="Selecionar departamento" itemValue=""
-					noSelectionOption="true" />
-				<f:selectItems value="#{departamento.departamentos}" />
-				<p:ajax update="celula" />
-			</p:selectOneMenu>
+				<p:selectOneMenu id="departamento"
+					value="#{chamado.departamentoChamado}" style="width:150px">
+					<f:selectItem itemLabel="Selecionar departamento" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{departamento.departamentos}" />
+					<p:ajax update="celula" />
+				</p:selectOneMenu>
 
-			<p:outputLabel for="celula" value="Célula: " />
-			<p:selectOneMenu id="celula" value="#{chamado.celulaChamado}"
-				style="width:150px">
-				<f:selectItem itemLabel="Selecionar célula" itemValue=""
-					noSelectionOption="true" />
-				<f:selectItems value="#{chamado.celulas}" />
-			</p:selectOneMenu>
-			<p:commandButton ajax="true" title="Pesquisar" update=":form:result:0:dadosForm"
+				<p:outputLabel for="celula" value="Célula: " />
+				<p:selectOneMenu id="celula" value="#{chamado.celulaChamado}"
+					style="width:150px">
+					<f:selectItem itemLabel="Selecionar célula" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{chamado.celulas}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+			<p:commandButton ajax="true" title="Pesquisar"
+				update=":form:result:0:dadosForm"
 				onstart="PF('statusDialog').show()"
 				oncomplete="PF('statusDialog').hide()" value="Pesquisar"
 				action="#{chamado.carregarFuncionarios()}" />
@@ -39,7 +53,7 @@
 
 
 
-		<p:panel   id="dadosForm" prependId="false">
+		<p:panel id="dadosForm" prependId="false">
 			<p:dataTable id="review-table" var="usuarioChamado"
 				value="#{chamado.usuarios}">
 				<p:column headerText="Nome" width="90">
@@ -52,7 +66,8 @@
 				</p:column>
 				<p:column headerText="Chamado" width="48">
 					<p:commandButton ajax="true" onstart="PF('statusDialog').show()"
-						oncomplete="PF('statusDialog').hide()"
+						update=":form:result,:form:resultados,form:result:0:dadosForm"
+						oncomplete="PF('statusDialog').hide(),PF('chamadoDialog').hide()"
 						title="Selecionar responsável" value="Selecionar"
 						actionListener="#{chamado.abrirChamado(usuarioChamado)}" />
 				</p:column>

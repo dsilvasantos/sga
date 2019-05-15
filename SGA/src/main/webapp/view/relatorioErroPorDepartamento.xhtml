@@ -15,7 +15,8 @@
 				<p:growl id="growl" showDetail="true" rendered="true" life="5000" />
 				<p:panel header="Emitir relatórios de erros por departamento"
 					style="margin-bottom:10px;">
-
+				
+				 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 					<p:outputLabel value="Departamento: " />
 					<p:selectOneMenu id="departamento" value="#{relatorio.departamento}"
 						style="width:150px">
@@ -30,6 +31,8 @@
 					<p:outputLabel value="Data Final: " />
 					<p:calendar id="popup2" value="#{relatorio.dataFinal}" />
 
+					</h:panelGrid>
+					
 					<p:commandButton update=":form:msgInfo"
 					    ajax="false"
 						id="gerarRelatorio" value="Gerar"

@@ -2,77 +2,49 @@ package br.com.sga.monitoramento.DAO;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import br.com.sga.monitoramento.model.Coleta;
 
-public class ColetaDAO {
-
-	private EntityManager getEntityManager() {
-		EntityManagerFactory factory = null;
-		EntityManager entityManager = null;
-	
-			// Obtém o factory a partir da unidade de persistência.
-			factory = Persistence.createEntityManagerFactory("SGA");
-			
-			// Cria um entity manager.
-			entityManager = factory.createEntityManager();
-			// Fecha o factory para liberar os recursos utilizado.
-			
-		
-			return entityManager;
-		
-	}
+public class ColetaDAO  extends EntityManagerSingleton{
 
 	public void persist(Coleta Coleta) {
-		EntityManager entityManager = getEntityManager();
 		try {
-			entityManager.getTransaction().begin();
+			transaction.begin();
 			entityManager.persist(Coleta);
-			entityManager.getTransaction().commit();
+			transaction.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}finally {
-			entityManager.close();
+			transaction.rollback();
 		}
 	}
 
 	public void merge(Coleta Coleta) {
-		EntityManager entityManager = getEntityManager();
+	
 		try {
-			entityManager.getTransaction().begin();
+			transaction.begin();
 			entityManager.merge(Coleta);
-			entityManager.getTransaction().commit();
+			transaction.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}finally {
-			entityManager.close();
+			transaction.rollback();
 		}
 	}
 
 	public void remove(Coleta Coleta) {
-		EntityManager entityManager = getEntityManager();
 		try {
-			entityManager.getTransaction().begin();
+			transaction.begin();
 			Coleta = entityManager.find(Coleta.class, Coleta.getId());
 			entityManager.remove(Coleta);
-			entityManager.getTransaction().commit();
+			transaction.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}finally {
-			entityManager.close();
+			transaction.rollback();
 		}
 	}
 
 
 	public List<String> recupear(String departamento){
-		EntityManager entityManager = getEntityManager();
 		try {
 			Query query = entityManager.createNativeQuery("Select coleta.nome from departamento,coleta where coleta.ID_DEPARTAMENTO = "
 					+ "departamento.id and departamento.nome=?1");
@@ -81,9 +53,7 @@ public class ColetaDAO {
 			return result;
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}finally {
-			entityManager.close();
+
 		}
 		return null;
 	}

@@ -47,7 +47,7 @@ order by aplicacao.nome,recursos.NOME,coleta.data]]>
 		<property name="com.jaspersoft.studio.field.label" value="valor"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="coleta"/>
 	</field>
-	<field name="data" class="java.sql.Date">
+	<field name="data" class="java.sql.Timestamp">
 		<property name="com.jaspersoft.studio.field.label" value="data"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="coleta"/>
 	</field>

@@ -36,7 +36,7 @@ public class ColetorController {
 		LOGGER.info("Coletor Jboss ativado.");
 		start=true;
 		//Milissegundo
-		int intervaloColeta = 480000;
+		int intervaloColeta = 120000;
 		 t = new Timer();
 		  ColetorService collector = new ColetorService();
 		  t.scheduleAtFixedRate(collector, 0, intervaloColeta);
