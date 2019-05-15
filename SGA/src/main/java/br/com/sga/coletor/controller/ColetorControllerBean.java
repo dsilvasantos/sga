@@ -68,7 +68,7 @@ public class ColetorControllerBean implements Serializable {
 		}
 	}
 	
-	public void sendClean(Erro erro) {
+	public boolean sendClean(Erro erro) {
 
 		String key;
 		LOGGER.info("Usuário [" + user + "] solicitou clean do alrame: ");
@@ -87,9 +87,11 @@ public class ColetorControllerBean implements Serializable {
 					new FacesMessage("Sucesso.", "A limpeza do alerta foi executada com sucesso."));
 		} else {
 			LOGGER.error("Tipo de recurso não pode ser nulo ou não foi reconhecido.");
-			FacesContext.getCurrentInstance().addMessage("Teste Falha",
-					new FacesMessage("Falha.", "Tipo de recurso naõ identificado. "));
+			FacesContext.getCurrentInstance().addMessage("Teste Sucesso",
+					new FacesMessage("Falha.", "A limpeza do alerta não foi executada com sucesso."));
 		}
+		
+		return true;
 	}
 
 	public List<Erro> getAlertas() {

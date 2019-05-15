@@ -15,7 +15,7 @@
 		<class>br.com.sga.monitoramento.model.RecursosAplicacao</class>
 		<class>br.com.sga.monitoramento.model.Erro</class>
 		<class>br.com.sga.monitoramento.model.Recursos</class>
-		<class>br.com.sga.monitoramento.model.Coleta</class> 
+		<class>br.com.sga.monitoramento.model.Coleta</class>
 		<properties>
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.MySQL5InnoDBDialect" />
@@ -23,7 +23,11 @@
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.cache.use_second_level_cache"
 				value="false" />
-
+			<property name="hibernate.cache.provider_class"
+				value="false" />
+			<property name="hibernate.cache.use_query_cache"
+				value="false" />
+			
 			<property name="hibernate.order_updates" value="true" />
 			<property name="hibernate.order_inserts" value="true" />
 			<property name="hibernate.jdbc.batch_versioned_data"

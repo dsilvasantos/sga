@@ -5,6 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 	
+		<div class="entry" style="line-height: 200%">
 	
 	<p:panel header="Consultar alertas do Coletor JBoss" style="margin-bottom:10px;">
         <p:separator />
@@ -34,11 +35,12 @@
 		    <p:column headerText="Ação">
 		        <p:commandButton ajax="true"  
 				onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" 
-				title="Limpar Alerta" value="Limpar" actionListener="#{coletor.sendClean(valor)}" />
+				title="Limpar Alerta" value="Limpar" actionListener="#{coletor.sendClean(valor)}" 
+				update=":form:result,:form:resultados"/>
 		   		<p></p>
 		          <p:commandButton ajax="true" 
 		        onstart="PF('statusDialog').show()" oncomplete="PF('chamadoDialog').show(),PF('statusDialog').hide()" 
-				 actionListener="#{chamado.sendErro(valor)}"
+				 actionListener="#{chamado.sendErro(valor)}" 
 				title="Abrir Chamado" value="Abrir Chamado"	>
 				<ui:include src="chamado.xhtml">
 				 </ui:include>
@@ -46,4 +48,5 @@
 		    </p:column>      
 		</p:dataTable>
     </p:panel>
+   </div>
 </ui:composition>
