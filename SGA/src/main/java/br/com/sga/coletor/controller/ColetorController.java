@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedBean;
 import org.jboss.logging.Logger;
 
 import br.com.sga.coletor.service.ColetorService;
+import br.com.sga.monitoramento.enumeration.TiposUsuarios;
+import br.com.sga.services.SessionContext;
 
 
 

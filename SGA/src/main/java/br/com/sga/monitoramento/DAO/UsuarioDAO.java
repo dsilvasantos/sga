@@ -109,5 +109,22 @@ public class UsuarioDAO extends EntityManagerSingleton{
 		}
 		return usuario;
 	}
+	
+	public Usuario retornaUsuario(String login,String senha){
+		Usuario usuario = null;
+		try{
+			Query query =  entityManager.createNativeQuery(""
+					+ "select * from Usuario f where f.login =?1 and f.senha =?2",Usuario.class);
+			query.setParameter(1, login);
+			query.setParameter(2, senha);
+			if(query.getResultList().size()==0) {
+				return usuario;
+			}
+			usuario = (Usuario) query.getSingleResult();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return usuario;
+	}
 
 }

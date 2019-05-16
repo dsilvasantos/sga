@@ -44,4 +44,18 @@
 			<url-pattern>/favicon.ico</url-pattern>
 		</web-resource-collection>
 	</security-constraint>
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+
+  
+	<!-- login filter -->
+	<filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>br.com.sga.services.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/view/*</url-pattern>
+	</filter-mapping>
 </web-app>

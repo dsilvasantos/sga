@@ -14,9 +14,13 @@
 		</h:head>
 		
 		<h:body>
+			
+			<p:fieldset legend="Usuário" rendered="#{!cadastroUsuarioBean.permissao}">
+			<p>Você não tem permissão para acessar esta página, entre em contato com o Administrador</p>					
+		</p:fieldset>
 		
 			<div class="entry" style="line-height: 200%">
-				<h:form id="form">
+				<h:form id="form" rendered="#{cadastroUsuarioBean.permissao}">
 				<p:growl id="growl" />
 					<p:messages id="messages" />
 					<p:panel id="basic" header="Cadastro de Usuário" style="margin-bottom:20px">
@@ -39,11 +43,27 @@
 							noSelectionOption="true" />
 							<f:selectItems value="#{celula.celulas}" />
 							</p:selectOneMenu>	
-							
-							<p:commandButton value="Cadastrar" icon="ui-icon-star"
+
+						</p:panelGrid>
+						<p:commandButton value="Cadastrar" icon="ui-icon-star"
 								action="#{cadastroUsuarioBean.salvar()}" update="@form">
 							</p:commandButton>
-						</p:panelGrid>
+							<p:commandButton value="Cancelar"
+									action="#{cadastroUsuarioBean.cancela}">
+									<p:confirm header="Confirmação"
+									message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos."
+									icon="ui-icon-alert" />
+									<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+									icon="ui-icon-cancel">
+		
+									<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+							</p:commandButton>
+						<br/>
+						<br/>
 						<br/>
 						<p:dataTable id="usuarioTable"
 							value="#{cadastroUsuarioBean.listaUsuario}" var="user">
@@ -62,7 +82,7 @@
 							
 							<p:column headerText="Editar" width="1.0%">
 									<p:commandButton icon="ui-icon-pencil"
-									action="#{cadastroUsuarioBean.altera()}" styleClass="botoesIcones"
+									action="alteraUsuario.xhtml" styleClass="botoesIcones"
 									style="center">
 									<f:param name="UsuarioId" value="#{user.id}" />
 									 </p:commandButton> 
@@ -70,7 +90,7 @@
 
 							<p:column headerText="Excluir" width="1.0%">
 								<p:commandButton icon="ui-icon-trash"
-									action="#{cadastroUsuarioBean.remove()}" styleClass="botoesIcones"
+									action="removeUsuario.xhtml" styleClass="botoesIcones"
 									style="center">
 									<f:param name="UsuarioId" value="#{user.id}" />
 								</p:commandButton>

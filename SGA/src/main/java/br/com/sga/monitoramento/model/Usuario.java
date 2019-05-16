@@ -8,29 +8,31 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="usuario")
+@Table(name = "usuario")
 public class Usuario {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(name = "login",nullable=false)
+
+	@Column(name = "login", nullable = false)
 	private String login;
 
-	@Column(name = "senha",nullable=false)
+	@Column(name = "senha", nullable = false)
 	private String senha;
-	
-	@Column(name = "nome",nullable=false)
-	private String nome;
-	
-	@Column(name = "email",nullable=false)
-	private String email;
-			
-	@Column(name = "status",nullable=false)
-	private String status;
 
-	
+	@Column(name = "nome", nullable = false)
+	private String nome;
+
+	@Column(name = "email", nullable = false)
+	private String email;
+
+	@Column(name = "status", nullable = false)
+	private int status;
+
+	@Column(name = "tipo", nullable = false)
+	private int tipo;
+
 	public int getId() {
 		return id;
 	}
@@ -51,58 +53,48 @@ public class Usuario {
 		return senha;
 	}
 
-
-
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-
-
 
 	public String getNome() {
 		return nome;
 	}
 
-
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-
 
 	public String getEmail() {
 		return email;
 	}
 
-
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-
-
-	public String  getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-
-
-	public void setStatus(String  status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
+	public int getTipo() {
+		return tipo;
+	}
 
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
 
 	public Usuario() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-
-
-	public Usuario(int id, String login, String senha, String nome, String email, String status) {
+	public Usuario(int id, String login, String senha, String nome, String email, int status,int tipo) {
 		super();
 		this.id = id;
 		this.login = login;
@@ -110,7 +102,29 @@ public class Usuario {
 		this.nome = nome;
 		this.email = email;
 		this.status = status;
+		this.tipo = tipo;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
 
 }

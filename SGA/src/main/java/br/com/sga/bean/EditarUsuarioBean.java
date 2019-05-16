@@ -8,7 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import br.com.sga.controller.UsuarioController;
+import br.com.sga.controller.UsuarioLogadoMBImpl;
 import br.com.sga.monitoramento.DAO.UsuarioDAO;
 import br.com.sga.monitoramento.model.Usuario;
 import br.com.sga.services.ControladorMensagens;
@@ -21,7 +21,7 @@ public class EditarUsuarioBean implements Serializable{
 	
 	private Usuario usuario = new Usuario();
 	private UsuarioDAO userDAO = new UsuarioDAO();
-	private UsuarioController userCtrl = new UsuarioController();
+	private UsuarioLogadoMBImpl userCtrl = new UsuarioLogadoMBImpl();
 	
 	@EJB
 	ControladorMensagens controladorMensagens;
@@ -39,20 +39,13 @@ public class EditarUsuarioBean implements Serializable{
 	public void setUserDAO(UsuarioDAO userDAO) {
 		this.userDAO = userDAO;
 	}
-	public UsuarioController getUserCtrl() {
+	public UsuarioLogadoMBImpl getUserCtrl() {
 		return userCtrl;
 	}
-	public void setUserCtrl(UsuarioController userCtrl) {
+	public void setUserCtrl(UsuarioLogadoMBImpl userCtrl) {
 		this.userCtrl = userCtrl;
 	}
 	
-	@PostConstruct
-	public void inicia(){
-		String idUsuario = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
-				.get("UsuarioID");
-		
-		this.usuario = userCtrl.retornaUsuario(Integer.parseInt(idUsuario));
-	}
 	
 	public String cancela() {
 		return "cadastro_usuario?faces-redirect=true";
@@ -63,7 +56,7 @@ public class EditarUsuarioBean implements Serializable{
 			UsuarioDAO userDAO = new UsuarioDAO();
 			userDAO.merge(usuario);
 			controladorMensagens.addMsgInfo("Usuario Alterado com sucesso");
-			return "cadastro_usuario?faces-redirect=true";
+			return "cadastro_usuario.xhtml";
 		}catch(Exception e){
 			e.printStackTrace();
 		}

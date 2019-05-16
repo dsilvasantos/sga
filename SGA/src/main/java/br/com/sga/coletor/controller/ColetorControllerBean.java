@@ -16,16 +16,18 @@ import br.com.sga.coletor.service.ColetorService;
 import br.com.sga.monitoramento.DAO.AplicacaoDAO;
 import br.com.sga.monitoramento.DAO.ErroDAO;
 import br.com.sga.monitoramento.DAO.RecursosDAO;
+import br.com.sga.monitoramento.enumeration.TiposUsuarios;
 import br.com.sga.monitoramento.model.Aplicacao;
 import br.com.sga.monitoramento.model.Erro;
 import br.com.sga.monitoramento.model.Recursos;
+import br.com.sga.services.SessionContext;
 
 @ManagedBean(name = "coletor")
 @ViewScoped
 public class ColetorControllerBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private boolean permissao = false;
+
 	public static Logger LOGGER = Logger.getLogger(ColetorControllerBean.class);
 	private List<Erro> alertas = new ArrayList<Erro>();
 	private List<Erro> coletas = new ArrayList<Erro>();
@@ -33,17 +35,17 @@ public class ColetorControllerBean implements Serializable {
 	private boolean exibirColetas = false;
 	String user;
 	private boolean coletorStatus = ColetorController.isStart();
-
+	private boolean permissao = false;
 	public ColetorControllerBean() {
-
+		user = SessionContext.getInstance().getUsuarioLogado().getLogin();
 	}
 
 	public void statusColetor() {
 		if (coletorStatus) {
-			LOGGER.info("Usuário [" + user + "] solicitou o START do Coletor JBoss.");
+			LOGGER.info("Usuário [" + SessionContext.getInstance().getUsuarioLogado().getLogin() + "] solicitou o START do Coletor JBoss.");
 			ColetorController.startTimer();
 		} else {
-			LOGGER.info("Usuário [" + user + "] solicitou o STOP do Coletor JBoss.");
+			LOGGER.info("Usuário [" + SessionContext.getInstance().getUsuarioLogado().getLogin() + "] solicitou o STOP do Coletor JBoss.");
 			ColetorController.cancelTimer();
 		}
 	}
@@ -71,7 +73,7 @@ public class ColetorControllerBean implements Serializable {
 	public boolean sendClean(Erro erro) {
 
 		String key;
-		LOGGER.info("Usuário [" + user + "] solicitou clean do alrame: ");
+		LOGGER.info("Usuário [" + SessionContext.getInstance().getUsuarioLogado().getLogin() + "] solicitou clean do alrame: ");
 
 		key = recuperarAplicacao(erro.getAplicacao()) + "_" + recuperarRecurso(erro.getRecurso());
 		ColetorService.alertas.remove(key);
@@ -98,13 +100,6 @@ public class ColetorControllerBean implements Serializable {
 		return alertas;
 	}
 
-	public void setPermissao(boolean permissao) {
-		this.permissao = permissao;
-	}
-
-	public boolean isPermissao() {
-		return permissao;
-	}
 
 	public boolean isExibirResultados() {
 		return exibirResultados;
@@ -152,5 +147,17 @@ public class ColetorControllerBean implements Serializable {
 		RecursosDAO recursosDAO = new RecursosDAO();
 		Recursos recursos = recursosDAO.recupear(id);
 		return recursos.getNome();
+	}
+	
+	public boolean isPermissao() {
+		if(TiposUsuarios.analistaProducao.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	public void setPermissao(boolean permissao) {
+		this.permissao = permissao;
 	}
 }

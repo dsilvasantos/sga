@@ -10,7 +10,7 @@
 </center>
 <%
    // New location to be redirected
-   String site = new String(request.getContextPath()+"/view/inicio.xhtml");
+   String site = new String(request.getContextPath()+"/login.xhtml");
    response.setStatus(response.SC_MOVED_TEMPORARILY);
    response.setHeader("Location", site); 
 %>

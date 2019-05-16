@@ -8,13 +8,17 @@ import javax.faces.bean.ViewScoped;
 
 import br.com.sga.monitoramento.DAO.AplicacaoDAO;
 import br.com.sga.monitoramento.DAO.CelulaDAO;
+import br.com.sga.monitoramento.enumeration.TiposUsuarios;
 import br.com.sga.monitoramento.model.Aplicacao;
 import br.com.sga.services.AmbienteServices;
 import br.com.sga.services.AplicacaoCLI;
+import br.com.sga.services.SessionContext;
 
 @ManagedBean(name = "celula")
 @ViewScoped
 public class CelulaController {
+	
+	private boolean permissao = false;
 
 	private CelulaDAO celulaDao = new CelulaDAO();
 	private AplicacaoDAO aplicacaoDao = new AplicacaoDAO();
@@ -62,6 +66,18 @@ public class CelulaController {
 
 	public String getCelula() {
 		return celula;
+	}
+	
+	public boolean isPermissao() {
+		if(TiposUsuarios.analistaSuporte.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	public void setPermissao(boolean permissao) {
+		this.permissao = permissao;
 	}
 	
 }

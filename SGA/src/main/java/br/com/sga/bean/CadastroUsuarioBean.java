@@ -10,8 +10,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.sga.monitoramento.DAO.UsuarioDAO;
+import br.com.sga.monitoramento.enumeration.TiposUsuarios;
 import br.com.sga.monitoramento.model.Usuario;
 import br.com.sga.services.ControladorMensagens;
+import br.com.sga.services.SessionContext;
 
 @ViewScoped
 @ManagedBean(name = "cadastroUsuarioBean")
@@ -24,6 +26,8 @@ public class CadastroUsuarioBean implements Serializable{
 	private UsuarioDAO userDAO = new UsuarioDAO();
 	
 	private String celula;
+	
+	private boolean permissao = false;
 	
 	@EJB
 	ControladorMensagens controladorMensagens;
@@ -78,25 +82,39 @@ public class CadastroUsuarioBean implements Serializable{
 	}
 	
 	public String remove(){
-		return "remove_usuario.xhtml";
+		return "removeUsuario.xhtml";
 	}
 	
 	public String altera(){
 		return "alteraUsuario.xhtml";
 	}
 	
+	public String cancela() {
+		return "cadastro_usuario?faces-redirect=true";
+	}
+	
 	public String salvar(){
 		try{
 			userDAO.persist(usuario);
-			controladorMensagens.addMsgInfo("incluido.sucesso.usuario");
+			controladorMensagens.addMsgInfo("Usuário cadastrado com sucesso !");
 			usuario = new Usuario();
 			return "cadastro_usuario.xhtml";
 		}catch(Exception e){
-			controladorMensagens.addMsgErro("erro.inclusao.usuario");
+			controladorMensagens.addMsgErro("Erro ao incluir usuário !");
 		}
 		return null;
 	}
 	
-	
+	public boolean isPermissao() {
+		if(TiposUsuarios.analistaSuporte.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	public void setPermissao(boolean permissao) {
+		this.permissao = permissao;
+	}
 	
 }

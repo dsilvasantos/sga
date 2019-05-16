@@ -6,13 +6,16 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.com.sga.monitoramento.DAO.AplicacaoDAO;
+import br.com.sga.monitoramento.enumeration.TiposUsuarios;
 import br.com.sga.monitoramento.model.Aplicacao;
+import br.com.sga.services.SessionContext;
 
 
 @ManagedBean(name = "aplicacaoController")
 @ViewScoped
 public class AplicacaoController {
 	
+	private boolean permissao = false;
 	private Aplicacao aplicacao = new Aplicacao();
 	
 	public Aplicacao getAplicacao() {
@@ -44,4 +47,18 @@ public class AplicacaoController {
 		AplicacaoDAO ap = new AplicacaoDAO();
 		ap.merge(aplicacao);
 	}
+	
+	public boolean isPermissao() {
+		if(TiposUsuarios.desenvolvedor.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	public void setPermissao(boolean permissao) {
+		this.permissao = permissao;
+	}
+	
+	
 }

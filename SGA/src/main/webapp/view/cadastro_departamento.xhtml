@@ -13,8 +13,13 @@
 		</h:head>
 
 		<h:body>
+		
+		<p:fieldset legend="Departamento" rendered="#{!cadastroDepartamentoBean.permissao}">
+			<p>Você não tem permissão para acessar esta página, entre em contato com o Administrador</p>					
+		</p:fieldset>
+		
 			<div class="entry" style="line-height: 200%">
-				<h:form id="form">
+				<h:form id="form" rendered="#{cadastroDepartamentoBean.permissao}">
 					<p:growl id="growl" />
 					<p:panel id="basic" header="Cadastro de Departamento"
 						style="margin-bottom:20px">
@@ -27,12 +32,28 @@
 							<p:inputText id="localizacao"
 								value="#{cadastroDepartamentoBean.departamento.localizacao}" />
 
-							<p:commandButton value="Cadastrar" icon="ui-icon-star"
+						</p:panelGrid>
+						<p:commandButton value="Cadastrar" icon="ui-icon-star"
 								action="#{cadastroDepartamentoBean.salvar()}"
 								update="@form">
 							</p:commandButton>
-						</p:panelGrid>
+							<p:commandButton value="Cancelar"
+									action="#{cadastroDepartamentoBean.cancela}">
+									<p:confirm header="Confirmação"
+									message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos."
+									icon="ui-icon-alert" />
+									<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+									icon="ui-icon-cancel">
+		
+									<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+							</p:commandButton>
 						<br />
+						<br />
+						
 						<p:dataTable id="departamentosTable"
 							value="#{cadastroDepartamentoBean.listaDepartamentos}" var="dep">
 

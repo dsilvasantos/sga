@@ -19,6 +19,7 @@ import org.primefaces.model.chart.MeterGaugeChartModel;
 import br.com.sga.monitoramento.DAO.AplicacaoDAO;
 import br.com.sga.monitoramento.DAO.CelulaDAO;
 import br.com.sga.monitoramento.DAO.DepartamentoDAO;
+import br.com.sga.monitoramento.enumeration.TiposUsuarios;
 import br.com.sga.monitoramento.model.Aplicacao;
 import br.com.sga.monitoramento.model.Log;
 import br.com.sga.monitoramento.model.Server;
@@ -27,6 +28,7 @@ import br.com.sga.services.AplicacaoCLI;
 import br.com.sga.services.DatasourceServices;
 import br.com.sga.services.JvmServices;
 import br.com.sga.services.LogService;
+import br.com.sga.services.SessionContext;
 
 @ManagedBean(name = "server")
 @ViewScoped
@@ -47,6 +49,8 @@ public class ServerController {
 	private DepartamentoDAO departamentoDAO = new DepartamentoDAO();
 	private CelulaDAO celulaDAO = new CelulaDAO();
 	private AplicacaoDAO aplicacaoDAO = new AplicacaoDAO();
+	
+	private boolean permissao = false;
 	
 	public TreeNode createAplicacoes() {
 		AmbienteServices ambiente = new AmbienteServices();
@@ -298,7 +302,7 @@ public class ServerController {
 					+ ". Por favor, verifique se o o server já está finalizado.";
 		}
 	}
-
+	
 	public Server getServerInfo() {
 		return serverInfo;
 	}
@@ -338,5 +342,19 @@ public class ServerController {
 	public void setJustificativa(String justificativa) {
 		this.justificativa = justificativa;
 	}
+
+	public boolean isPermissao() {
+		if(TiposUsuarios.analistaProducao.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	public void setPermissao(boolean permissao) {
+		this.permissao = permissao;
+	}
+	
+	
 
 }

@@ -51,7 +51,7 @@
 									style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
 							</p:menuitem>
 
-							<p:menuitem value="Coleta" icon="ui-icon-clipboard" 
+							<p:menuitem  disabled="#{!coletor.permissao}"  value="Coleta" icon="ui-icon-clipboard" 
 								url="/view/coletor/coletor.jsf" />
 															
 							<p:menuitem>
@@ -61,10 +61,10 @@
 							
 							
 							<p:submenu label="Cadastros" icon="ui-icon-folder-collapsed">  
-								<p:menuitem value="Departamento" url="/view/cadastro_departamento.jsf" />
-								<p:menuitem value="Usuário" url="/view/cadastro_usuario.jsf" />
-								<p:menuitem value="Aplicação" url="/view/cadastro_aplicacao.jsf" />
-								<p:menuitem value="Célula" url="" /> 
+								<p:menuitem value="Departamento" disabled="#{!cadastroDepartamentoBean.permissao}" url="/view/cadastro_departamento.jsf" />
+								<p:menuitem value="Usuário" disabled="#{!cadastroUsuarioBean.permissao}" url="/view/cadastro_usuario.jsf" />
+								<p:menuitem value="Aplicação" disabled="#{!aplicacaoController.permissao}" url="/view/cadastro_aplicacao.jsf" />
+								<p:menuitem value="Célula" disabled="#{!celula.permissao}" url="" /> 
 							</p:submenu>
 							
 							<p:menuitem>
@@ -78,7 +78,13 @@
 								<p:menuitem value="Erros por departamento" url="/view/relatorioErroPorDepartamento.jsf" /> 
 							
 							</p:submenu>	
-												
+									
+							<p:menuitem>
+							<p:spacer width="1" height="15"
+									style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
+							</p:menuitem>
+							
+							<p:menuitem value="Sair"  action="#{usuarioLogadoMB.doLogout()}"/>
 						</p:menubar>
 
 					</h:form>
