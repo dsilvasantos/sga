@@ -1,4 +1,3 @@
-
 package br.com.sga.bean;
 
 import java.io.Serializable;

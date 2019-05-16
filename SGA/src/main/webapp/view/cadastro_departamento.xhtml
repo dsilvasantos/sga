@@ -13,13 +13,8 @@
 		</h:head>
 
 		<h:body>
-		
-		<p:fieldset legend="Departamento" rendered="#{!cadastroDepartamentoBean.permissao}">
-			<p>Você não tem permissão para acessar esta página, entre em contato com o Administrador</p>					
-		</p:fieldset>
-		
 			<div class="entry" style="line-height: 200%">
-				<h:form id="form" rendered="#{cadastroDepartamentoBean.permissao}">
+				<h:form id="form">
 					<p:growl id="growl" />
 					<p:panel id="basic" header="Cadastro de Departamento"
 						style="margin-bottom:20px">
