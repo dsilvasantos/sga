@@ -10,8 +10,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.sga.monitoramento.DAO.CelulaDAO;
+import br.com.sga.monitoramento.enumeration.TiposUsuarios;
 import br.com.sga.monitoramento.model.Celula;
 import br.com.sga.services.ControladorMensagens;
+import br.com.sga.services.SessionContext;
 
 @ViewScoped
 @ManagedBean
@@ -22,7 +24,7 @@ public class CadastroCelulaBean implements Serializable{
 	private Celula celula = new Celula();
 	private CelulaDAO celulaDAO = new CelulaDAO();
 	private List<Celula> listaCelula = new ArrayList<Celula>();
-	
+	private boolean permissao = false;
 	@EJB
 	ControladorMensagens controladorMensagens;
 	
@@ -79,5 +81,17 @@ public class CadastroCelulaBean implements Serializable{
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public boolean isPermissao() {
+		if(TiposUsuarios.analistaSuporte.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	public void setPermissao(boolean permissao) {
+		this.permissao = permissao;
 	}
 }

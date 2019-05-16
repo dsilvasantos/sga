@@ -2,24 +2,16 @@ package br.com.sga.bean;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-
-import br.com.sga.controller.UsuarioController;
-import br.com.sga.monitoramento.DAO.UsuarioDAO;
-import br.com.sga.monitoramento.model.Usuario;
-import br.com.sga.services.ControladorMensagens;
 
 @ViewScoped
 @ManagedBean
 public class RemoveUsuarioBean implements Serializable   {
+	
+	/*
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	
 	private Usuario user = new Usuario();
@@ -75,4 +67,7 @@ public class RemoveUsuarioBean implements Serializable   {
 		}
 		return null;
 	}
+	
+	/*
+	*/
 }

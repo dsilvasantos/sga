@@ -10,8 +10,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.sga.monitoramento.DAO.DepartamentoDAO;
+import br.com.sga.monitoramento.enumeration.TiposUsuarios;
 import br.com.sga.monitoramento.model.Departamento;
 import br.com.sga.services.ControladorMensagens;
+import br.com.sga.services.SessionContext;
 
 @ManagedBean(name = "cadastroDepartamentoBean")
 @ViewScoped
@@ -22,7 +24,7 @@ public class CadastraDepartamentoBean implements Serializable {
 	private Departamento departamento = new Departamento();
 	private List<Departamento> listaDepartamentos = new ArrayList<Departamento>();
 	private DepartamentoDAO dpDAO = new DepartamentoDAO();
-
+	private boolean permissao = false;
 	@EJB
 	ControladorMensagens controladorMensagens;
 
@@ -86,6 +88,18 @@ public class CadastraDepartamentoBean implements Serializable {
 			controladorMensagens.addMsgInfo("erro.inclusao.departamento");
 		}
 		return null;
+	}
+	
+	public boolean isPermissao() {
+		if(TiposUsuarios.analistaSuporte.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	public void setPermissao(boolean permissao) {
+		this.permissao = permissao;
 	}
 
 }

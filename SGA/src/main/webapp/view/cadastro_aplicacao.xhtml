@@ -4,8 +4,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" 
-	template="/template/template.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
 
 	<ui:define name="content">
 
@@ -13,41 +12,51 @@
 			<link type="text/css" rel="stylesheet" href="../css/default.css" />
 		</h:head>
 
-		<div class="entry" style="line-height: 200%">
-		
-		<p:messages id="messages"/>
-		
-		<h:form>
-		
-		<p:panel id="basic" header="Cadastro de Aplicação"
-						style="margin-bottom:20px">
-		
-		<p:panelGrid columns="2">
-		
-		<p:outputLabel for="aplicacao" value="Nome da Aplicação:" />
-		<p:inputText id="aplicacao" value="#{Aplicacao.aplicacao.nome}" />
-		
-		<p:outputLabel for="status_aplicacao" value="Status da aplicação:" />
-		<h:selectOneMenu id="status_aplicacao" value="#{Aplicacao.aplicacao.status}">
-                  <f:selectItem itemValue="1" itemLabel="Ativa"/>
-                  <f:selectItem itemValue="2" itemLabel="Desativada"/>
-        </h:selectOneMenu>
-		
-		<p:outputLabel for="celula_aplicacao" value="Célula:" />
-		<h:selectOneMenu id="celula_aplicacao" value="#{Aplicacao.aplicacao.status}">
-        </h:selectOneMenu>
-		
-		<p:commandButton value="Cadastrar" icon="ui-icon-star"
-		action="#{Aplicacao.cadastraApl}" update="messages">
-		</p:commandButton>
-		
-		</p:panelGrid>
-		</p:panel>
-		</h:form>
-		
-		</div>
-
 		<h:body>
-		</h:body>
+			<p:fieldset legend="Aplicação"
+				rendered="#{!aplicacaoController.permissao}">
+				<p>Você não tem permissão para acessar esta página, entre em
+					contato com o Administrador</p>
+			</p:fieldset>
+
+			<div class="entry" style="line-height: 200%">
+
+				<p:messages id="messages" />
+
+				<h:form rendered="#{aplicacaoController.permissao}">
+
+					<p:panel id="basic" header="Cadastro de Aplicação"
+						style="margin-bottom:20px">
+
+						<p:panelGrid columns="2">
+
+							<p:outputLabel for="aplicacao" value="Nome da Aplicação:" />
+							<p:inputText id="aplicacao" value="#{Aplicacao.aplicacao.nome}" />
+
+							<p:outputLabel for="status_aplicacao"
+								value="Status da aplicação:" />
+							<h:selectOneMenu id="status_aplicacao"
+								value="#{Aplicacao.aplicacao.status}">
+								<f:selectItem itemValue="1" itemLabel="Ativa" />
+								<f:selectItem itemValue="2" itemLabel="Desativada" />
+							</h:selectOneMenu>
+
+							<p:outputLabel for="celula_aplicacao" value="Célula:" />
+							<h:selectOneMenu id="celula_aplicacao"
+								value="#{Aplicacao.aplicacao.status}">
+							</h:selectOneMenu>
+
+							<p:commandButton value="Cadastrar" icon="ui-icon-star"
+								action="#{Aplicacao.cadastraApl}" update="messages">
+							</p:commandButton>
+
+						</p:panelGrid>
+					</p:panel>
+				</h:form>
+
+			</div>
+
+		
+			</h:body>
 	</ui:define>
 </ui:composition>
