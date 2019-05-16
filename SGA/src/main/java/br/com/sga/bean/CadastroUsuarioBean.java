@@ -1,3 +1,4 @@
+
 package br.com.sga.bean;
 
 import java.io.Serializable;
@@ -10,10 +11,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.sga.monitoramento.DAO.UsuarioDAO;
-import br.com.sga.monitoramento.enumeration.TiposUsuarios;
 import br.com.sga.monitoramento.model.Usuario;
 import br.com.sga.services.ControladorMensagens;
-import br.com.sga.services.SessionContext;
 
 @ViewScoped
 @ManagedBean(name = "cadastroUsuarioBean")
@@ -26,8 +25,6 @@ public class CadastroUsuarioBean implements Serializable{
 	private UsuarioDAO userDAO = new UsuarioDAO();
 	
 	private String celula;
-	
-	private boolean permissao = false;
 	
 	@EJB
 	ControladorMensagens controladorMensagens;
@@ -105,16 +102,6 @@ public class CadastroUsuarioBean implements Serializable{
 		return null;
 	}
 	
-	public boolean isPermissao() {
-		if(TiposUsuarios.analistaSuporte.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-
-	public void setPermissao(boolean permissao) {
-		this.permissao = permissao;
-	}
+	
 	
 }
