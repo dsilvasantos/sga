@@ -7,30 +7,35 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	template="/template/template.xhtml">
-  
-<h:head>
-  
-</h:head>
-  
-<h:body>
-     <h:form>
-          <p:messages id="messages" />
-          <p:panelGrid columns="2">
-                
-				<p:outputLabel for="id" value="ID:" />
-                <p:inputText id="ID" value="#{Celula.celula.id}" />	
-				
-				<p:outputLabel for="nome" value="Nome:" />
-                <p:inputText id="nome" value="#{Celula.celula.nome}" />
-                 
-                <p:outputLabel for="descricao" value="Descrição:" />
-                <p:inputText id="descricao" value="#{Celula.celula.descricao}" />                                
-  
-                <p:commandButton  value="Cadastrar" icon="ui-icon-star" 
-                 action="#{Celula.cadastraCel}" update="messages">
-                </p:commandButton>
-  
-          </p:panelGrid>
+<ui:define name="content">
+
+		<h:head>
+			
+			<link type="text/css" rel="stylesheet" href="../css/default.css" />
+			
+		</h:head>
+		<h:body>
+		
+	<div class="entry" style="line-height: 200%">
+		<h:form id="form">
+		<p:growl id="growl" />
+	          <p:messages id="messages" />
+	          <p:panel id="basic" header="Cadastro de Célula" style="margin-bottom:20px">
+		          <p:panelGrid columns="2">
+						
+						<p:outputLabel for="nome" value="Nome:" />
+		                <p:inputText id="nome" value="#{cadastroCelulaBean.celula.nome}" />
+		                 
+		                <p:outputLabel for="descricao" value="Descrição:" />
+		                <p:inputText id="descricao" value="#{cadastroCelulaBean.celula.descricao}" />                                
+		  
+	      	    </p:panelGrid>
+      	    <p:commandButton  value="Cadastrar" icon="ui-icon-star" 
+	         action="#{cadastroCelulaBean.salvar}" update="form">
+	         </p:commandButton>
+	         </p:panel>
      </h:form>
+    </div>
 </h:body>
+</ui:define>
 </ui:composition>

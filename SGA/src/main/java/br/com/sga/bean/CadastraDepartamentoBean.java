@@ -33,6 +33,10 @@ public class CadastraDepartamentoBean implements Serializable {
 	public String remove() {
 		return "removeDepartamento.xhtml";
 	}
+	
+	public String cancela() {
+		return "cadastro_departamento?faces-redirect=true";
+	}
 
 	public Departamento getDepartamento() {
 		return departamento;

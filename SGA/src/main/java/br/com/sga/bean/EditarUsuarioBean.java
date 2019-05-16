@@ -63,7 +63,7 @@ public class EditarUsuarioBean implements Serializable{
 			UsuarioDAO userDAO = new UsuarioDAO();
 			userDAO.merge(usuario);
 			controladorMensagens.addMsgInfo("Usuario Alterado com sucesso");
-			return "cadastro_usuario?faces-redirect=true";
+			return "cadastro_usuario.xhtml";
 		}catch(Exception e){
 			e.printStackTrace();
 		}

@@ -57,4 +57,16 @@ public class CelulaDAO extends EntityManagerSingleton{
 		}
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Celula> listaUsuario() {
+		try {
+			Query query = entityManager.createQuery("select d from Celula d");
+			List<Celula> result = query.getResultList();
+			return result;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
 }
