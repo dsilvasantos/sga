@@ -7,14 +7,12 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	template="/template/template.xhtml">
-<ui:define name="content">
+	<ui:define name="content">
 
 		<h:head>
-			
 			<link type="text/css" rel="stylesheet" href="../css/default.css" />
-			
 		</h:head>
-		<h:body>
+	<h:body>
 		
 	<div class="entry" style="line-height: 200%">
 		<h:form id="form">
@@ -28,10 +26,18 @@
 		                 
 		                <p:outputLabel for="descricao" value="Descrição:" />
 		                <p:inputText id="descricao" value="#{cadastroCelulaBean.celula.descricao}" />                                
-		  
+		  				
+		  				 <p:selectOneMenu id="departamento" value="#{celula.departamento}"
+							style="width:150px">
+							<f:selectItem itemLabel="Selecionar departamento" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{departamento.departamentos}" />
+							<p:ajax update="celula" /> 
+						</p:selectOneMenu>
+						
 	      	    </p:panelGrid>
-      	    <p:commandButton  value="Cadastrar" icon="ui-icon-star" 
-	         action="#{cadastroCelulaBean.salvar}" update="form">
+      	    	<p:commandButton  value="Cadastrar" icon="ui-icon-star" 
+      	    	action="#{cadastroCelulaBean.salvar}" update="@form">
 	         </p:commandButton>
 	         </p:panel>
      </h:form>
