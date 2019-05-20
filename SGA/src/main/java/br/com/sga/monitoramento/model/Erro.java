@@ -43,7 +43,7 @@ public class Erro {
 	@Column(name = "solucao",nullable=false)
 	private String solucao;
 	
-	@Column(name = "id_recurso",nullable=false)
+	@Column(name = "id_recursos",nullable=false)
 	private int recurso;
 	
 	@Column(name = "id_usuario",nullable=true)

@@ -5,16 +5,19 @@
   
 <h:head>
   <link type="text/css" rel="stylesheet" href="../css/default.css" />
+  <link type="text/css" rel="stylesheet" href="css/login.css" />
   <link rel="shortcut icon" type="image/x-icon" href="../imagens/favicon.ico"/>
 </h:head>
   
 <h:body>
-	<img src="#{request.contextPath}/imagens/SGA.png" alt="logo"/>
+	
 
       <h:form id = "form" prependId="false">
             <p:growl id="growl"/>
-            <p:panelGrid columns="2" cellpadding="5">
-                  <p:outputLabel for="nomeUsuario" value="Login:" style="text-align:center"/>
+			<p:panelGrid columns="1" styleClass="ui-fluid center ui-noborder">                  
+			<img src="#{request.contextPath}/imagens/SGA.png" alt="logo"/>
+			
+			<p:outputLabel for="nomeUsuario" value="Login:" style="text-align:center"/>
                   <p:inputText id="nomeUsuario" value="#{usuarioLogadoMB.login}" />
                   
                    

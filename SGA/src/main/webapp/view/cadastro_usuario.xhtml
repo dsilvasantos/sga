@@ -22,7 +22,7 @@
 			<div class="entry" style="line-height: 200%">
 				<h:form id="form" rendered="#{cadastroUsuarioBean.permissao}">
 				<p:growl id="growl" />
-					<p:messages id="messages" />
+			
 					<p:panel id="basic" header="Cadastro de Usuário" style="margin-bottom:20px">
 						<p:panelGrid columns="2">
 							<p:outputLabel for="login" value="Login:" />
@@ -84,7 +84,7 @@
 									<p:commandButton icon="ui-icon-pencil"
 									action="alteraUsuario.xhtml" styleClass="botoesIcones"
 									style="center">
-									<f:param name="UsuarioId" value="#{user.id}" />
+									<f:param name="UsuarioID" value="#{user.id}" />
 									 </p:commandButton> 
 							</p:column>
 
@@ -92,7 +92,7 @@
 								<p:commandButton icon="ui-icon-trash"
 									action="removeUsuario.xhtml" styleClass="botoesIcones"
 									style="center">
-									<f:param name="UsuarioId" value="#{user.id}" />
+									<f:param name="UsuarioID" value="#{user.id}" />
 								</p:commandButton>
 							</p:column>
 						</p:dataTable>

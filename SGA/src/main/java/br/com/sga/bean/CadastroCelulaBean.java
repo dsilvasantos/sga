@@ -89,6 +89,7 @@ public class CadastroCelulaBean implements Serializable{
 		}else {
 			return false;
 		}
+		
 	}
 
 	public void setPermissao(boolean permissao) {

@@ -12,6 +12,7 @@ public class CelulaDAO extends EntityManagerSingleton{
 
 	public void persist(Celula Celula) {
 		try {
+			if(!transaction.isActive())
 			transaction.begin();
 			entityManager.persist(Celula);
 			 transaction.commit();

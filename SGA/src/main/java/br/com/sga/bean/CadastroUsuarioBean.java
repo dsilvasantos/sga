@@ -102,13 +102,15 @@ public class CadastroUsuarioBean implements Serializable{
 		}
 		return null;
 	}
+	
 	public boolean isPermissao() {
 		if(TiposUsuarios.analistaSuporte.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
 			return true;
 		}else {
 			return false;
 		}
-	}
+		
+}
 
 	public void setPermissao(boolean permissao) {
 		this.permissao = permissao;

@@ -96,6 +96,7 @@ public class CadastraDepartamentoBean implements Serializable {
 		}else {
 			return false;
 		}
+
 	}
 
 	public void setPermissao(boolean permissao) {

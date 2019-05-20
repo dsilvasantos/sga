@@ -50,7 +50,7 @@
 
   
 	<!-- login filter -->
-	<filter>
+ 	<filter>
 		<filter-name>LoginFilter</filter-name>
 		<filter-class>br.com.sga.services.LoginFilter</filter-class>
 	</filter>

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +22,11 @@ public class Celula {
 	
 	@Column(name = "descricao",nullable=true)
 	private String descricao;
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_DEPARTAMENTO")
+	private Departamento departamento;
 
 	public String getNome() {
 		return nome;
@@ -55,5 +62,15 @@ public class Celula {
 		this.nome = nome;
 		this.descricao = descricao;
 	}
+
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
+	}
+	
+	
 
 }
