@@ -31,6 +31,18 @@ public class Aplicacao {
 	@Transient
 	private Server server;
 	
+	@Transient
+	private String status_string;
+	
+	
+	
+	public String getStatus_string() {
+		return status_string;
+	}
+	public void setStatus_string(String status_string) {
+		this.status_string = status_string;
+	}
+	
 	public String getNome() {
 		return nome;
 	}

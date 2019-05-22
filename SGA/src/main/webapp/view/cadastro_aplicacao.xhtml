@@ -13,17 +13,13 @@
 		</h:head>
 
 		<h:body>
-			<p:fieldset legend="Aplicação"
-				rendered="#{!aplicacaoController.permissao}">
-				<p>Você não tem permissão para acessar esta página, entre em
-					contato com o Administrador</p>
-			</p:fieldset>
+			
 
 			<div class="entry" style="line-height: 200%">
 
 				<p:messages id="messages" />
 
-				<h:form rendered="#{aplicacaoController.permissao}">
+				<h:form >
 
 					<p:panel id="basic" header="Cadastro de Aplicação"
 						style="margin-bottom:20px">
@@ -75,17 +71,17 @@
 							
 							<p:column headerText="Editar" width="1.0%">
 									<p:commandButton icon="ui-icon-pencil"
-									action="alteraCelula.xhtml" styleClass="botoesIcones"
+									action="alteraAplicacao.xhtml" styleClass="botoesIcones"
 									style="center">
-								<f:param name="CelulaId" value="#{cel.id}" />
+								<f:param name="AplicacaoId" value="#{apl.id}" />
 									 </p:commandButton> 
 							</p:column>
 							
 							<p:column headerText="Excluir" width="1.0%">
 								<p:commandButton icon="ui-icon-trash"
-									action="removeCelula.xhtml" styleClass="botoesIcones"
+									action="removeAplicacao.xhtml" styleClass="botoesIcones"
 									style="center">
-									<f:param name="CelulaId" value="#{cel.id}" />
+									<f:param name="AplicacaoId" value="#{apl.id}" />
 								</p:commandButton>
 								</p:column>
 				</p:dataTable>	

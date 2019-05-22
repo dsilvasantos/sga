@@ -16,9 +16,9 @@
 	<h:body>
 		<h:form id="form">
 		<p:growl id="growl" />
-		<p:panel id="AlteraUser" header="Cadastro de Usário">
+		<p:panel id="AlteraUser" header="Alterar Usário">
 			
-				<p:panel header="Dados Usuario" styleClass="semBorda">
+				<p:panel header="Dados Usuário" styleClass="semBorda">
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Login " />
 					<p:inputText value="#{editarUsuarioBean.user.login}" />
@@ -30,10 +30,10 @@
 					<p:inputText id="email" value="#{editarUsuarioBean.user.email}" />
 								
 					<p:outputLabel for="celula" value="Célula: " />
-					<p:selectOneMenu id="celula" value="#{celula.celula}" style="width:150px">
+					<h:selectOneMenu id="celula" value="#{celula.celula}" style="width:150px">
 					<f:selectItem itemLabel="Selecionar célula" itemValue="" noSelectionOption="true" />
 					<f:selectItems value="#{celula.celulas}" />
-					</p:selectOneMenu>
+					</h:selectOneMenu>
 					
 					<p:outputLabel for="status_usuario" value="Status do Usuário:" />
 					<h:selectOneMenu id="status_usuario" value="#{editarUsuarioBean.user.status}">
@@ -43,8 +43,8 @@
 			        
 		  		</p:panelGrid>
 		     </p:panel>
-        </p:panel>
-        <p:commandButton value="Salvar"
+        	<br/>
+            <p:commandButton value="Salvar"
 					action="#{editarUsuarioBean.salvaAlteracao()}" update="growl">
 					<p:confirm header="Confirmação"
 						message="Tem certeza que deseja salvar o registro?"
@@ -58,7 +58,7 @@
 					</p:confirmDialog>
 				</p:commandButton>
 
-				<p:commandButton value="Cancelar"
+				<p:commandButton value="Cancelar" style="margin-left:10px;"
 					action="#{editarUsuarioBean.cancela()}">
 					<p:confirm header="Confirmação"
 						message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos."
@@ -72,6 +72,9 @@
 							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 					</p:confirmDialog>
 				</p:commandButton>
+        	
+        </p:panel>
+    
         </h:form>
 	</h:body>
 	
