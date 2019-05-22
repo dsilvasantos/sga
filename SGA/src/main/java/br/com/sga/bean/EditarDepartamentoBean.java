@@ -42,13 +42,6 @@ public class EditarDepartamentoBean implements Serializable{
 		this.dpDAO = dpDAO;
 	}
 
-	public DepartamentoController getDpCont() {
-		return dpCont;
-	}
-
-	public void setDpCont(DepartamentoController dpCont) {
-		this.dpCont = dpCont;
-	}
 
 	@PostConstruct
 	public void inicia(){

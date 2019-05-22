@@ -8,8 +8,11 @@ import javax.faces.bean.ViewScoped;
 
 import br.com.sga.monitoramento.DAO.AplicacaoDAO;
 import br.com.sga.monitoramento.DAO.CelulaDAO;
+import br.com.sga.monitoramento.DAO.DepartamentoDAO;
 import br.com.sga.monitoramento.enumeration.TiposUsuarios;
 import br.com.sga.monitoramento.model.Aplicacao;
+import br.com.sga.monitoramento.model.Celula;
+import br.com.sga.monitoramento.model.Departamento;
 import br.com.sga.services.AmbienteServices;
 import br.com.sga.services.AplicacaoCLI;
 import br.com.sga.services.SessionContext;

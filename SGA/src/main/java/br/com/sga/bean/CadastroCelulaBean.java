@@ -59,7 +59,7 @@ public class CadastroCelulaBean implements Serializable{
 	
 	private List<Celula> listaCelula() {
 		CelulaDAO celula = new CelulaDAO();
-		return celula.listaUsuario();
+		return celula.listaCelula();
 	}
 	
 	@PostConstruct

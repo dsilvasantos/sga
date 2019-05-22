@@ -9,6 +9,7 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<non-jta-data-source>java:jboss/datasources/sga</non-jta-data-source>
 		<class>br.com.sga.monitoramento.model.Celula</class>
+		<class>br.com.sga.monitoramento.model.Trabalha</class>
 		<class>br.com.sga.monitoramento.model.Departamento</class>
 		<class>br.com.sga.monitoramento.model.Aplicacao</class>
 		<class>br.com.sga.monitoramento.model.Usuario</class>

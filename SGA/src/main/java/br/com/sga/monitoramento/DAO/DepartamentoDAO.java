@@ -71,6 +71,8 @@ public class DepartamentoDAO extends EntityManagerSingleton{
 	public Departamento retornaDepartamento(Integer idDepartamento){
 		Departamento departamento = null;
 		try{
+			if(!entityManager.getTransaction().isActive())
+			entityManager.getTransaction().begin();
 			departamento = (Departamento) entityManager.createQuery("select f from Departamento f where f.id = :idDepartamento")
 			.setParameter("idDepartamento", idDepartamento).getSingleResult();
 		}catch(Exception e){

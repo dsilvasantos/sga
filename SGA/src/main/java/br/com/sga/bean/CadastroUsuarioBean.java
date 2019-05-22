@@ -2,6 +2,7 @@ package br.com.sga.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -10,10 +11,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.sga.monitoramento.DAO.UsuarioDAO;
-import br.com.sga.monitoramento.enumeration.TiposUsuarios;
+import br.com.sga.monitoramento.model.Celula;
+import br.com.sga.monitoramento.model.Trabalha;
 import br.com.sga.monitoramento.model.Usuario;
 import br.com.sga.services.ControladorMensagens;
-import br.com.sga.services.SessionContext;
 
 @ViewScoped
 @ManagedBean(name = "cadastroUsuarioBean")
@@ -25,32 +26,18 @@ public class CadastroUsuarioBean implements Serializable{
 	private List<Usuario> listaUsuario = new ArrayList<Usuario>();
 	private UsuarioDAO userDAO = new UsuarioDAO();
 	private boolean permissao = false;
-	private String celula;
+	private List<Celula> celulasSelecionadas = new ArrayList<Celula>();	
 	
 	@EJB
 	ControladorMensagens controladorMensagens;
 	
-	/*public List<Usuario> getUsuario() {
-		if(celula != null){
-			userDAO.recupearPorCelula(celula);
-		}
-		return new ArrayList<>();
-	}*/
+	
 
 	public Usuario getUsuario() {
 		return this.usuario;
 	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-
-	public String getCelula() {
-		return celula;
-	}
-
-	public void setCelula(String celula) {
-		this.celula = celula;
 	}
 
 	public UsuarioDAO getUserDAO() {
@@ -93,27 +80,44 @@ public class CadastroUsuarioBean implements Serializable{
 	
 	public String salvar(){
 		try{
+			usuario.setListaTrabalha(new ArrayList<Trabalha>());
+			for(Celula cell : celulasSelecionadas){
+				Trabalha trabalha = new Trabalha();
+				trabalha.setCelula(cell);
+				trabalha.setUser(usuario);
+				trabalha.setDate_ini(new GregorianCalendar(2019, 00, 01).getTime());
+				trabalha.setDate_fim(new GregorianCalendar(2019, 05, 01).getTime());
+				usuario.getListaTrabalha().add(trabalha);
+			}
 			userDAO.persist(usuario);
 			controladorMensagens.addMsgInfo("Usuário cadastrado com sucesso !");
 			usuario = new Usuario();
 			return "cadastro_usuario.xhtml";
 		}catch(Exception e){
+			e.printStackTrace();
 			controladorMensagens.addMsgErro("Erro ao incluir usuário !");
 		}
 		return null;
 	}
 	
 	public boolean isPermissao() {
-		if(TiposUsuarios.analistaSuporte.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
-			return true;
-		}else {
-			return false;
-		}
+		//if(TiposUsuarios.analistaSuporte.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
+		//	return true;
+		//}else {
+		//	return false;
+		//}
+		return true;
 		
 }
 
 	public void setPermissao(boolean permissao) {
 		this.permissao = permissao;
+	}
+	public List<Celula> getCelulasSelecionadas() {
+		return celulasSelecionadas;
+	}
+	public void setCelulasSelecionadas(List<Celula> celulasSelecionadas) {
+		this.celulasSelecionadas = celulasSelecionadas;
 	}
 	
 	

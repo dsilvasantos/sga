@@ -12,6 +12,7 @@ public class UsuarioDAO extends EntityManagerSingleton{
 
 	public void persist(Usuario Usuario) {
 		try {
+			if(!transaction.isActive())
 			transaction.begin();
 			entityManager.persist(Usuario);
 			transaction.commit();

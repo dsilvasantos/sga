@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import br.com.sga.monitoramento.model.Celula;
+import br.com.sga.monitoramento.model.Departamento;
 
 public class CelulaDAO extends EntityManagerSingleton{
 
@@ -24,6 +25,7 @@ public class CelulaDAO extends EntityManagerSingleton{
 
 	public void merge(Celula Celula) {
 		try {
+			if(!entityManager.getTransaction().isActive())
 			transaction.begin();
 			entityManager.merge(Celula);
 			transaction.commit();
@@ -35,7 +37,9 @@ public class CelulaDAO extends EntityManagerSingleton{
 
 	public void remove(Celula Celula) {
 		try {
-			transaction.begin();
+			if(!entityManager.getTransaction().isActive())
+			//transaction.begin();
+			entityManager.getTransaction().begin();
 			Celula = entityManager.find(Celula.class, Celula.getId());
 			entityManager.remove(Celula);
 			transaction.commit();
@@ -60,7 +64,7 @@ public class CelulaDAO extends EntityManagerSingleton{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Celula> listaUsuario() {
+	public List<Celula> listaCelula() {
 		try {
 			Query query = entityManager.createQuery("select d from Celula d");
 			List<Celula> result = query.getResultList();
@@ -70,4 +74,18 @@ public class CelulaDAO extends EntityManagerSingleton{
 		}
 		return null;
 	}
+
+	public Celula retornaCelula(Integer idCelula) {
+		Celula celula = null;
+		try{
+			if(!entityManager.getTransaction().isActive())
+				entityManager.getTransaction().begin();
+			celula = (Celula) entityManager.createQuery("select f from Celula f where f.id = :idCelula")
+			.setParameter("idCelula", idCelula).getSingleResult();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return celula;
+	}
+
 }

@@ -1,10 +1,14 @@
 package br.com.sga.monitoramento.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -32,7 +36,10 @@ public class Usuario {
 
 	@Column(name = "tipo", nullable = false)
 	private int tipo;
-
+	
+	@OneToMany(mappedBy = "user", targetEntity = Trabalha.class, cascade = CascadeType.ALL)
+	private List<Trabalha> listaTrabalha;
+	
 	public int getId() {
 		return id;
 	}
@@ -75,6 +82,16 @@ public class Usuario {
 
 	public int getStatus() {
 		return status;
+	}
+	
+	
+
+	public List<Trabalha> getListaTrabalha() {
+		return listaTrabalha;
+	}
+
+	public void setListaTrabalha(List<Trabalha> listaTrabalha) {
+		this.listaTrabalha = listaTrabalha;
 	}
 
 	public void setStatus(int status) {

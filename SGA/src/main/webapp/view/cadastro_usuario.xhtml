@@ -37,14 +37,20 @@
 							<p:outputLabel for="email" value="Email:" />
 							<p:inputText id="email" value="#{cadastroUsuarioBean.usuario.email}" />
 							
-							<p:outputLabel for="celula" value="Célula: " />
-							<p:selectOneMenu id="celula" value="#{celula.celula}" style="width:150px">
-							<f:selectItem itemLabel="Selecionar célula" itemValue=""
-							noSelectionOption="true" />
-							<f:selectItems value="#{celula.celulas}" />
-							</p:selectOneMenu>	
-
+							
+							
+					    
 						</p:panelGrid>
+						<br/>
+						<p:panel header="Selecione uma célula" toggleable="true"
+					style="width:30%;" collapsed="true">
+
+    						<p:selectManyCheckbox id="celula" value="#{cadastroUsuarioBean.celulasSelecionadas}" converter="oneMenuConverter">
+						        <f:selectItems var = "cel" itemValue="#{cel}" value = "#{cadastroCelulaBean.listaCelula}" itemLabel="#{cel.nome}"/>
+					    	</p:selectManyCheckbox>
+					    	</p:panel>
+					    <br/>
+					    
 						<p:commandButton value="Cadastrar" icon="ui-icon-star"
 								action="#{cadastroUsuarioBean.salvar()}" update="@form">
 							</p:commandButton>

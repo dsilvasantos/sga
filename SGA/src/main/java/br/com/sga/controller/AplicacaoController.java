@@ -49,11 +49,12 @@ public class AplicacaoController {
 	}
 	
 	public boolean isPermissao() {
-		if(TiposUsuarios.desenvolvedor.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
-			return true;
-		}else {
-			return false;
-		}
+		//if(TiposUsuarios.desenvolvedor.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
+		//	return true;
+		//}else {
+		//	return false;
+		//}
+		return true;
 	}
 
 	public void setPermissao(boolean permissao) {
