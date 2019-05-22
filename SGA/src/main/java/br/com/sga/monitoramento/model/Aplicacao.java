@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -21,6 +23,10 @@ public class Aplicacao {
 	
 	@Column(name = "status",nullable=false)
 	private Integer status;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_CELULA")
+	private Celula celula;
 	
 	@Transient
 	private Server server;
@@ -54,6 +60,12 @@ public class Aplicacao {
 		this.status = status;
 	}
 	
+	public Celula getCelula() {
+		return celula;
+	}
+	public void setCelula(Celula celula) {
+		this.celula = celula;
+	}
 	public Aplicacao() {
 		super();
 		// TODO Auto-generated constructor stub

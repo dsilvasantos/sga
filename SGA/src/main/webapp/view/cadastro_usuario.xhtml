@@ -54,7 +54,7 @@
 						<p:commandButton value="Cadastrar" icon="ui-icon-star"
 								action="#{cadastroUsuarioBean.salvar()}" update="@form">
 							</p:commandButton>
-							<p:commandButton value="Cancelar"
+							<p:commandButton value="Cancelar" style="margin-left:10px;"
 									action="#{cadastroUsuarioBean.cancela}">
 									<p:confirm header="Confirmação"
 									message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos."
@@ -68,7 +68,6 @@
 									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 								</p:confirmDialog>
 							</p:commandButton>
-						<br/>
 						<br/>
 						<br/>
 						<p:dataTable id="usuarioTable"

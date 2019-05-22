@@ -30,34 +30,65 @@
 
 						<p:panelGrid columns="2">
 
-							<p:outputLabel for="aplicacao" value="Nome da Aplicação:" />
-							<p:inputText id="aplicacao" value="#{Aplicacao.aplicacao.nome}" />
-
-							
-							<p:outputLabel for="status_aplicacao"
-								value="Status da aplicação:" />
-							<h:selectOneMenu id="status_aplicacao"
-								value="#{Aplicacao.aplicacao.status}">
-								<f:selectItem itemValue="1" itemLabel="Ativa" />
-								<f:selectItem itemValue="2" itemLabel="Desativada" />
-							</h:selectOneMenu>
-							
-								
+						<p:outputLabel for="nome" value="Nome da Aplicação:" />
+						<p:inputText id="nome" value="#{cadastraAplicacaoBean.aplicacao.nome}" />
+		
 							
 						<p:outputLabel for="celula" value="Célula:" />
-		  				 <p:selectOneMenu converter="oneMenuConverter" id="celula" value="#{cadastroUsuarioBean.celulasSelecionadas}"
+		  				 <p:selectOneMenu converter="oneMenuConverter" id="celula" value="#{cadastraAplicacaoBean.aplicacao.celula}"
 							style="width:150px">
 							<f:selectItem itemLabel="Selecionar Célula" itemValue=""
 								noSelectionOption="true" />
 							<f:selectItems var = "cel" itemValue="#{cel}" value = "#{cadastroCelulaBean.listaCelula}" itemLabel="#{cel.nome}" />
 						</p:selectOneMenu>
-							
-							
-							<p:commandButton value="Cadastrar" icon="ui-icon-star"
-								action="#{Aplicacao.cadastraApl}" update="messages">
-							</p:commandButton>
-
 						</p:panelGrid>
+						<br/>
+						<p:commandButton value="Cadastrar" icon="ui-icon-star"
+								action="#{cadastraAplicacaoBean.salvar}" update="@form">
+						</p:commandButton>
+						<p:commandButton value="Cancelar" action="#{cadastroUsuarioBean.cancela}" style="margin-left:10px;">
+						<p:confirm header="Confirmação"
+						message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos." icon="ui-icon-alert" />
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" icon="ui-icon-cancel">
+						<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</p:confirmDialog>
+						</p:commandButton>	
+						<br/>
+						<br/>
+							
+						<p:dataTable id="aplicacaoTable" value="#{cadastraAplicacaoBean.listaAplicacao}" var="apl">
+							
+							<p:column headerText="Nome" width="5.0%">
+								<h:outputText value="#{apl.nome}" />
+							</p:column>
+							
+							<p:column headerText="Status" width="5.0%">
+								<h:outputText value="#{apl.status}" />
+							</p:column>
+							
+							<p:column headerText="Célula" width="5.0%">
+								<h:outputText value="#{apl.celula.nome}" />
+							</p:column>
+							
+							<p:column headerText="Editar" width="1.0%">
+									<p:commandButton icon="ui-icon-pencil"
+									action="alteraCelula.xhtml" styleClass="botoesIcones"
+									style="center">
+								<f:param name="CelulaId" value="#{cel.id}" />
+									 </p:commandButton> 
+							</p:column>
+							
+							<p:column headerText="Excluir" width="1.0%">
+								<p:commandButton icon="ui-icon-trash"
+									action="removeCelula.xhtml" styleClass="botoesIcones"
+									style="center">
+									<f:param name="CelulaId" value="#{cel.id}" />
+								</p:commandButton>
+								</p:column>
+				</p:dataTable>	
 					</p:panel>
 				</h:form>
 

@@ -8,6 +8,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import br.com.sga.monitoramento.model.Aplicacao;
+import br.com.sga.monitoramento.model.Celula;
 
 public class AplicacaoDAO extends EntityManagerSingleton{
 
@@ -47,6 +48,19 @@ public class AplicacaoDAO extends EntityManagerSingleton{
 		}
 	}
 
+	
+	@SuppressWarnings("unchecked")
+	public List<Aplicacao> listaAplicacao() {
+		try {
+			Query query = entityManager.createQuery("select d from Aplicacao d");
+			List<Aplicacao> result = query.getResultList();
+			return result;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
 	public List<Aplicacao> recupear(String celula) {
 		try {
 		Query query = entityManager.createNativeQuery(

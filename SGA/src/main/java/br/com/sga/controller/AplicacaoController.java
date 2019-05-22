@@ -27,6 +27,7 @@ public class AplicacaoController {
 	}
 
 	public void salvar(Aplicacao aplicacao){
+		//System.out.println("aqui vem");
 		FacesMessage face = null;
 		if(aplicacao != null){
 		AplicacaoDAO ap = new AplicacaoDAO();

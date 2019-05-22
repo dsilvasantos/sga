@@ -1,8 +1,5 @@
 body {
-	background: #4C6AB0
-		repeating-linear-gradient(90deg, #4C6AB0, #4C6AB0 calc(50% - 210px),
-		#5073C3 calc(50% - 210px), #5073C3 calc(50% + 210px)) repeat scroll 0%
-		0%;
+	background-image: url("../imagens/fundobg.jpg"); 
 }
 
 .ui-widget-content {
