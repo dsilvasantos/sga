@@ -18,7 +18,7 @@
 			<p:growl id="growl" />
 			<p:panel id="painelCelula" header="Alterar Aplicação">
 				<br />
-				<p:panel header="Dados Aplicação" styleClass="semBorda" style="margin-bottom:20px">
+				<p:panel header="Dados Aplicação"  style="margin-bottom:20px">
 					<p:panelGrid columns="2">
 
 						<p:outputLabel value="Nome " />
@@ -31,13 +31,9 @@
 							<f:selectItem itemLabel="Selecionar Célula" itemValue=""
 								noSelectionOption="true" />
 							<f:selectItems var = "cel" itemValue="#{cel}" value = "#{cadastroCelulaBean.listaCelula}" itemLabel="#{cel.nome}" />
-						</p:selectOneMenu>
-						
+						</p:selectOneMenu>	
 					</p:panelGrid>
-				</p:panel>
-			
-			<br/>
-			
+					<br/>
 			<p:commandButton value="Salvar"
 					action="#{editarAplicacaoBean.salvaAlteracao}" update="growl">
 					<p:confirm header="Confirmação"
@@ -66,6 +62,44 @@
 							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 					</p:confirmDialog>
 				</p:commandButton>
+				</p:panel>
+			<br/>
+			<p:panel header="Recursos por Aplicação" style="margin-bottom:20px">
+				<p:panelGrid columns="2">
+				<p:outputLabel for="celula" value="Recurso:" />
+		  				 <h:selectOneMenu converter="oneMenuConverter" id="recurso" value="#{cadastraAplicacaoBean.aplicacao.celula}"
+							style="width:150px">
+							<f:selectItem itemLabel="Selecionar Célula" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems var = "cel" itemValue="#{cel}" value = "#{cadastroCelulaBean.listaCelula}" itemLabel="#{cel.nome}" />
+					</h:selectOneMenu>	
+					
+					<p:outputLabel value="Quantidade Mínima:" />
+					<p:inputText value="#{editarAplicacaoBean.aplicacao.nome}" />
+					
+					<p:outputLabel value="Quantidade Máxima: " />
+					<p:inputText value="#{editarAplicacaoBean.aplicacao.id}" />
+					
+					<p:outputLabel value="Valor: " />
+					<p:inputText value="#{editarAplicacaoBean.aplicacao.nome}" />
+					
+					</p:panelGrid>
+					<br/>
+					<p:commandButton value="Adicionar"
+					action="#{editarAplicacaoBean.salvaAlteracao}" update="growl">
+					<p:confirm header="Confirmação"
+						message="Tem certeza que deseja salvar o registro?"
+						icon="ui-icon-alert" />
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</p:commandButton>
+								
+			</p:panel>
 			
 			</p:panel>	
 			

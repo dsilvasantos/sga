@@ -24,7 +24,6 @@ public class EditarAplicacaoBean implements Serializable{
 	
 	private Aplicacao aplicacao = new Aplicacao();
 	private AplicacaoDAO aplicacaoDAO = new AplicacaoDAO();
-	
 	@EJB
 	ControladorMensagens controladorMensagens;
 	
@@ -51,6 +50,7 @@ public class EditarAplicacaoBean implements Serializable{
 				.get("AplicacaoId");
 		
 		this.aplicacao = this.aplicacaoDAO.recupearAplicacaoID(Integer.parseInt(idAplicacao));
+		
 	}
 	
 	public String cancela() {
