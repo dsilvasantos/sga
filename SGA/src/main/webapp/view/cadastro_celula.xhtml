@@ -14,9 +14,13 @@
 			<link type="text/css" rel="stylesheet" href="../css/default.css" />
 		</h:head>
 	<h:body>
-		
+
+	<p:fieldset legend="Célula" rendered="#{!celula.permissao}">
+			<p>Você não tem permissão para acessar esta página, entre em contato com o Administrador</p>					
+		</p:fieldset>
+
 	<div class="entry" style="line-height: 200%">
-		<h:form id="form">
+		<h:form id="form" rendered="#{celula.permissao}">
 		<p:growl id="growl" />
 	          
 	          <p:panel id="basic" header="Cadastro de Célula" style="margin-bottom:20px">

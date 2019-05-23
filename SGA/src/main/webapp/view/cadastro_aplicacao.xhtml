@@ -13,84 +13,97 @@
 		</h:head>
 
 		<h:body>
-			
+
+			<p:fieldset legend="Aplicação"
+				rendered="#{!aplicacaoController.permissao}">
+				<p>Você não tem permissão para acessar esta página, entre em
+					contato com o Administrador</p>
+			</p:fieldset>
 
 			<div class="entry" style="line-height: 200%">
 
 				<p:growl id="growl" />
 
-				<h:form >
+				<h:form rendered="#{aplicacaoController.permissao}">>
 
 					<p:panel id="basic" header="Cadastro de Aplicação"
 						style="margin-bottom:20px">
 
 						<p:panelGrid columns="2">
 
-						<p:outputLabel for="nome" value="Nome da Aplicação:" />
-						<p:inputText id="nome" value="#{cadastraAplicacaoBean.aplicacao.nome}" />
-		
-							
-						<p:outputLabel for="celula" value="Célula:" />
-		  				 <p:selectOneMenu converter="oneMenuConverter" id="celula" value="#{cadastraAplicacaoBean.aplicacao.celula}"
-							style="width:150px">
-							<f:selectItem itemLabel="Selecionar Célula" itemValue=""
-								noSelectionOption="true" />
-							<f:selectItems var = "cel" itemValue="#{cel}" value = "#{cadastroCelulaBean.listaCelula}" itemLabel="#{cel.nome}" />
-						</p:selectOneMenu>
+							<p:outputLabel for="nome" value="Nome da Aplicação:" />
+							<p:inputText id="nome"
+								value="#{cadastraAplicacaoBean.aplicacao.nome}" />
+
+
+							<p:outputLabel for="celula" value="Célula:" />
+							<p:selectOneMenu converter="oneMenuConverter" id="celula"
+								value="#{cadastraAplicacaoBean.aplicacao.celula}"
+								style="width:150px">
+								<f:selectItem itemLabel="Selecionar Célula" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItems var="cel" itemValue="#{cel}"
+									value="#{cadastroCelulaBean.listaCelula}"
+									itemLabel="#{cel.nome}" />
+							</p:selectOneMenu>
 						</p:panelGrid>
-						<br/>
+						<br />
 						<p:commandButton value="Cadastrar" icon="ui-icon-star"
-								action="#{cadastraAplicacaoBean.salvar}" update="@form">
+							action="#{cadastraAplicacaoBean.salvar}" update="@form">
 						</p:commandButton>
-						<p:commandButton value="Cancelar" action="#{cadastroUsuarioBean.cancela}" style="margin-left:10px;">
-						<p:confirm header="Confirmação"
-						message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos." icon="ui-icon-alert" />
-						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" icon="ui-icon-cancel">
-						<p:commandButton value="Sim" type="button"
-						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-						<p:commandButton value="Não" type="button"
-						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-						</p:confirmDialog>
-						</p:commandButton>	
-						<br/>
-						<br/>
-							
-						<p:dataTable id="aplicacaoTable" value="#{cadastraAplicacaoBean.listaAplicacao}" var="apl">
-							
+						<p:commandButton value="Cancelar"
+							action="#{cadastroUsuarioBean.cancela}" style="margin-left:10px;">
+							<p:confirm header="Confirmação"
+								message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos."
+								icon="ui-icon-alert" />
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade" icon="ui-icon-cancel">
+								<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+						</p:commandButton>
+						<br />
+						<br />
+
+						<p:dataTable id="aplicacaoTable"
+							value="#{cadastraAplicacaoBean.listaAplicacao}" var="apl">
+
 							<p:column headerText="Nome" width="5.0%">
-								<h:outputText value="#{apl.nome}"/>
+								<h:outputText value="#{apl.nome}" />
 							</p:column>
-							
+
 							<p:column headerText="Status" width="5.0%">
 								<h:outputText value="#{apl.status}" />
 							</p:column>
-							
+
 							<p:column headerText="Célula" width="5.0%">
 								<h:outputText value="#{apl.celula.nome}" />
 							</p:column>
-							
+
 							<p:column headerText="Editar" width="1.0%">
-									<p:commandButton icon="ui-icon-pencil"
+								<p:commandButton icon="ui-icon-pencil"
 									action="alteraAplicacao.xhtml" styleClass="botoesIcones"
 									style="center">
-								<f:param name="AplicacaoId" value="#{apl.id}" />
-									 </p:commandButton> 
+									<f:param name="AplicacaoId" value="#{apl.id}" />
+								</p:commandButton>
 							</p:column>
-							
+
 							<p:column headerText="Excluir" width="1.0%">
 								<p:commandButton icon="ui-icon-trash"
 									action="removeAplicacao.xhtml" styleClass="botoesIcones"
 									style="center">
 									<f:param name="AplicacaoId" value="#{apl.id}" />
 								</p:commandButton>
-								</p:column>
-				</p:dataTable>	
+							</p:column>
+						</p:dataTable>
 					</p:panel>
 				</h:form>
 
 			</div>
 
-		
-			</h:body>
+
+		</h:body>
 	</ui:define>
 </ui:composition>
