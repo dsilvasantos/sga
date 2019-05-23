@@ -44,9 +44,9 @@
 						<br/>
 						<p:panel header="Selecione uma célula" toggleable="true"
 					style="width:30%;" collapsed="true">
-
-    						<p:selectManyCheckbox id="celula" value="#{cadastroUsuarioBean.celulasSelecionadas}" converter="oneMenuConverter">
-						        <f:selectItems var = "cel" itemValue="#{cel}" value = "#{cadastroCelulaBean.listaCelula}" itemLabel="#{cel.nome}"/>
+							
+    						<p:selectManyCheckbox  id="celula" value="#{cadastroUsuarioBean.celulasSelecionadas}" converter="oneMenuConverter">
+						        <f:selectItems style="margin-bottom:10px;" var = "cel" itemValue="#{cel}" value = "#{cadastroCelulaBean.listaCelula}" itemLabel="#{cel.nome}" />
 					    	</p:selectManyCheckbox>
 					    	</p:panel>
 					    <br/>

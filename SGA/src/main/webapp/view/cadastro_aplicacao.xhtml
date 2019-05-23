@@ -17,7 +17,7 @@
 
 			<div class="entry" style="line-height: 200%">
 
-				<p:messages id="messages" />
+				<p:growl id="growl" />
 
 				<h:form >
 
@@ -58,7 +58,7 @@
 						<p:dataTable id="aplicacaoTable" value="#{cadastraAplicacaoBean.listaAplicacao}" var="apl">
 							
 							<p:column headerText="Nome" width="5.0%">
-								<h:outputText value="#{apl.nome}" />
+								<h:outputText value="#{apl.nome}"/>
 							</p:column>
 							
 							<p:column headerText="Status" width="5.0%">
