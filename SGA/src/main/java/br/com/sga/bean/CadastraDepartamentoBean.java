@@ -90,6 +90,7 @@ public class CadastraDepartamentoBean implements Serializable {
 		return null;
 	}
 	
+	
 	public boolean isPermissao() {
 		if(TiposUsuarios.analistaSuporte.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
 			return true;
@@ -98,7 +99,7 @@ public class CadastraDepartamentoBean implements Serializable {
 		}
 
 	}
-
+	 
 	public void setPermissao(boolean permissao) {
 		this.permissao = permissao;
 	}
