@@ -32,16 +32,8 @@ public class Aplicacao {
 	private Server server;
 	
 	@Transient
-	private String status_string;
+	private String statusTexto;
 	
-	
-	
-	public String getStatus_string() {
-		return status_string;
-	}
-	public void setStatus_string(String status_string) {
-		this.status_string = status_string;
-	}
 	
 	public String getNome() {
 		return nome;
@@ -78,6 +70,14 @@ public class Aplicacao {
 	public void setCelula(Celula celula) {
 		this.celula = celula;
 	}
+	
+	public String getStatusTexto() {
+		return statusTexto;
+	}
+	public void setStatusTexto(String statusTexto) {
+		this.statusTexto = statusTexto;
+	}
+	
 	public Aplicacao() {
 		super();
 		// TODO Auto-generated constructor stub

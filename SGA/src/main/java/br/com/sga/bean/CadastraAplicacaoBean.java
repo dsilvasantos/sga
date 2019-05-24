@@ -79,7 +79,27 @@ public class CadastraAplicacaoBean implements Serializable{
 
 	private List<Aplicacao> listaAplicacao() {
 		AplicacaoDAO ad = new AplicacaoDAO();
-		return ad.listaAplicacao();
+		List<Aplicacao> list = new ArrayList<Aplicacao>();
+		Aplicacao apl = null;
+		//LOGGER.info(message);
+		for(Aplicacao a : ad.listaAplicacao()) 
+		{
+			apl = new Aplicacao();
+			apl.setNome(a.getNome());
+			apl.setId(a.getId());
+			apl.setCelula(a.getCelula());
+			apl.setStatus(a.getStatus());
+			if(a.getStatus() == 1)
+			{
+				apl.setStatusTexto("Ativa");
+			}
+			else 
+			{
+				apl.setStatusTexto("Desativada");
+			}
+			list.add(apl);
+		}
+		return list;
 	}
 
 

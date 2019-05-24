@@ -1,7 +1,10 @@
 package br.com.sga.monitoramento.DAO;
 
+import java.util.List;
+
 import javax.persistence.Query;
 
+import br.com.sga.monitoramento.model.Aplicacao;
 import br.com.sga.monitoramento.model.Recursos;
 
 public class RecursosDAO extends EntityManagerSingleton{
@@ -41,6 +44,18 @@ public class RecursosDAO extends EntityManagerSingleton{
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Recursos> listaRecursos() {
+		try {
+			Query query = entityManager.createQuery("select d from Recursos d");
+			List<Recursos> result = query.getResultList();
+			return result;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
 	public Recursos recupear(int recurso) {
 		try {
 			Query query = entityManager.createNativeQuery("Select * from recursos where id = ?1", Recursos.class);

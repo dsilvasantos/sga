@@ -1,6 +1,8 @@
 package br.com.sga.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -24,6 +26,7 @@ public class EditarAplicacaoBean implements Serializable{
 	
 	private Aplicacao aplicacao = new Aplicacao();
 	private AplicacaoDAO aplicacaoDAO = new AplicacaoDAO();
+	private List<Aplicacao> listaAplicacao = new ArrayList<Aplicacao>();
 	@EJB
 	ControladorMensagens controladorMensagens;
 	
@@ -43,6 +46,14 @@ public class EditarAplicacaoBean implements Serializable{
 	public void setAplicacaoDAO(AplicacaoDAO aplicacaoDAO) {
 		this.aplicacaoDAO = aplicacaoDAO;
 	}
+	
+	public List<Aplicacao> getListaAplicacao() {
+		return listaAplicacao;
+	}
+
+	public void setListaAplicacao(List<Aplicacao> listaAplicacao) {
+		this.listaAplicacao = listaAplicacao;
+	}
 
 	@PostConstruct
 	public void inicia(){
@@ -51,7 +62,10 @@ public class EditarAplicacaoBean implements Serializable{
 		
 		this.aplicacao = this.aplicacaoDAO.recupearAplicacaoID(Integer.parseInt(idAplicacao));
 		
+		this.listaAplicacao = this.aplicacaoDAO.listaAplicacaoID(Integer.parseInt(idAplicacao));
+		
 	}
+	
 	
 	public String cancela() {
 		return "cadastro_aplicacao?faces-redirect=true";

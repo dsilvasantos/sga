@@ -23,15 +23,19 @@
 
 						<p:outputLabel value="Nome " />
 						<p:inputText value="#{editarAplicacaoBean.aplicacao.nome}" />
+				
 						
+					<p:outputLabel value="Status da Aplicação:" />
+					<h:selectOneMenu id="status_apl" value="#{editarAplicacaoBean.aplicacao.status}">
+			        <f:selectItem itemValue="1" itemLabel="Ativa"/>
+			        <f:selectItem itemValue="0" itemLabel="Desativada"/>
+			        </h:selectOneMenu>
 						
 						<p:outputLabel for="celula" value="Célula:" />
-		  				 <p:selectOneMenu converter="oneMenuConverter" id="celula" value="#{cadastraAplicacaoBean.aplicacao.celula}"
+		  				 <h:selectOneMenu converter="oneMenuConverter" id="celula" value="#{editarAplicacaoBean.aplicacao.celula}"
 							style="width:150px">
-							<f:selectItem itemLabel="Selecionar Célula" itemValue=""
-								noSelectionOption="true" />
 							<f:selectItems var = "cel" itemValue="#{cel}" value = "#{cadastroCelulaBean.listaCelula}" itemLabel="#{cel.nome}" />
-						</p:selectOneMenu>	
+						</h:selectOneMenu>	
 					</p:panelGrid>
 					<br/>
 			<p:commandButton value="Salvar"
@@ -66,29 +70,38 @@
 			<br/>
 			<p:panel header="Recursos por Aplicação" style="margin-bottom:20px">
 				<p:panelGrid columns="2">
-				<p:outputLabel for="celula" value="Recurso:" />
-		  				 <h:selectOneMenu converter="oneMenuConverter" id="recurso" value="#{cadastraAplicacaoBean.aplicacao.celula}"
+				
+					<p:outputLabel for="celula" value="Adicionar recurso a aplicação: " />
+		  				 <h:selectOneMenu converter="oneMenuConverter" id="aplicacaoObj" value="#{cadastraRecursoAplicacaoBean.recursoAplicacao.aplicacao}"
 							style="width:150px">
-							<f:selectItem itemLabel="Selecionar Célula" itemValue=""
-								noSelectionOption="true" />
-							<f:selectItems var = "cel" itemValue="#{cel}" value = "#{cadastroCelulaBean.listaCelula}" itemLabel="#{cel.nome}" />
+							<f:selectItems var = "cel" itemValue="#{cel}" value = "#{editarAplicacaoBean.listaAplicacao}" itemLabel="#{cel.nome}"  />
+					</h:selectOneMenu>	
+				
+				
+				<p:outputLabel for="celula" value="Recurso:" />
+		  				 <h:selectOneMenu converter="oneMenuConverter" id="recurso" value="#{cadastraRecursoAplicacaoBean.recursoAplicacao.recursos}"
+							style="width:150px">
+							<f:selectItems var = "cel" itemValue="#{cel}" value = "#{consultaRecursoBean.listaRecursos}" itemLabel="#{cel.nome}" />
 					</h:selectOneMenu>	
 					
 					<p:outputLabel value="Quantidade Mínima:" />
-					<p:inputText value="#{editarAplicacaoBean.aplicacao.nome}" />
+					<p:inputText value="#{cadastraRecursoAplicacaoBean.recursoAplicacao.quantidadeMinima}" />
 					
 					<p:outputLabel value="Quantidade Máxima: " />
-					<p:inputText value="#{editarAplicacaoBean.aplicacao.id}" />
+					<p:inputText value="#{cadastraRecursoAplicacaoBean.recursoAplicacao.quantidadeMaxima}" />
+					
+					<p:outputLabel value="Quantidade Crítica: " />
+					<p:inputText value="#{cadastraRecursoAplicacaoBean.recursoAplicacao.quantiodadeCritica}" />
 					
 					<p:outputLabel value="Valor: " />
-					<p:inputText value="#{editarAplicacaoBean.aplicacao.nome}" />
+					<p:inputText value="#{cadastraRecursoAplicacaoBean.recursoAplicacao.valor}" />
 					
 					</p:panelGrid>
 					<br/>
 					<p:commandButton value="Adicionar"
-					action="#{editarAplicacaoBean.salvaAlteracao}" update="growl">
+					action="#{cadastraRecursoAplicacaoBean.salvar}" update="growl">
 					<p:confirm header="Confirmação"
-						message="Tem certeza que deseja salvar o registro?"
+						message="Tem certeza que deseja adicionar este recurso a aplicação?"
 						icon="ui-icon-alert" />
 					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 

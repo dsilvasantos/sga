@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,11 +17,14 @@ public class RecursosAplicacao {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "ID_APLICACAO",nullable=false)
-	private int aplicacao;
 	
-	@Column(name = "ID_RECURSOS",nullable=false)
-	private int recursos;
+	@ManyToOne
+	@JoinColumn(name = "ID_RECURSOS")
+	private Recursos recursos;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_APLICACAO")
+	private Aplicacao aplicacao;
 	
 	@Column(name = "quantidade_minima",nullable=false)
 	private int quantidadeMinima;
@@ -41,20 +46,20 @@ public class RecursosAplicacao {
 		this.id = id;
 	}
 
-	public int getAplicacao() {
-		return aplicacao;
-	}
-
-	public void setAplicacao(int aplicacao) {
-		this.aplicacao = aplicacao;
-	}
-
-	public int getRecursos() {
+	public Recursos getRecursos() {
 		return recursos;
 	}
 
-	public void setRecursos(int recursos) {
+	public void setRecursos(Recursos recursos) {
 		this.recursos = recursos;
+	}
+	
+	public Aplicacao getAplicacao() {
+		return aplicacao;
+	}
+
+	public void setAplicacao(Aplicacao aplicacao) {
+		this.aplicacao = aplicacao;
 	}
 
 	public int getQuantidadeMinima() {
@@ -89,12 +94,10 @@ public class RecursosAplicacao {
 		this.valor = valor;
 	}
 
-	public RecursosAplicacao(int id, int aplicacao, int recursos, int quantidadeMinima, int quantidadeMaxima,
+	public RecursosAplicacao(int id, int quantidadeMinima, int quantidadeMaxima,
 			int quantiodadeCritica, String valor) {
 		super();
 		this.id = id;
-		this.aplicacao = aplicacao;
-		this.recursos = recursos;
 		this.quantidadeMinima = quantidadeMinima;
 		this.quantidadeMaxima = quantidadeMaxima;
 		this.quantiodadeCritica = quantiodadeCritica;
