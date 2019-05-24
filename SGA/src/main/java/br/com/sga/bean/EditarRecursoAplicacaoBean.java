@@ -12,22 +12,17 @@ import javax.faces.context.FacesContext;
 
 import org.jboss.logging.Logger;
 
-import br.com.sga.coletor.service.ColetorService;
-import br.com.sga.monitoramento.DAO.AplicacaoDAO;
 import br.com.sga.monitoramento.DAO.CelulaDAO;
-import br.com.sga.monitoramento.DAO.DepartamentoDAO;
 import br.com.sga.monitoramento.DAO.RecursosAplicacaoDAO;
-import br.com.sga.monitoramento.enumeration.TiposUsuarios;
 import br.com.sga.monitoramento.model.Celula;
-import br.com.sga.monitoramento.model.Departamento;
 import br.com.sga.monitoramento.model.RecursosAplicacao;
+import br.com.sga.monitoramento.DAO.AplicacaoDAO;
 import br.com.sga.monitoramento.model.Aplicacao;
 import br.com.sga.services.ControladorMensagens;
-import br.com.sga.services.SessionContext;
 
-@ManagedBean
 @ViewScoped
-public class CadastraRecursoAplicacaoBean implements Serializable{
+@ManagedBean
+public class EditarRecursoAplicacaoBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -39,35 +34,53 @@ public class CadastraRecursoAplicacaoBean implements Serializable{
 	@EJB
 	ControladorMensagens controladorMensagens;
 	
+	
+	
 	public RecursosAplicacao getRecursoAplicacao() {
 		return recursoAplicacao;
 	}
+
+
+
 	public void setRecursoAplicacao(RecursosAplicacao recursoAplicacao) {
 		this.recursoAplicacao = recursoAplicacao;
 	}
+
+
+
 	public RecursosAplicacaoDAO getRecursoAplicacaoDAO() {
 		return recursoAplicacaoDAO;
 	}
+
+
+
 	public void setRecursoAplicacaoDAO(RecursosAplicacaoDAO recursoAplicacaoDAO) {
 		this.recursoAplicacaoDAO = recursoAplicacaoDAO;
 	}
+
+
+
 	public List<RecursosAplicacao> getListaRecursoAplicacao() {
 		return listaRecursoAplicacao;
 	}
+
+
+
 	public void setListaRecursoAplicacao(List<RecursosAplicacao> listaRecursoAplicacao) {
 		this.listaRecursoAplicacao = listaRecursoAplicacao;
-	}	
-		
-	public String salvar(){
+	}
+
+
+
+	public String salvaAlteracao(){
 		try{
-			this.recursoAplicacaoDAO.persist(recursoAplicacao);
-			this.controladorMensagens.addMsgInfo("Aplicação cadastrada com sucesso !");
-			recursoAplicacao = new RecursosAplicacao();
-			return "cadastro_aplicacao.xhtml";
+		this.recursoAplicacaoDAO.merge(recursoAplicacao);
+		this.controladorMensagens.addMsgInfo("Recurso da aplicação alterado com sucesso !");
+		return "cadastro_aplicacao.xhtml";
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return null;
 	}
-
+	
 }

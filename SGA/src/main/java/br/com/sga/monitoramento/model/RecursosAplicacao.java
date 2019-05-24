@@ -16,16 +16,7 @@ public class RecursosAplicacao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	
-	@ManyToOne
-	@JoinColumn(name = "ID_RECURSOS")
-	private Recursos recursos;
-	
-	@ManyToOne
-	@JoinColumn(name = "ID_APLICACAO")
-	private Aplicacao aplicacao;
-	
+		
 	@Column(name = "quantidade_minima",nullable=false)
 	private int quantidadeMinima;
 	
@@ -38,6 +29,14 @@ public class RecursosAplicacao {
 	@Column(name = "valor",nullable=false)
 	private String valor;
 
+	@ManyToOne
+	@JoinColumn(name = "ID_RECURSOS")
+	private Recursos recursos;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_APLICACAO")
+	private Aplicacao aplicacao;
+	
 	public int getId() {
 		return id;
 	}
@@ -45,23 +44,6 @@ public class RecursosAplicacao {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public Recursos getRecursos() {
-		return recursos;
-	}
-
-	public void setRecursos(Recursos recursos) {
-		this.recursos = recursos;
-	}
-	
-	public Aplicacao getAplicacao() {
-		return aplicacao;
-	}
-
-	public void setAplicacao(Aplicacao aplicacao) {
-		this.aplicacao = aplicacao;
-	}
-
 	public int getQuantidadeMinima() {
 		return quantidadeMinima;
 	}
@@ -93,7 +75,24 @@ public class RecursosAplicacao {
 	public void setValor(String valor) {
 		this.valor = valor;
 	}
+	
+	public Aplicacao getAplicacao() {
+		return aplicacao;
+	}
 
+	public void setAplicacao(Aplicacao aplicacao) {
+		this.aplicacao = aplicacao;
+	}
+	
+
+	public Recursos getRecursos() {
+		return recursos;
+	}
+
+	public void setRecursos(Recursos recursos) {
+		this.recursos = recursos;
+	}
+	
 	public RecursosAplicacao(int id, int quantidadeMinima, int quantidadeMaxima,
 			int quantiodadeCritica, String valor) {
 		super();

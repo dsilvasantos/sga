@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/template/template.xhtml">
+	
+	<ui:define name="content" >
+	
+	<h:head>
+		  <link type="text/css" rel="stylesheet" href="../css/default.css" />
+	</h:head>
+	<h:body>
+	
+		<h:form id="form">
+			<p:growl id="growl" />
+			<p:panel id="painelCelula" header="Alterar Recurso da Aplicação">
+				<br />
+				<p:panel header="Dados do Recurso da Aplicação" styleClass="semBorda">
+					<p:panelGrid columns="2">
+
+						<p:outputLabel value="Aplicação: " />
+						<p:outputLabel value="#{consultaRecursoAplicacaoBean.recursoAplicacao.aplicacao.nome}"/>
+						
+						<p:outputLabel value="Recurso: " />
+						<p:outputLabel value="#{consultaRecursoAplicacaoBean.recursoAplicacao.recursos.nome}"/>
+						
+					
+						<p:outputLabel value="Quantidade Mínima " />
+						<p:inputText value="#{consultaRecursoAplicacaoBean.recursoAplicacao.quantidadeMinima}" />
+						
+						<p:outputLabel value="Quantidade Máxima " />
+						<p:inputText value="#{consultaRecursoAplicacaoBean.recursoAplicacao.quantidadeMaxima}" />
+						
+						<p:outputLabel value="Quantidade Crítica " />
+						<p:inputText value="#{consultaRecursoAplicacaoBean.recursoAplicacao.quantiodadeCritica}" />
+						
+						<p:outputLabel value="Valor " />
+						<p:inputText value="#{consultaRecursoAplicacaoBean.recursoAplicacao.valor}" />
+												
+	
+						
+						
+					</p:panelGrid>
+				</p:panel>
+				
+				<br/>
+				
+				<p:commandButton value="Alterar"
+					action="#{consultaRecursoAplicacaoBean.salvaAlteracao}" update="growl">
+					<p:confirm header="Confirmação"
+						message="Tem certeza que deseja alterar os dados deste recurso para essa aplicação?"
+						icon="ui-icon-alert" />
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</p:commandButton>
+
+				<p:commandButton value="Cancelar" style="margin-left:10px;"
+					action="cadastro_aplicacao.xhtml">
+					<p:confirm header="Confirmação"
+						message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos."
+						icon="ui-icon-alert" />
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+						icon="ui-icon-cancel">
+
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</p:commandButton>
+				
+			<br/>
+						
+				
+				
+			</p:panel>	
+			
+			
+		</h:form>
+	</h:body>
+</ui:define>
+</ui:composition>

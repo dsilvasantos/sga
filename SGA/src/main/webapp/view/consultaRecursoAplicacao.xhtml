@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/template/template.xhtml">
+	
+	<ui:define name="content" >
+	
+	<h:head>
+		  <link type="text/css" rel="stylesheet" href="../css/default.css" />
+	</h:head>
+	<h:body>
+	
+		<h:form id="form">
+			<p:growl id="growl" />
+			<p:panel id="painelRecursoAplicacao" header="Recursos da Aplicação">
+							
+							
+							
+							<p:dataTable id="recursoaplicacaoTable"
+							value="#{consultaRecursoAplicacaoBean.listaRecursoAplicacao}" var="apl">
+
+							<p:column headerText="Nome do Recurso" width="5.0%">
+								<h:outputText value="#{apl.recursos.nome}" />
+							</p:column>
+
+							<p:column headerText="Quantidade Mínima" width="5.0%">
+								<h:outputText value="#{apl.quantidadeMinima}" />
+							</p:column>
+							
+							<p:column headerText="Quantidade Máxima" width="5.0%">
+								<h:outputText value="#{apl.quantidadeMaxima}" />
+							</p:column>
+							
+							<p:column headerText="Quantidade Crítica" width="5.0%">
+								<h:outputText value="#{apl.quantiodadeCritica}" />
+							</p:column>
+							
+							<p:column headerText="Valor" width="5.0%">
+								<h:outputText value="#{apl.valor}" />
+							</p:column>
+							
+							<p:column headerText="Editar" width="1.0%">
+								<p:commandButton icon="ui-icon-pencil"
+									action="alteraRecursoAplicacao.xhtml" styleClass="botoesIcones"
+									style="center">
+									<f:param name="RecursoAplicacaoIdFinal" value="#{apl.id}" />
+								</p:commandButton>
+							</p:column>
+
+							<p:column headerText="Excluir" width="1.0%">
+								<p:commandButton icon="ui-icon-trash"
+									action="removeRecursoAplicacao.xhtml" styleClass="botoesIcones"
+									style="center">
+									<f:param name="RecursoAplicacaoIdFinal" value="#{apl.id}" />
+								</p:commandButton>
+							</p:column>
+							
+						</p:dataTable>
+			
+			</p:panel>	
+			
+		</h:form>
+	</h:body>
+</ui:define>
+</ui:composition>

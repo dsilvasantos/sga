@@ -27,13 +27,14 @@ import br.com.sga.services.SessionContext;
 
 @ManagedBean
 @ViewScoped
-public class CadastraRecursoAplicacaoBean implements Serializable{
+public class ConsultaRecursoAplicacaoBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	private RecursosAplicacao recursoAplicacao = new RecursosAplicacao();
 	private RecursosAplicacaoDAO recursoAplicacaoDAO = new RecursosAplicacaoDAO();
 	private List<RecursosAplicacao> listaRecursoAplicacao = new ArrayList<RecursosAplicacao>();
+	String idRecursoAplicacao, idRecursoAplicacaoFinal;
 	private boolean permissao = false;
 	private static final Logger LOGGER = Logger.getLogger(CadastraAplicacaoBean.class);
 	@EJB
@@ -57,17 +58,65 @@ public class CadastraRecursoAplicacaoBean implements Serializable{
 	public void setListaRecursoAplicacao(List<RecursosAplicacao> listaRecursoAplicacao) {
 		this.listaRecursoAplicacao = listaRecursoAplicacao;
 	}	
+	
+	@PostConstruct
+	public void iniciar() {
 		
-	public String salvar(){
+		idRecursoAplicacao = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+		
+				.get("RecursoAplicacaoId");
+	
+		idRecursoAplicacaoFinal = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+				
+				.get("RecursoAplicacaoIdFinal");
+		
+		
+		if(idRecursoAplicacao == null) 
+		{
+			
+		}
+		else 
+		{
+			listaRecursoAplicacao = listaRecursoAplicacao();
+		}
+		
+		if(idRecursoAplicacaoFinal == null) 
+		{
+			
+		}
+		else 
+		{
+			recursoAplicacao = this.recursoAplicacaoDAO.recuperaRecursoAplicacao(Integer.parseInt(idRecursoAplicacaoFinal));
+		}
+		
+		
+		}
+	
+	private List<RecursosAplicacao> listaRecursoAplicacao() 
+	{ 
+		return this.recursoAplicacaoDAO.listaRecursosAplicacao(Integer.parseInt(idRecursoAplicacao));
+	}
+	
+	public String salvaAlteracao(){
 		try{
-			this.recursoAplicacaoDAO.persist(recursoAplicacao);
-			this.controladorMensagens.addMsgInfo("Aplicação cadastrada com sucesso !");
-			recursoAplicacao = new RecursosAplicacao();
-			return "cadastro_aplicacao.xhtml";
+		this.recursoAplicacaoDAO.merge(recursoAplicacao);
+		this.controladorMensagens.addMsgInfo("Recurso da aplicação alterado com sucesso !");
+		return "cadastro_aplicacao.xhtml";
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return null;
 	}
-
+	
+	public String exclui(){
+		try{
+		this.recursoAplicacaoDAO.remove(recursoAplicacao);
+		this.controladorMensagens.addMsgInfo("Recurso da aplicação excluído com sucesso !");
+		return "cadastro_aplicacao.xhtml";
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

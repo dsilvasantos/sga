@@ -72,16 +72,16 @@
 				<p:panelGrid columns="2">
 				
 					<p:outputLabel for="celula" value="Adicionar recurso a aplicação: " />
-		  				 <h:selectOneMenu converter="oneMenuConverter" id="aplicacaoObj" value="#{cadastraRecursoAplicacaoBean.recursoAplicacao.aplicacao}"
+		  				 <h:selectOneMenu converter="oneMenuConverter" id="aplicacaoObj" var = "vrecursoAplicacao" value="#{cadastraRecursoAplicacaoBean.recursoAplicacao.aplicacao}"
 							style="width:150px">
 							<f:selectItems var = "cel" itemValue="#{cel}" value = "#{editarAplicacaoBean.listaAplicacao}" itemLabel="#{cel.nome}"  />
 					</h:selectOneMenu>	
 				
 				
-				<p:outputLabel for="celula" value="Recurso:" />
+					<p:outputLabel for="celula" value="Recurso:" />
 		  				 <h:selectOneMenu converter="oneMenuConverter" id="recurso" value="#{cadastraRecursoAplicacaoBean.recursoAplicacao.recursos}"
 							style="width:150px">
-							<f:selectItems var = "cel" itemValue="#{cel}" value = "#{consultaRecursoBean.listaRecursos}" itemLabel="#{cel.nome}" />
+							<f:selectItems var = "vrecursos" itemValue="#{vrecursos}" value = "#{consultaRecursoBean.listaRecursos}" itemLabel="#{vrecursos.nome}" />
 					</h:selectOneMenu>	
 					
 					<p:outputLabel value="Quantidade Mínima:" />
@@ -110,6 +110,13 @@
 						<p:commandButton value="Não" type="button"
 							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 					</p:confirmDialog>
+				</p:commandButton>
+			
+				
+				<p:commandButton value="Visualizar Recursos da aplicação"
+					action="consultaRecursoAplicacao.xhtml" 
+					style="margin-left:10px;">
+					<f:param name="RecursoAplicacaoId" value="#{editarAplicacaoBean.aplicacao.id}" />
 				</p:commandButton>
 								
 			</p:panel>
