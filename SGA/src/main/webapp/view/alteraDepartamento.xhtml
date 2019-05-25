@@ -41,10 +41,8 @@
 						
 					</p:panelGrid>
 				</p:panel>-->
-				
-			</p:panel>
 			
-			<p:commandButton value="Salvar"
+						<p:commandButton value="Salvar"
 					action="#{editarDepartamentoBean.salvaAlteracao}" update="growl">
 					<p:confirm header="Confirmação"
 						message="Tem certeza que deseja salvar o registro?"
@@ -58,7 +56,7 @@
 					</p:confirmDialog>
 				</p:commandButton>
 
-				<p:commandButton value="Cancelar"
+				<p:commandButton value="Cancelar" style="margin-left:10px;"
 					action="#{editarDepartamentoBean.cancela}">
 					<p:confirm header="Confirmação"
 						message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos."
@@ -72,6 +70,10 @@
 							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 					</p:confirmDialog>
 				</p:commandButton>
+				
+			</p:panel>
+			
+
 		</h:form>
 	</ui:define>
 </ui:composition>
