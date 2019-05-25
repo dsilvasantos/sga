@@ -160,4 +160,10 @@ public class ColetorControllerBean implements Serializable {
 	public void setPermissao(boolean permissao) {
 		this.permissao = permissao;
 	}
+	
+	public String limparErro(Erro erro) {
+		String key = recuperarAplicacao(erro.getAplicacao()) + "_" + recuperarRecurso(erro.getRecurso());
+		ColetorService.alertas.remove(key);
+		return key;
+	}
 }
