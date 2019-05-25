@@ -15,7 +15,9 @@
       <h:form id = "form" prependId="false">
             <p:growl id="growl"/>
 			<p:panelGrid columns="1" styleClass="ui-fluid center ui-noborder">                  
-			<img src="#{request.contextPath}/imagens/SGA.png" alt="logo"/>
+			<img
+					src="../imagens/LOGOSGA.png"
+					alt="logo" style="widht: 50px; height: 100px;"/>
 			
 			<p:outputLabel for="nomeUsuario" value="Login:" style="text-align:center"/>
                   <p:inputText id="nomeUsuario" value="#{usuarioLogadoMB.login}" />

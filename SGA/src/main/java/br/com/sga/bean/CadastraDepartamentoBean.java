@@ -81,7 +81,7 @@ public class CadastraDepartamentoBean implements Serializable {
 	public String salvar() {
 		try {
 			dpDAO.persist(departamento);
-			controladorMensagens.addMsgInfo("Derpartamento incluido com sucesso");
+			controladorMensagens.addMsgInfo("Departamento incluido com sucesso");
 			departamento = new Departamento();
 			return "cadastro_departamento.xhtml";
 		} catch (Exception e) {

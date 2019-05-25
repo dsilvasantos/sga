@@ -33,12 +33,12 @@
 		                <p:inputTextarea id="descricao" value="#{cadastroCelulaBean.celula.descricao}" />                                
 		  				
 		  				<p:outputLabel for="departamento" value="Departamento:" />
-		  				 <p:selectOneMenu id="departamento" converter="oneMenuConverter" value="#{cadastroCelulaBean.celula.departamento}"
+		  				 <h:selectOneMenu id="departamento" converter="oneMenuConverter" value="#{cadastroCelulaBean.celula.departamento}"
 							style="width:150px">
 							<f:selectItem itemLabel="Selecionar departamento" itemValue=""
 								noSelectionOption="true" />
 							<f:selectItems value="#{departamento.listaDepartamentos}"  var = "dep" itemLabel="#{dep.nome}" itemValue="#{dep}" />
-						</p:selectOneMenu>
+						</h:selectOneMenu>
 						
 	      	    </p:panelGrid>
 	      	    <br/>
