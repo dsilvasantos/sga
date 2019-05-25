@@ -51,7 +51,7 @@
 								update=":form:resultados" />
 							<p></p>
 							<p:commandButton ajax="true" onstart="PF('statusDialog').show()"
-								oncomplete="PF('solucaoDialog').show(),PF('statusDialog').hide()"
+								oncomplete="PF('statusDialog').hide(),PF('solucaoDialog').show()"
 								actionListener="#{erro.sendErro(valor)}"
 								title="Solucionar" value="Solucionar">
 								<ui:include src="solucao.xhtml">
