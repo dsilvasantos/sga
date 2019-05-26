@@ -5,8 +5,8 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="521"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="633"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="353"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="531"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="455"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false"/>
 	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
@@ -17,17 +17,17 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
-	<parameter name="dataInicial" class="java.sql.Timestamp"/>
-	<parameter name="dataFinal" class="java.sql.Timestamp"/>
+	<parameter name="dataInicial" class="java.util.Date"/>
+	<parameter name="dataFinal" class="java.util.Date"/>
 	<parameter name="departamento" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT prioridade,erros.DESCRICAO as descricao,aplicacao.nome as aplicacao,
 data_abertura,data_solucao,erros.status as status,usuario.nome as usuario,
 recursos.nome as recurso,celula.nome as celula
 FROM erros,aplicacao,usuario,celula,departamento,recursos
-where departamento.ID=1 and celula.ID_DEPARTAMENTO=departamento.id and
+where departamento.ID=$P{departamento}  and celula.ID_DEPARTAMENTO=departamento.id and
 aplicacao.ID_CELULA=celula.ID and erros.ID_APLICACAO=aplicacao.ID and
-recursos.ID=erros.id_recurso and data_abertura between $P{dataInicial} and $P{dataFinal}
+recursos.ID=erros.id_recursos and data_abertura >=  $P{dataInicial} and data_abertura <= $P{dataFinal} 
 order by aplicacao,data_abertura]]>
 	</queryString>
 	<field name="prioridade" class="java.lang.String">
