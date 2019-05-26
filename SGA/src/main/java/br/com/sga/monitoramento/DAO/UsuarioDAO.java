@@ -52,8 +52,8 @@ public class UsuarioDAO extends EntityManagerSingleton{
 
 			Query query = entityManager.createNativeQuery(
 					"Select usuario.id,usuario.login,usuario.senha,usuario.nome,usuario.email,usuario.status from "
-							+ "celula,usuario,trabalha where celula.nome= ?1 and trabalha.id_celula=celula.id and "
-							+ "usuario.id=trabalha.id_usuario",
+							+ "celula,usuario where celula.nome= ?1 and usuario.id_celula=celula.id "
+,
 					Usuario.class);
 			query.setParameter(1, celula);
 			if (query.getResultList().isEmpty()) {
@@ -118,13 +118,22 @@ public class UsuarioDAO extends EntityManagerSingleton{
 		Usuario usuario = null;
 		try{
 			Query query =  entityManager.createNativeQuery(""
-					+ "select * from Usuario f where f.login =?1 and f.senha =?2",Usuario.class);
+					+ "select * from Usuario f where f.login =?1 and f.senha =?2");
 			query.setParameter(1, login);
 			query.setParameter(2, senha);
 			if(query.getResultList().size()==0) {
 				return usuario;
 			}
-			usuario = (Usuario) query.getSingleResult();
+			Object[] objeto = (Object[]) query.getSingleResult();
+			int id = (Integer)objeto[0];
+			String nome = (String) objeto[3];
+			String email = (String) objeto[4];
+			int status = (Integer) objeto[5];
+			int tipo = (Integer) objeto[6];
+			int celula = (Integer) objeto[7];
+			
+			usuario = new Usuario(id,  login,  senha,  nome,  email,  status, tipo, celula);
+			return usuario;
 		}catch(Exception e){
 			e.printStackTrace();
 		}

@@ -20,23 +20,26 @@
 
 
 	<p:dialog header="Solução" widgetVar="solucaoDialog" modal="true"
-		showEffect="fade" hideEffect="fade" resizable="false">
-		<p:growl id="growl" showDetail="true" rendered="true" life="5000" />
+		 showEffect="fade" hideEffect="fade" resizable="false" draggable="false">
 
-		<p:panel id="dadosForm" header="Solucionar erro" style="margin-bottom:10px;">
-			<h:panelGrid columns="2" styleClass="semBorda"
-				columnClasses="firstColumn">
-				<p:outputLabel value="Solução" />
-				<p:inputTextarea id="Solucao"
-					value="#{erro.solucao}" />
-			</h:panelGrid>
-			<p:commandButton ajax="true" title="Solução"
-				update=":form:result,:form:resultados,form:result:0:dadosForm"
-				onstart="PF('statusDialog').show()"
-				oncomplete="PF('statusDialog').hide(),PF('solucaoDialog').hide()" value="Solução"
-					actionListener="#{erro.solucionar()}"
-				 />
-		</p:panel>
+		<h:form>
+			<p:growl id="growl" showDetail="true" rendered="true" life="5000" />
+
+			<p:panel id="dadosForm" header="Solucionar erro"
+				style="margin-bottom:10px;">
+				<h:panelGrid columns="2" styleClass="semBorda"
+					columnClasses="firstColumn">
+					<p:outputLabel value="Solução" />
+					<p:inputTextarea id="Solucao" value="#{erro.solucao}" />
+				</h:panelGrid>
+				<p:commandButton ajax="true" title="Solução"  onstart="PF('statusDialog').show()"
+					update=":form:result,:form:resultados"
+					oncomplete="PF('statusDialog').hide(),PF('solucaoDialog').hide()"
+					value="Solução" actionListener="#{erro.solucionar()}" />
+					
+					
+			</p:panel>
+		</h:form>
 	</p:dialog>
 </ui:composition>
 

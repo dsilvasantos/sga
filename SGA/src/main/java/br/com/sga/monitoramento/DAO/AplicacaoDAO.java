@@ -1,5 +1,6 @@
 package br.com.sga.monitoramento.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -65,10 +66,18 @@ public class AplicacaoDAO extends EntityManagerSingleton{
 	public List<Aplicacao> recupear(String celula) {
 		try {
 		Query query = entityManager.createNativeQuery(
-				"Select aplicacao.id,aplicacao.nome,aplicacao.status from aplicacao,celula where aplicacao.ID_CELULA = "
-						+ "celula.id and celula.nome=?1",Aplicacao.class);
+				"Select aplicacao.id id,aplicacao.nome nome,aplicacao.status status from aplicacao,celula where aplicacao.ID_CELULA = "
+						+ "celula.id and celula.nome=?1");
 		query.setParameter(1, celula);
-		List<Aplicacao> aplicacoes = query.getResultList();
+		List<Object[]> objs = query.getResultList();
+		List<Aplicacao> aplicacoes =  new ArrayList<>();
+		for (Object[] o : objs) {
+			Aplicacao aplicacao = new Aplicacao();
+			aplicacao.setId((Integer) o[0]);
+			aplicacao.setNome((String) o[1]);
+			aplicacao.setStatus((Integer) o[2]);
+			aplicacoes.add(aplicacao);
+		}
 		return aplicacoes;
 		} catch (Exception ex) {
 			ex.printStackTrace();

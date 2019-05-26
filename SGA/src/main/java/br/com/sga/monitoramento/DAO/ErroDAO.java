@@ -49,7 +49,7 @@ public class ErroDAO extends EntityManagerSingleton{
 	public List<Erro> recupearErroIDUsuario(int id) {
 		try {
 		Query query = entityManager.createNativeQuery(
-				"Select * from erros where erros.id_usuario=?1 and status='Aberto'",Erro.class);
+				"Select * from erros where erros.id_usuario=?1 and status='Designado'",Erro.class);
 		query.setParameter(1, id);
 		List<Erro> erros = query.getResultList();
 		return erros;

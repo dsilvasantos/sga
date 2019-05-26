@@ -132,14 +132,14 @@ public class ColetorRoles {
 					+ "|versao-jboss=" + versaoJboss;
 
 			mensagem += "\n Versão do JBoss OK.";
-			identificarAlertas(TipoAlerta.OK, TipoRecurso.VERSAOJBOSS.toString().toLowerCase(), key, mensagem, recursosAplicacao.getId(),
+			identificarAlertas(TipoAlerta.OK, TipoRecurso.VERSAOJBOSS.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos().getId(),
 					server.getNome(),null);
 		} else {
 			mensagem = TipoAlerta.CRITICAL.getValor().toUpperCase() + " Versão do JBoss está diferente = "
 					+ server.getJbossVersion() + "|versao-jboss=" + versaoJboss;
 			mensagem += "\n Versão do JBoss está diferente.";
 			identificarAlertas(TipoAlerta.CRITICAL, TipoRecurso.VERSAOJBOSS.toString().toLowerCase(), key, mensagem,
-					recursosAplicacao.getId(), server.getNome(),null);
+					recursosAplicacao.getRecursos().getId(), server.getNome(),null);
 		}
 
 		// Tratando alertas dos Server
@@ -176,14 +176,14 @@ public class ColetorRoles {
 						+ minGrafico + ";" + maxGrafico + ";";
 				mensagem += "\n Uso da memória Heap superior a " + critical + "%";
 				identificarAlertas(TipoAlerta.CRITICAL, TipoRecurso.HEAP.toString().toLowerCase(), key, mensagem,
-						recursosAplicacao.getId(), server.getNome(),valorHeap);
+						recursosAplicacao.getRecursos().getId(), server.getNome(),valorHeap);
 			} else if (valorHeap > NumWarning) {
 				mensagem = TipoAlerta.WARN.getValor().toUpperCase() + " Uso da memória heap="
 						+ server.getJvm().getPercentUseHeap() + "%";
 				mensagem += "|heap=" + server.getJvm().getPercentUseHeap() + ";" + warning + ";" + critical + ";"
 						+ minGrafico + ";" + maxGrafico + ";";
 				mensagem += "\n Uso da memória Heap superior a " + warning + "%";
-				identificarAlertas(TipoAlerta.WARN, TipoRecurso.HEAP.toString().toLowerCase(), key, mensagem, recursosAplicacao.getId(),
+				identificarAlertas(TipoAlerta.WARN, TipoRecurso.HEAP.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos().getId(),
 						server.getNome(),valorHeap);
 			} else {
 				mensagem = TipoAlerta.OK.getValor().toUpperCase() + " Uso da memória heap="
@@ -191,7 +191,7 @@ public class ColetorRoles {
 				mensagem += "|heap=" + server.getJvm().getPercentUseHeap() + ";" + warning + ";" + critical + ";"
 						+ minGrafico + ";" + maxGrafico + ";";
 				mensagem += "\n Uso da memória Heap inferior a " + warning + "%";
-				identificarAlertas(TipoAlerta.OK, TipoRecurso.HEAP.toString().toLowerCase(), key, mensagem, recursosAplicacao.getId(),
+				identificarAlertas(TipoAlerta.OK, TipoRecurso.HEAP.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos().getId(),
 						server.getNome(),valorHeap);
 			}
 		} catch (Exception e) {
@@ -207,7 +207,7 @@ public class ColetorRoles {
 	 * 
 	 * @param server
 	 * @param key
-	 * @param recursosAplicacao.getId()
+	 * @param recursosAplicacao.getRecursos().getId()
 	 */
 	// TODO aguardar a definição do limite do metaspace para calcular o percentual
 	// de uso, por enquanto, apenas é informado a quantidade de uso em MB
@@ -234,14 +234,14 @@ public class ColetorRoles {
 					+ ";" + maxGrafico + ";";
 			mensagem += "\nValor do Metaspace superior a " + critical + "MB";
 			identificarAlertas(TipoAlerta.CRITICAL, TipoRecurso.METASPACE.toString().toLowerCase(), key, mensagem,
-					recursosAplicacao.getId(), server.getNome(),metaSpaceUse);
+					recursosAplicacao.getRecursos().getId(), server.getNome(),metaSpaceUse);
 		} else if (metaSpaceUse > warning) {
 			String mensagem = TipoAlerta.WARN.getValor().toUpperCase() + " Memória Metaspace="
 					+ server.getMetaspaceUsedMB() + "MB";
 			mensagem += "|metaspace=" + server.getMetaspaceUsedMB() + ";" + warning + ";" + critical + ";" + minGrafico
 					+ ";" + maxGrafico + ";";
 			mensagem += "\nValor do Metaspace superior a " + warning + "MB";
-			identificarAlertas(TipoAlerta.WARN, TipoRecurso.METASPACE.toString().toLowerCase(), key, mensagem, recursosAplicacao.getId(),
+			identificarAlertas(TipoAlerta.WARN, TipoRecurso.METASPACE.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos().getId(),
 					server.getNome(),metaSpaceUse);
 		} else if (metaSpaceUse < warning) {
 			String mensagem = TipoAlerta.OK.getValor().toUpperCase() + " Memória Metaspace="
@@ -249,7 +249,7 @@ public class ColetorRoles {
 			mensagem += "|metaspace=" + server.getMetaspaceUsedMB() + ";" + warning + ";" + critical + ";" + minGrafico
 					+ ";" + maxGrafico + ";";
 			mensagem += "\nValor do Metaspace inferior a " + warning + "MB";
-			identificarAlertas(TipoAlerta.OK, TipoRecurso.METASPACE.toString().toLowerCase(), key, mensagem, recursosAplicacao.getId(),
+			identificarAlertas(TipoAlerta.OK, TipoRecurso.METASPACE.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos().getId(),
 					server.getNome(),metaSpaceUse);
 		}
 	}
@@ -279,21 +279,21 @@ public class ColetorRoles {
 			mensagem += "|threads=" + server.getThread() + ";" + warning + ";" + critical + ";" + minGrafico + ";"
 					+ maxGrafico + ";";
 			mensagem += "\nValor das Threads superior a " + critical;
-			identificarAlertas(TipoAlerta.CRITICAL, TipoRecurso.THREAD.toString().toLowerCase(), key, mensagem, recursosAplicacao.getId(),
+			identificarAlertas(TipoAlerta.CRITICAL, TipoRecurso.THREAD.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos().getId(),
 					server.getNome(),server.getThread());
 		} else if (server.getThread() > warning) {
 			mensagem = TipoAlerta.WARN.getValor().toUpperCase() + " Quantidade de threads=" + server.getThread();
 			mensagem += "|threads=" + server.getThread() + ";" + warning + ";" + critical + ";" + minGrafico + ";"
 					+ maxGrafico + ";";
 			mensagem += "\nValor das Threads superior a " + warning;
-			identificarAlertas(TipoAlerta.WARN, TipoRecurso.THREAD.toString().toLowerCase(), key, mensagem, recursosAplicacao.getId(),
+			identificarAlertas(TipoAlerta.WARN, TipoRecurso.THREAD.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos().getId(),
 					server.getNome(),server.getThread());
 		} else {
 			mensagem = TipoAlerta.OK.getValor().toUpperCase() + " Quantidade de threads=" + server.getThread();
 			mensagem += "|threads=" + server.getThread() + ";" + warning + ";" + critical + ";" + minGrafico + ";"
 					+ maxGrafico + ";";
 			mensagem += "\nValor das Threads inferior a " + warning;
-			identificarAlertas(TipoAlerta.OK, TipoRecurso.THREAD.toString().toLowerCase(), key, mensagem, recursosAplicacao.getId(),
+			identificarAlertas(TipoAlerta.OK, TipoRecurso.THREAD.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos().getId(),
 					server.getNome(),server.getThread());
 		}
 	}
@@ -374,7 +374,7 @@ public class ColetorRoles {
 							+ ds.getMaxCount();
 					identificarAlertas(TipoAlerta.CRITICAL,
 							TipoRecurso.DATASOURCE.toString().toLowerCase() + "_" + ds.getNome(), key, mensagem,
-							recursosAplicacao.getId(), server.getNome(),percentualUso);
+							recursosAplicacao.getRecursos().getId(), server.getNome(),percentualUso);
 				} else if (percentualUso > warning) {
 					mensagem = TipoAlerta.WARN.getValor().toUpperCase() + " Datasource [" + ds.getNome()
 							+ "] com percentual de uso = " + ds.getPercentUsage() + "%";
@@ -385,7 +385,7 @@ public class ColetorRoles {
 							+ ds.getMaxCount();
 					identificarAlertas(TipoAlerta.WARN,
 							TipoRecurso.DATASOURCE.toString().toLowerCase() + "_" + ds.getNome(), key, mensagem,
-							recursosAplicacao.getId(), server.getNome(),percentualUso);
+							recursosAplicacao.getRecursos().getId(), server.getNome(),percentualUso);
 				} else {
 					mensagem = TipoAlerta.OK.getValor().toUpperCase() + " Datasource [" + ds.getNome()
 							+ "] com percentual de uso = " + ds.getPercentUsage() + "%";
@@ -396,7 +396,7 @@ public class ColetorRoles {
 							+ ds.getMaxCount();
 					identificarAlertas(TipoAlerta.OK,
 							TipoRecurso.DATASOURCE.toString().toLowerCase() + "_" + ds.getNome(), key, mensagem,
-							recursosAplicacao.getId(), server.getNome(),percentualUso);
+							recursosAplicacao.getRecursos().getId(), server.getNome(),percentualUso);
 				}
 			}
 		} catch (Exception e) {
