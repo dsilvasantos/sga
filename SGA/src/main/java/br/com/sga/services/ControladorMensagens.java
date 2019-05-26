@@ -42,7 +42,7 @@ public class ControladorMensagens implements Serializable {
 	}
 
 	public void addMsgInfo(String msg) {
-//		String summary = bundle.getString(msg);
+		//String summary = bundle.getString(msg);
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
 		adicionaMensagem(message);
 	}
