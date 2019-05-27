@@ -2,7 +2,6 @@ package br.com.sga.monitoramento.DAO;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import br.com.sga.monitoramento.model.Usuario;
@@ -117,23 +116,11 @@ public class UsuarioDAO extends EntityManagerSingleton{
 	public Usuario retornaUsuario(String login,String senha){
 		Usuario usuario = null;
 		try{
-			Query query =  entityManager.createNativeQuery(""
-					+ "select * from Usuario f where f.login =?1 and f.senha =?2");
-			query.setParameter(1, login);
-			query.setParameter(2, senha);
-			if(query.getResultList().size()==0) {
-				return usuario;
-			}
-			Object[] objeto = (Object[]) query.getSingleResult();
-			int id = (Integer)objeto[0];
-			String nome = (String) objeto[3];
-			String email = (String) objeto[4];
-			int status = (Integer) objeto[5];
-			int tipo = (Integer) objeto[6];
-			int celula = (Integer) objeto[7];
-			
-			usuario = new Usuario(id,  login,  senha,  nome,  email,  status, tipo, celula);
-			return usuario;
+			Query query =  entityManager.createQuery(
+					 "select f from Usuario f where f.login =:login and f.senha =:senha");
+			query.setParameter("login", login);
+			query.setParameter("senha", senha);
+			usuario = (Usuario) query.getSingleResult();
 		}catch(Exception e){
 			e.printStackTrace();
 		}

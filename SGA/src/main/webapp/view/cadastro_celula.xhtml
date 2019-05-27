@@ -33,12 +33,12 @@
 		                <p:inputTextarea id="descricao" value="#{cadastroCelulaBean.celula.descricao}" />                                
 		  				
 		  				<p:outputLabel for="departamento" value="Departamento:" />
-		  				 <h:selectOneMenu id="departamento" converter="oneMenuConverter" value="#{cadastroCelulaBean.celula.departamento}"
+		  				 <p:selectOneMenu id="departamento" converter="oneMenuConverter" value="#{cadastroCelulaBean.celula.departamento}"
 							style="width:150px">
 							<f:selectItem itemLabel="Selecionar departamento" itemValue=""
 								noSelectionOption="true" />
 							<f:selectItems value="#{departamento.listaDepartamentos}"  var = "dep" itemLabel="#{dep.nome}" itemValue="#{dep}" />
-						</h:selectOneMenu>
+						</p:selectOneMenu>
 						
 	      	    </p:panelGrid>
 	      	    <br/>
@@ -46,16 +46,7 @@
       	    	action="#{cadastroCelulaBean.salvar}" update="@form">
 	         	</p:commandButton>
 	         	
-	         	<p:commandButton value="Cancelar" action="#{cadastroUsuarioBean.cancela}" style="margin-left:10px;">
-				<p:confirm header="Confirmação"
-				message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos." icon="ui-icon-alert" />
-				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" icon="ui-icon-cancel">
-				<p:commandButton value="Sim" type="button"
-				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="Não" type="button"
-				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-				</p:confirmDialog>
-				</p:commandButton>
+	         
 				<br/>
 				<br/>
 				<p:dataTable id="celulaTable" value="#{cadastroCelulaBean.listaCelula}" var="cel">

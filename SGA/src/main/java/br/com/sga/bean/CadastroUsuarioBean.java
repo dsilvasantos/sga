@@ -13,7 +13,7 @@ import javax.faces.bean.ViewScoped;
 import br.com.sga.monitoramento.DAO.UsuarioDAO;
 import br.com.sga.monitoramento.enumeration.TiposUsuarios;
 import br.com.sga.monitoramento.model.Celula;
-import br.com.sga.monitoramento.model.Trabalha;
+
 import br.com.sga.monitoramento.model.Usuario;
 import br.com.sga.services.ControladorMensagens;
 import br.com.sga.services.SessionContext;
@@ -81,7 +81,7 @@ public class CadastroUsuarioBean implements Serializable{
 	}
 	
 	public String salvar(){
-		try{
+		try{/*
 			usuario.setListaTrabalha(new ArrayList<Trabalha>());
 			for(Celula cell : celulasSelecionadas){
 				Trabalha trabalha = new Trabalha();
@@ -90,7 +90,7 @@ public class CadastroUsuarioBean implements Serializable{
 				trabalha.setDate_ini(new GregorianCalendar(2019, 00, 01).getTime());
 				trabalha.setDate_fim(new GregorianCalendar(2019, 05, 01).getTime());
 				usuario.getListaTrabalha().add(trabalha);
-			}
+			}*/
 			userDAO.persist(usuario);
 			controladorMensagens.addMsgInfo("Usuário cadastrado com sucesso !");
 			usuario = new Usuario();

@@ -28,17 +28,24 @@
 					
 					<p:outputLabel value="Email:" />
 					<p:inputText id="email" value="#{editarUsuarioBean.user.email}" />
+					
+					<p:outputLabel for="tipo_usuario" value="Tipo do Usuário:" />
+					<p:selectOneMenu id="tipo_usuario" value="#{cadastroUsuarioBean.usuario.tipo}">
+						<f:selectItem itemValue="1" itemLabel="1- Analista de Producao"/>
+						<f:selectItem itemValue="2" itemLabel="2- Analista de Suporte"/>
+						<f:selectItem itemValue="3" itemLabel="3- Desenvolvedor"/>
+					</p:selectOneMenu>
 								
 					<p:outputLabel for="celula" value="Célula: " />
-					<h:selectOneMenu id="celula" value="#{celula.celula}" style="width:150px">
+					<p:selectOneMenu id="celula" converter="oneMenuConverter" value="#{editarUsuarioBean.user.celula}" style="width:150px">
 					<f:selectItem itemLabel="Selecionar célula" itemValue="" noSelectionOption="true" />
-					<f:selectItems value="#{celula.celulas}" />
-					</h:selectOneMenu>
+					<f:selectItems value="#{celula.retornaTodasCelulas()}" var = "cel" itemLabel="#{cel.nome}" itemValue="#{cel}" />
+					</p:selectOneMenu>
 					
 					<p:outputLabel for="status_usuario" value="Status do Usuário:" />
 					<h:selectOneMenu id="status_usuario" value="#{editarUsuarioBean.user.status}">
-			        <f:selectItem itemValue="1" itemLabel="1- Ativado"/>
-			        <f:selectItem itemValue="0" itemLabel="0- Desativado"/>
+			        <f:selectItem itemValue="1" itemLabel="1- Ativo"/>
+			        <f:selectItem itemValue="0" itemLabel="0- Inativo	"/>
 			        </h:selectOneMenu>
 			        
 		  		</p:panelGrid>

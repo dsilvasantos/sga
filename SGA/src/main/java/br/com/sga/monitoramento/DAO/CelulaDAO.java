@@ -35,7 +35,7 @@ public class CelulaDAO extends EntityManagerSingleton{
 		}
 	}
 
-	public void remove(Celula Celula) {
+	public void remove(Celula Celula) throws Exception {
 		try {
 			if(!entityManager.getTransaction().isActive())
 			//transaction.begin();

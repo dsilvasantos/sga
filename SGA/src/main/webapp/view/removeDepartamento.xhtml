@@ -41,7 +41,19 @@
 				</p:commandButton>
 
 				<p:commandButton value="Cancelar" style="margin-left:10px;"
-					action="#{removerDepatamentoBean.cancela()}" />
+					action="#{removerDepartamentoBean.cancela}" >
+						<p:confirm header="Confirmação"
+									message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos."
+									icon="ui-icon-alert" />
+									<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+									icon="ui-icon-cancel">
+		
+									<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+							</p:commandButton>
 		</h:form>
 	</ui:define>
 </ui:composition>

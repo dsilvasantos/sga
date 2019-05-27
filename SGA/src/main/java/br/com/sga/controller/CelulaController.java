@@ -6,6 +6,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.sga.bean.CadastroCelulaBean;
 import br.com.sga.monitoramento.DAO.AplicacaoDAO;
 import br.com.sga.monitoramento.DAO.CelulaDAO;
 import br.com.sga.monitoramento.DAO.DepartamentoDAO;
@@ -22,7 +23,6 @@ import br.com.sga.services.SessionContext;
 public class CelulaController {
 	
 	private boolean permissao = false;
-
 	private CelulaDAO celulaDao = new CelulaDAO();
 	private AplicacaoDAO aplicacaoDao = new AplicacaoDAO();
 	
@@ -83,4 +83,8 @@ public class CelulaController {
 		this.permissao = permissao;
 	}
 	
+	public List<Celula> retornaTodasCelulas() {
+		return celulaDao.listaCelula();
+
+	}
 }

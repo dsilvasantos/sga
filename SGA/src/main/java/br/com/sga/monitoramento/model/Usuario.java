@@ -1,14 +1,13 @@
 package br.com.sga.monitoramento.model;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -37,11 +36,12 @@ public class Usuario {
 	@Column(name = "tipo", nullable = false)
 	private int tipo;
 	
-	@Column(name = "id_celula", nullable = false)
-	private int celula;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_celula", nullable = false)
+	private Celula celula;
 	
-	@OneToMany(mappedBy = "user", targetEntity = Trabalha.class, cascade = CascadeType.ALL)
-	private List<Trabalha> listaTrabalha;
+	//@OneToMany(mappedBy = "user", targetEntity = Trabalha.class, cascade = CascadeType.ALL)
+	//private List<Trabalha> listaTrabalha;
 	
 	public int getId() {
 		return id;
@@ -86,16 +86,14 @@ public class Usuario {
 	public int getStatus() {
 		return status;
 	}
-	
-	
 
-	public List<Trabalha> getListaTrabalha() {
+	/*public List<Trabalha> getListaTrabalha() {
 		return listaTrabalha;
 	}
 
 	public void setListaTrabalha(List<Trabalha> listaTrabalha) {
 		this.listaTrabalha = listaTrabalha;
-	}
+	}*/
 
 	public void setStatus(int status) {
 		this.status = status;
@@ -109,11 +107,11 @@ public class Usuario {
 		this.tipo = tipo;
 	}
 
-	public int getCelula() {
+	public Celula getCelula() {
 		return celula;
 	}
 
-	public void setCelula(int celula) {
+	public void setCelula(Celula celula) {
 		this.celula = celula;
 	}
 
@@ -122,7 +120,7 @@ public class Usuario {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Usuario(int id, String login, String senha, String nome, String email, int status,int tipo,int celula) {
+	public Usuario(int id, String login, String senha, String nome, String email, int status,int tipo,Celula celula) {
 		super();
 		this.id = id;
 		this.login = login;
