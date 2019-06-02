@@ -26,19 +26,19 @@
 					<p:panel id="basic" header="Cadastro de Usuário" style="margin-bottom:20px">
 						<p:panelGrid columns="2">
 							<p:outputLabel for="login" value="Login:" />
-							<p:inputText id="login" value="#{cadastroUsuarioBean.usuario.login}" />
+							<p:inputText id="login" value="#{cadastroUsuarioBean.usuario.login}" required="true" requiredMessage="O usuário deve conter um Login !"/>
 
 							<p:outputLabel for="senha" value="Senha:" />
-							<p:inputText id="senha"  type="password" value="#{cadastroUsuarioBean.usuario.senha}" />
+							<p:inputText id="senha"  type="password" value="#{cadastroUsuarioBean.usuario.senha}" required="true" requiredMessage="Sua senha deve ser adicionada!"/>
 
 							<p:outputLabel for="nome" value="Nome:" />
-							<p:inputText id="nome" value="#{cadastroUsuarioBean.usuario.nome}" />
+							<p:inputText id="nome" value="#{cadastroUsuarioBean.usuario.nome}" required="true" requiredMessage="Campo Nome é Obrigatório !"/>
 
 							<p:outputLabel for="email" value="Email:" />
-							<p:inputText id="email" value="#{cadastroUsuarioBean.usuario.email}" />
+							<p:inputText id="email" onblur="validaEmail(#email)" value="#{cadastroUsuarioBean.usuario.email}" required="true" requiredMessage="Campo Email deve ser preenchido!"/>
 							
 							<p:outputLabel for="tipo_usuario" value="Tipo do Usuário:" />
-							<p:selectOneMenu id="tipo_usuario" value="#{cadastroUsuarioBean.usuario.tipo}">
+							<p:selectOneMenu id="tipo_usuario" value="#{cadastroUsuarioBean.usuario.tipo}" required="true" requiredMessage="O usuário deve conter um tipo de perfil">
 						       <f:selectItem itemValue="1" itemLabel="1- Analista de Producao"/>
 						       <f:selectItem itemValue="2" itemLabel="2- Analista de Suporte"/>
 						       <f:selectItem itemValue="3" itemLabel="3- Desenvolvedor"/>
@@ -55,9 +55,6 @@
 						</p:panelGrid>
 						
 						<br/>
-					    <br/>
-					    
-					    
 			        	
 						<p:commandButton value="Cadastrar" icon="ui-icon-star"
 								action="#{cadastroUsuarioBean.salvar()}" update="@form">
@@ -90,7 +87,7 @@
 							</p:column>
 							
 							<p:column headerText="Editar" width="1.0%">
-									<p:commandButton icon="ui-icon-pencil"
+									<p:commandButton id="botao_editar" immediate="true" icon="ui-icon-pencil"
 									action="alteraUsuario.xhtml" styleClass="botoesIcones"
 									style="center">
 									<f:param name="UsuarioID" value="#{user.id}" />
@@ -98,7 +95,7 @@
 							</p:column>
 
 							<p:column headerText="Excluir" width="1.0%">
-								<p:commandButton icon="ui-icon-trash"
+								<p:commandButton id="botao_excluir" immediate="true" icon="ui-icon-trash"
 									action="removeUsuario.xhtml" styleClass="botoesIcones"
 									style="center">
 									<f:param name="UsuarioID" value="#{user.id}" />
@@ -108,6 +105,8 @@
 					</p:panel>
 				</h:form>
 			</div>
+			<script type="text/javascript"
+					src="#{request.contextPath}/js/validacaoEmail.js"></script>
 		</h:body>
 	</ui:define>
 </ui:composition>
