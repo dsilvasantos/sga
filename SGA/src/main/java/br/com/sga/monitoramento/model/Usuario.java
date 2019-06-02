@@ -36,9 +36,8 @@ public class Usuario {
 	@Column(name = "tipo", nullable = false)
 	private int tipo;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_celula", nullable = false)
-	private Celula celula;
+	@Column(name = "id_celula", nullable = false)
+	private int celula;
 	
 	//@OneToMany(mappedBy = "user", targetEntity = Trabalha.class, cascade = CascadeType.ALL)
 	//private List<Trabalha> listaTrabalha;
@@ -107,11 +106,11 @@ public class Usuario {
 		this.tipo = tipo;
 	}
 
-	public Celula getCelula() {
+	public int getCelula() {
 		return celula;
 	}
 
-	public void setCelula(Celula celula) {
+	public void setCelula(int celula) {
 		this.celula = celula;
 	}
 
@@ -120,7 +119,7 @@ public class Usuario {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Usuario(int id, String login, String senha, String nome, String email, int status,int tipo,Celula celula) {
+	public Usuario(int id, String login, String senha, String nome, String email, int status,int tipo,int celula) {
 		super();
 		this.id = id;
 		this.login = login;
