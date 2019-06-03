@@ -28,7 +28,7 @@
 						<p:inputTextarea value="#{editarCelulaBean.celula.descricao}"/>
 						
 						<p:outputLabel for="departamento" value="Departamento" />
-		  				 <p:selectOneMenu id="departamento" converter="oneMenuConverter" value="#{cadastroCelulaBean.celula.departamento}"
+		  				 <p:selectOneMenu id="departamento" converter="oneMenuConverter" value="#{editarCelulaBean.celula.departamento}"
 							style="width:150px">
 							<f:selectItems value="#{departamento.listaDepartamentos}"  var = "dep" itemLabel="#{dep.nome}" itemValue="#{dep}" />
 						</p:selectOneMenu> 
