@@ -92,6 +92,7 @@ public class CadastroUsuarioBean implements Serializable{
 				usuario.getListaTrabalha().add(trabalha);
 			}*/
 			userDAO.persist(usuario);
+			usuario.setStatus(1);
 			controladorMensagens.addMsgInfo("Usuário cadastrado com sucesso !");
 			usuario = new Usuario();
 			return "cadastro_usuario.xhtml";
