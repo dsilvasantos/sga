@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum AmbienteEnum {
-	PRODUCAO("Produção", "192.168.1.188", "sga", "sga.1234", 9999);
+	PRODUCAO("Produção", "192.168.1.78", "sga", "sga.1234", 9999);
 
 	private String ambiente;
 	private String host;

@@ -32,5 +32,4 @@
 				value="1000" />
 		</properties>
 	</persistence-unit>
-
 </persistence>

@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import br.com.sga.monitoramento.model.Celula;
 import br.com.sga.monitoramento.model.Usuario;
 
 public class UsuarioDAO extends EntityManagerSingleton{
@@ -12,7 +11,6 @@ public class UsuarioDAO extends EntityManagerSingleton{
 
 	public void persist(Usuario Usuario) {
 		try {
-			if(!transaction.isActive())
 			transaction.begin();
 			entityManager.persist(Usuario);
 			transaction.commit();
@@ -24,7 +22,7 @@ public class UsuarioDAO extends EntityManagerSingleton{
 
 	public void merge(Usuario Usuario) {
 		try {
-			if(!transaction.isActive())
+			
 				transaction.begin();
 			entityManager.merge(Usuario);
 			transaction.commit();
@@ -37,7 +35,7 @@ public class UsuarioDAO extends EntityManagerSingleton{
 	public void remove(Usuario Usuario) {
 		
 		try {
-			if(!transaction.isActive())
+			
 			transaction.begin();
 			Usuario = entityManager.find(Usuario.class, Usuario.getId());
 			entityManager.remove(Usuario);
@@ -83,8 +81,6 @@ public class UsuarioDAO extends EntityManagerSingleton{
 	public Usuario retornaUsuario(Integer idUsuario){
 		Usuario usuario = null;
 		try{
-			if(!entityManager.getTransaction().isActive())
-			entityManager.getTransaction().begin();
 			usuario = (Usuario) entityManager.createQuery("select f from Usuario f where f.id = :idUsuario")
 			.setParameter("idUsuario", idUsuario).getSingleResult();
 		}catch(Exception e){

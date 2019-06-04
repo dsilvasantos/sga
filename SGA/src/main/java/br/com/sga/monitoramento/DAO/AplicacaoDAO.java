@@ -66,7 +66,7 @@ public class AplicacaoDAO extends EntityManagerSingleton{
 	public List<Aplicacao> recupear(String celula) {
 		try {
 		Query query = entityManager.createNativeQuery(
-				"Select aplicacao.id id,aplicacao.nome nome,aplicacao.status status from aplicacao,celula where aplicacao.ID_CELULA = "
+				"Select aplicacao.id id,aplicacao.nome nome,aplicacao.status status from aplicacao,celula where aplicacao.STATUS='1' and aplicacao.ID_CELULA = "
 						+ "celula.id and celula.nome=?1");
 		query.setParameter(1, celula);
 		List<Object[]> objs = query.getResultList();
@@ -115,7 +115,7 @@ public class AplicacaoDAO extends EntityManagerSingleton{
 	public List<Aplicacao> listaAplicacaoID(int id) {
 		try {
 			Query query = entityManager.createNativeQuery(
-					"Select * from aplicacao where aplicacao.id=?1",Aplicacao.class);
+					"Select * from aplicacao where aplicacao.STATUS='1' and aplicacao.id=?1",Aplicacao.class);
 			query.setParameter(1, id);
 			List<Aplicacao> result = query.getResultList();
 			return result;
