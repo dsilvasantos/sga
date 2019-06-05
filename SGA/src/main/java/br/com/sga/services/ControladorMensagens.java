@@ -20,24 +20,21 @@ public class ControladorMensagens implements Serializable {
 	}
 
 	public void addMsgFatal(String msg) {
-		String summary = bundle.getString(msg);
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL, summary, null);
+//		String summary = bundle.getString(msg);
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL, msg, null);
 		adicionaMensagem(message);
 	}
 
 	public void addMsgErro(String msg) {
-		try{
-		String summary = bundle.getString(msg);
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
+//		String summary = bundle.getString(msg);
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
 		adicionaMensagem(message);
-		}catch(Exception e){
-			
-		}
+		
 	}
 
 	public void addMsgAlerta(String msg) {
-		String summary = bundle.getString(msg);
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, summary, null);
+//		String summary = bundle.getString(msg);
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, msg, null);
 		adicionaMensagem(message);
 	}
 

@@ -46,7 +46,7 @@
 							
 							<p:outputLabel for="celula" value="Celula:" />
 		  				 	<p:selectOneMenu id="celula" converter="oneMenuConverter" value="#{cadastroUsuarioBean.usuario.celula}"
-								style="width:150px">
+								required="true" requiredMessage="O usuário deve estar alocado em uma Célula" style="width:150px">
 								<f:selectItem itemLabel="Selecionar célula" itemValue=""
 									noSelectionOption="true" />
 								<f:selectItems value="#{cadastroCelulaBean.listaCelula}"  var = "cel" itemLabel="#{cel.nome}" itemValue="#{cel}" />
