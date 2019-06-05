@@ -76,6 +76,7 @@ public class ColetorControllerBean implements Serializable {
 		LOGGER.info("Usuário [" + SessionContext.getInstance().getUsuarioLogado().getLogin() + "] solicitou clean do alrame: ");
 
 		key = recuperarAplicacao(erro.getAplicacao()) + "_" + recuperarRecurso(erro.getRecurso());
+		erro = ColetorService.alertas.get(key);
 		ColetorService.alertas.remove(key);
 		erro.setDataSolucao(new Date());
 		erro.setStatus("Removido");

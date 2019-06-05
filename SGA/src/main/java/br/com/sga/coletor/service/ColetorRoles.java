@@ -96,12 +96,13 @@ public class ColetorRoles {
 			break;
 		case OK:
 			if (ColetorService.alertas.containsKey(key)) {
+				erro = ColetorService.alertas.get(key);
 				// remove alerta
 				ColetorService.alertas.remove(key);
 				erro.setDataSolucao(new Date());
 				erro.setStatus("Finalizado");
 				erro.setSolucao("Solucionado automáticamente");
-				erroDAO.persist(erro);
+				erroDAO.merge(erro);
 			}
 			break;
 		default:
@@ -125,7 +126,7 @@ public class ColetorRoles {
 			recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "versao-jboss");
 			versaoJboss = recursosAplicacao.getValor();
 		} catch (Exception e) {
-			LOGGER.error("Falha ao recuperar informações das Threads em: " + key);
+			LOGGER.error("Falha ao recuperar informações das versao-jboss em: " + key);
 		}
 		if (server.getJbossVersion().equals(versaoJboss)) {
 			mensagem = TipoAlerta.OK.getValor().toUpperCase() + " Versão do JBoss OK = " + server.getJbossVersion()
@@ -161,14 +162,20 @@ public class ColetorRoles {
 		String maxGrafico = "100";
 		String minGrafico = "0";
 		String mensagem;
-
+		int NumWarning;
+		int NumCritical;
+		int valorHeap;
+		RecursosAplicacao recursosAplicacao = new RecursosAplicacao();
 		try {
-			RecursosAplicacao recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "heap");
-			int NumWarning = recursosAplicacao.getQuantidadeMaxima();
-			int NumCritical = recursosAplicacao.getQuantiodadeCritica();
+			recursosAplicacao = recursosAplicacaoDAO.recupear(server.getNome(), "heap");
+			NumWarning = recursosAplicacao.getQuantidadeMaxima();
+			NumCritical = recursosAplicacao.getQuantiodadeCritica();
 
-			int valorHeap = Integer.parseInt(server.getJvm().getPercentUseHeap());
-			
+			valorHeap = Integer.parseInt(server.getJvm().getPercentUseHeap());
+		} catch (Exception e) {
+			LOGGER.error("Falha ao recuperar informações de Heap em: " + key);
+			return;
+		}
 			if (valorHeap > NumCritical) {
 				mensagem = TipoAlerta.CRITICAL.getValor().toUpperCase() + " Uso da memória heap="
 						+ server.getJvm().getPercentUseHeap() + "%";
@@ -194,9 +201,6 @@ public class ColetorRoles {
 				identificarAlertas(TipoAlerta.OK, TipoRecurso.HEAP.toString().toLowerCase(), key, mensagem, recursosAplicacao.getRecursos().getId(),
 						server.getNome(),valorHeap);
 			}
-		} catch (Exception e) {
-			LOGGER.error("Falha ao recuperar informações de Heap em: " + key);
-		}
 
 	}
 
@@ -224,6 +228,7 @@ public class ColetorRoles {
 			warning = recursosAplicacao.getQuantidadeMaxima();
 		} catch (Exception e) {
 			LOGGER.error("Falha ao recuperar informações das Metaspace em: " + key);
+			return;
 		}
 
 		int metaSpaceUse = Integer.parseInt(server.getMetaspaceUsedMB());
@@ -271,7 +276,8 @@ public class ColetorRoles {
 			critical = recursosAplicacao.getQuantiodadeCritica();
 			warning = recursosAplicacao.getQuantidadeMaxima();
 		} catch (Exception e) {
-			LOGGER.error("Falha ao recuperar informações das Metaspace em: " + key);
+			LOGGER.error("Falha ao recuperar informações de thread em: " + key);
+			return;
 		}
 
 		if (server.getThread() > critical) {
