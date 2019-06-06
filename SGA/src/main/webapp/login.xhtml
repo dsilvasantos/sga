@@ -12,10 +12,11 @@
 <h:body>
 	
 
-      <h:form id = "form" prependId="false">
+			<img src="#{request.contextPath}/imagens/lgsga.png" alt="logo" style="height:300px; left:560px; position:relative"/>
+      <h:form id = "form" prependId="false" style="top: -100px; position: relative">
             <p:growl id="growl"/>
 			<p:panelGrid columns="1" styleClass="ui-fluid center ui-noborder">                  
-			<img src="#{request.contextPath}/imagens/SGA.png" alt="logo"/>
+		
 			
 			<p:outputLabel for="nomeUsuario" value="Login:" style="text-align:center"/>
                   <p:inputText id="nomeUsuario" value="#{usuarioLogadoMB.login}" />

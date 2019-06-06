@@ -54,7 +54,7 @@ public class EditarCelulaBean implements Serializable{
 		try{
 		this.celulaDAO.merge(celula);
 		this.controladorMensagens.addMsgInfo("Celula alterada com sucesso !");
-		//return "cadastro_celula.xhtml";
+		return "cadastro_celula.xhtml";
 		}catch(Exception e){
 			e.printStackTrace();
 		}

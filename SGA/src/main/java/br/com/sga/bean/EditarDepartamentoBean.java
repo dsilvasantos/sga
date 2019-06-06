@@ -60,7 +60,7 @@ public class EditarDepartamentoBean implements Serializable{
 			DepartamentoDAO daoDepartamento = new DepartamentoDAO();
 			daoDepartamento.merge(departamento);
 			controladorMensagens.addMsgInfo("Departamento Alterado com sucesso");
-			return "cadastro_departamento?faces-redirect=true";
+			return "cadastro_departamento.xhtml";
 		}catch(Exception e){
 			e.printStackTrace();
 		}
