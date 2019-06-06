@@ -54,7 +54,7 @@
 							</p:column>
 
 							<p:column headerText="Editar" width="1.0%">
-									<p:commandButton icon="ui-icon-pencil"
+									<p:commandButton icon="ui-icon-pencil" immediate="true" 
 									action="alteraDepartamento.xhtml" styleClass="botoesIcones"
 									style="center">
 									<f:param name="DepartamentoId" value="#{dep.id}" />
@@ -63,7 +63,7 @@
 
 							<p:column headerText="Excluir" width="1.0%">
 								<p:commandButton icon="ui-icon-trash"
-									action="#{cadastroDepartamentoBean.remove()}" styleClass="botoesIcones"
+									action="#{cadastroDepartamentoBean.remove()}" immediate="true"  styleClass="botoesIcones"
 									style="center">
 									<f:param name="DepartamentoId" value="#{dep.id}" />
 								</p:commandButton>

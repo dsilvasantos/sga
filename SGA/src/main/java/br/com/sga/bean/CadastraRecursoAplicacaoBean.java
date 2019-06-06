@@ -60,10 +60,17 @@ public class CadastraRecursoAplicacaoBean implements Serializable{
 		
 	public String salvar(){
 		try{
-			this.recursoAplicacaoDAO.persist(recursoAplicacao);
-			this.controladorMensagens.addMsgInfo("Aplicação cadastrada com sucesso !");
-			recursoAplicacao = new RecursosAplicacao();
-			return "cadastro_aplicacao.xhtml";
+			if(recursoAplicacao.getRecursos() == null) 
+			{
+				this.controladorMensagens.addMsgInfo("Todos os recursos já foram adicionados a esta aplicação!");
+			}
+			else 
+			{
+				this.recursoAplicacaoDAO.persist(recursoAplicacao);
+				this.controladorMensagens.addMsgInfo("Recurso foi adicionado a aplicação com sucesso!");
+				recursoAplicacao = new RecursosAplicacao();
+				return "cadastro_aplicacao.xhtml";
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}

@@ -76,7 +76,7 @@ public class EditarRecursoAplicacaoBean implements Serializable{
 		try{
 		this.recursoAplicacaoDAO.merge(recursoAplicacao);
 		this.controladorMensagens.addMsgInfo("Recurso da aplicação alterado com sucesso !");
-		return "cadastro_aplicacao.xhtml";
+		return "consultaRecursoAplicacao.xhtml";
 		}catch(Exception e){
 			e.printStackTrace();
 		}

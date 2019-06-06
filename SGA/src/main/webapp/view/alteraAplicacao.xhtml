@@ -73,14 +73,14 @@
 				
 					<p:outputLabel for="celula" value="Adicionar recurso a aplicação: " />
 		  				 <p:selectOneMenu converter="oneMenuConverter" id="aplicacaoObj" var = "vrecursoAplicacao" value="#{cadastraRecursoAplicacaoBean.recursoAplicacao.aplicacao}"
-							style="width:150px">
+							 style="width:150px">
 							<f:selectItems var = "cel" itemValue="#{cel}" value = "#{editarAplicacaoBean.listaAplicacao}" itemLabel="#{cel.nome}"  />
 					</p:selectOneMenu>	
 				
 				
 					<p:outputLabel for="celula" value="Recurso:" />
 		  				 <p:selectOneMenu converter="oneMenuConverter" id="recurso" value="#{cadastraRecursoAplicacaoBean.recursoAplicacao.recursos}"
-							style="width:150px">
+							 style="width:150px">
 							<f:selectItems var = "vrecursos" itemValue="#{vrecursos}" value = "#{consultaRecursoBean.listaRecursos}" itemLabel="#{vrecursos.nome}" />
 					</p:selectOneMenu>	
 					
