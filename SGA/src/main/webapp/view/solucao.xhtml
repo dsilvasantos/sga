@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<style type="text/css">
+.semBorda tr, .semBorda td {
+	border: none !important;
+	border-style: none !important;
+	border-width: 0px !important;
+}
+
+.firstColumn {
+	width: 60px;
+}
+</style>
+
+
+
+	<p:dialog header="Solução" widgetVar="solucaoDialog" modal="true"
+		 showEffect="fade" hideEffect="fade" resizable="false" draggable="false">
+
+		<h:form>
+			<p:growl id="growl" showDetail="true" rendered="true" life="5000" />
+
+			<p:panel id="dadosForm" header="Solucionar erro"
+				style="margin-bottom:10px;">
+				<h:panelGrid columns="2" styleClass="semBorda"
+					columnClasses="firstColumn">
+					<p:outputLabel value="Solução" />
+					<p:inputTextarea id="Solucao" value="#{erro.solucao}" />
+				</h:panelGrid>
+				<p:commandButton ajax="true" title="Solução"  onstart="PF('statusDialog').show()"
+					update=":form:result,:form:resultados"
+					oncomplete="PF('statusDialog').hide(),PF('solucaoDialog').hide()"
+					value="Solução" actionListener="#{erro.solucionar()}" />
+					
+					
+			</p:panel>
+		</h:form>
+	</p:dialog>
+</ui:composition>
+

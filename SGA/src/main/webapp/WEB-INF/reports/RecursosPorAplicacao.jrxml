@@ -15,12 +15,12 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
-	<parameter name="dataInicial" class="java.sql.Timestamp"/>
-	<parameter name="dataFinal" class="java.sql.Timestamp"/>
+	<parameter name="dataInicial" class="java.util.Date"/>
+	<parameter name="dataFinal" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[SELECT aplicacao.nome as aplicacao,recursos.NOME as recurso,valor,data
 FROM coleta,aplicacao,recursos
-where coleta.aplicacao=aplicacao.ID and recursos.ID=coleta.recurso
+where coleta.id_aplicacao=aplicacao.ID and recursos.ID=coleta.id_recursos
 and data between $P{dataInicial} and $P{dataFinal}
 order by aplicacao.nome,recursos.NOME,coleta.data]]>
 	</queryString>

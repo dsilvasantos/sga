@@ -2,7 +2,6 @@ package br.com.sga.monitoramento.DAO;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import br.com.sga.monitoramento.model.Usuario;
@@ -12,7 +11,6 @@ public class UsuarioDAO extends EntityManagerSingleton{
 
 	public void persist(Usuario Usuario) {
 		try {
-			if(!transaction.isActive())
 			transaction.begin();
 			entityManager.persist(Usuario);
 			transaction.commit();
@@ -24,7 +22,7 @@ public class UsuarioDAO extends EntityManagerSingleton{
 
 	public void merge(Usuario Usuario) {
 		try {
-			if(!transaction.isActive())
+			
 				transaction.begin();
 			entityManager.merge(Usuario);
 			transaction.commit();
@@ -37,7 +35,7 @@ public class UsuarioDAO extends EntityManagerSingleton{
 	public void remove(Usuario Usuario) {
 		
 		try {
-			if(!transaction.isActive())
+			
 			transaction.begin();
 			Usuario = entityManager.find(Usuario.class, Usuario.getId());
 			entityManager.remove(Usuario);
@@ -52,8 +50,8 @@ public class UsuarioDAO extends EntityManagerSingleton{
 
 			Query query = entityManager.createNativeQuery(
 					"Select usuario.id,usuario.login,usuario.senha,usuario.nome,usuario.email,usuario.status from "
-							+ "celula,usuario,trabalha where celula.nome= ?1 and trabalha.id_celula=celula.id and "
-							+ "usuario.id=trabalha.id_usuario",
+							+ "celula,usuario where celula.nome= ?1 and usuario.id_celula=celula.id "
+,
 					Usuario.class);
 			query.setParameter(1, celula);
 			if (query.getResultList().isEmpty()) {
@@ -83,8 +81,6 @@ public class UsuarioDAO extends EntityManagerSingleton{
 	public Usuario retornaUsuario(Integer idUsuario){
 		Usuario usuario = null;
 		try{
-			if(!entityManager.getTransaction().isActive())
-			entityManager.getTransaction().begin();
 			usuario = (Usuario) entityManager.createQuery("select f from Usuario f where f.id = :idUsuario")
 			.setParameter("idUsuario", idUsuario).getSingleResult();
 		}catch(Exception e){
@@ -117,18 +113,18 @@ public class UsuarioDAO extends EntityManagerSingleton{
 	public Usuario retornaUsuario(String login,String senha){
 		Usuario usuario = null;
 		try{
-			Query query =  entityManager.createNativeQuery(""
-					+ "select * from Usuario f where f.login =?1 and f.senha =?2",Usuario.class);
-			query.setParameter(1, login);
-			query.setParameter(2, senha);
-			if(query.getResultList().size()==0) {
-				return usuario;
-			}
+			Query query =  entityManager.createQuery(
+					 "select f from Usuario f where f.login =:login and f.senha =:senha");
+			query.setParameter("login", login);
+			query.setParameter("senha", senha);
 			usuario = (Usuario) query.getSingleResult();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return usuario;
+			return usuario;
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		return null;
+	
 	}
-
+	
+		
 }

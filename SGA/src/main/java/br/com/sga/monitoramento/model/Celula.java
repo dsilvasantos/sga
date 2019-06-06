@@ -23,7 +23,6 @@ public class Celula {
 	@Column(name = "descricao",nullable=true)
 	private String descricao;
 	
-	
 	@ManyToOne
 	@JoinColumn(name = "ID_DEPARTAMENTO")
 	private Departamento departamento;

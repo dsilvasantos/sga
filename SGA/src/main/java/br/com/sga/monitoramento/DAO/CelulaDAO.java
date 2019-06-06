@@ -7,16 +7,13 @@ import javax.persistence.Query;
 import br.com.sga.monitoramento.model.Celula;
 import br.com.sga.monitoramento.model.Departamento;
 
-public class CelulaDAO extends EntityManagerSingleton{
-
-
+public class CelulaDAO extends EntityManagerSingleton {
 
 	public void persist(Celula Celula) {
 		try {
-			if(!transaction.isActive())
 			transaction.begin();
 			entityManager.persist(Celula);
-			 transaction.commit();
+			transaction.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			transaction.rollback();
@@ -25,7 +22,6 @@ public class CelulaDAO extends EntityManagerSingleton{
 
 	public void merge(Celula Celula) {
 		try {
-			if(!entityManager.getTransaction().isActive())
 			transaction.begin();
 			entityManager.merge(Celula);
 			transaction.commit();
@@ -35,12 +31,10 @@ public class CelulaDAO extends EntityManagerSingleton{
 		}
 	}
 
-	public void remove(Celula Celula) {
+	public void remove(Celula Celula) throws Exception {
 		try {
-			if(!entityManager.getTransaction().isActive())
-			//transaction.begin();
-			entityManager.getTransaction().begin();
 			Celula = entityManager.find(Celula.class, Celula.getId());
+			transaction.begin();
 			entityManager.remove(Celula);
 			transaction.commit();
 		} catch (Exception ex) {
@@ -49,11 +43,11 @@ public class CelulaDAO extends EntityManagerSingleton{
 		}
 	}
 
-
-	public List<String> recupear(String departamento){
+	public List<String> recupear(String departamento) {
 		try {
-			Query query = entityManager.createNativeQuery("Select celula.nome from departamento,celula where celula.ID_DEPARTAMENTO = "
-					+ "departamento.id and departamento.nome=?1");
+			Query query = entityManager
+					.createNativeQuery("Select celula.nome from departamento,celula where celula.ID_DEPARTAMENTO = "
+							+ "departamento.id and departamento.nome=?1");
 			query.setParameter(1, departamento);
 			List<String> result = query.getResultList();
 			return result;
@@ -62,7 +56,7 @@ public class CelulaDAO extends EntityManagerSingleton{
 		}
 		return null;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Celula> listaCelula() {
 		try {
@@ -77,12 +71,10 @@ public class CelulaDAO extends EntityManagerSingleton{
 
 	public Celula retornaCelula(Integer idCelula) {
 		Celula celula = null;
-		try{
-			if(!entityManager.getTransaction().isActive())
-				entityManager.getTransaction().begin();
+		try {
 			celula = (Celula) entityManager.createQuery("select f from Celula f where f.id = :idCelula")
-			.setParameter("idCelula", idCelula).getSingleResult();
-		}catch(Exception e){
+					.setParameter("idCelula", idCelula).getSingleResult();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return celula;

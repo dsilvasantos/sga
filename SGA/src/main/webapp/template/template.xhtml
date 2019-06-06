@@ -13,8 +13,6 @@
 		<meta content='text/html; charset=ISO-8859-1'
 			http-equiv="Content-Type" />
 		<link type="text/css" rel="stylesheet" href="../css/default.css" />
-		<link rel="shortcut icon" type="image/x-icon"
-			href="../imagens/favicon.ico" />
 		<ui:insert name="head"></ui:insert>
 	</h:head>
 
@@ -85,6 +83,13 @@
 									style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
 							</p:menuitem>
 							
+							<p:menuitem value="Erros"  url="/view/errorPorUsuario.jsf"/>
+							
+								<p:menuitem>
+							<p:spacer width="1" height="15"
+									style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
+							</p:menuitem>
+							
 							<p:menuitem value="Sair"  action="#{usuarioLogadoMB.doLogout()}"/>
 						</p:menubar>
 
@@ -105,7 +110,7 @@
 			</div>
 
 
-			<div id="footer" class="ui-widget ui-widget-header ui-corner-all" style="position: absolute;bottom: 0;left: 0;">
+			<div id="footer" class="ui-widget ui-widget-header ui-corner-all" style="position: fixed;bottom: 0;left: 0;">
 				<p class="copyright">&nbsp;&nbsp;&copy;&nbsp;&nbsp;2019
 					&nbsp;&bull;&nbsp; Desenvolvido pela SGA &nbsp;&bull;&nbsp;</p>
 				<p>Melhor visualizado nos navegadores Chrome ou Firefox</p>

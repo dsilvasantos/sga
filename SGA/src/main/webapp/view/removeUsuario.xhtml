@@ -12,7 +12,7 @@
 		<p:growl id="message" showDetail="true" />
 		
 			<p:panel header="Usuario à deletar">
-				<h:panelGrid columns="2">
+				<p:panelGrid columns="2">
 	
 					<p:outputLabel value="Login" />
 					<p:outputLabel value="#{removeUsuarioBean.user.login}" />
@@ -26,10 +26,13 @@
 					<p:outputLabel value="Status" />
 					<p:outputLabel value="#{removeUsuarioBean.user.status}" />
 					
-					<p:outputLabel value="Celula" />
-					<p:outputLabel value="#{celula.celula}" />
+					<p:outputLabel value="Tipo" />
+					<p:outputLabel value="#{removeUsuarioBean.user.tipo}" />
 					
-				</h:panelGrid>
+					<p:outputLabel value="Celula" />
+					<p:outputLabel value="#{removeUsuarioBean.user.celula.nome}" />
+					
+				</p:panelGrid>
 			</p:panel>
 			<br/>
 			<p:commandButton value="Excluir" action="#{removeUsuarioBean.exclui}"
@@ -49,7 +52,19 @@
 				</p:commandButton>
 
 				<p:commandButton value="Cancelar"
-					action="#{removeUsuarioBean.cancela()}" />
+					action="#{removeUsuarioBean.cancela()}"> 
+									<p:confirm header="Confirmação"
+									message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos."
+									icon="ui-icon-alert" />
+									<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+									icon="ui-icon-cancel">
+		
+									<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+							</p:commandButton>
 		</h:form>
 	</ui:define>
 </ui:composition>

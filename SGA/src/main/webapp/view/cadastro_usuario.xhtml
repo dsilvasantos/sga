@@ -26,50 +26,43 @@
 					<p:panel id="basic" header="Cadastro de Usuário" style="margin-bottom:20px">
 						<p:panelGrid columns="2">
 							<p:outputLabel for="login" value="Login:" />
-							<p:inputText id="login" value="#{cadastroUsuarioBean.usuario.login}" />
+							<p:inputText id="login" value="#{cadastroUsuarioBean.usuario.login}" required="true" requiredMessage="O usuário deve conter um Login !"/>
 
 							<p:outputLabel for="senha" value="Senha:" />
-							<p:inputText id="senha"  type="password" value="#{cadastroUsuarioBean.usuario.senha}" />
+							<p:inputText id="senha"  type="password" value="#{cadastroUsuarioBean.usuario.senha}" required="true" requiredMessage="Sua senha deve ser adicionada!"/>
 
 							<p:outputLabel for="nome" value="Nome:" />
-							<p:inputText id="nome" value="#{cadastroUsuarioBean.usuario.nome}" />
+							<p:inputText id="nome" value="#{cadastroUsuarioBean.usuario.nome}" required="true" requiredMessage="Campo Nome é Obrigatório !"/>
 
 							<p:outputLabel for="email" value="Email:" />
-							<p:inputText id="email" value="#{cadastroUsuarioBean.usuario.email}" />
+							<p:inputText id="email" onblur="validaEmail(#email)" value="#{cadastroUsuarioBean.usuario.email}" required="true" requiredMessage="Campo Email deve ser preenchido!"/>
 							
+							<p:outputLabel for="tipo_usuario" value="Tipo do Usuário:" />
+							<p:selectOneMenu id="tipo_usuario" value="#{cadastroUsuarioBean.usuario.tipo}" required="true" requiredMessage="O usuário deve conter um tipo de perfil">
+						       <f:selectItem itemValue="1" itemLabel="1- Analista de Producao"/>
+						       <f:selectItem itemValue="2" itemLabel="2- Analista de Suporte"/>
+						       <f:selectItem itemValue="3" itemLabel="3- Desenvolvedor"/>
+					        </p:selectOneMenu>
 							
-							
+							<p:outputLabel for="celula" value="Celula:" />
+		  				 	<p:selectOneMenu id="celula" converter="oneMenuConverter" value="#{cadastroUsuarioBean.usuario.celula}"
+								required="true" requiredMessage="O usuário deve estar alocado em uma Célula" style="width:150px">
+								<f:selectItem itemLabel="Selecionar célula" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItems value="#{cadastroCelulaBean.listaCelula}"  var = "cel" itemLabel="#{cel.nome}" itemValue="#{cel}" />
+							</p:selectOneMenu>	
 					    
 						</p:panelGrid>
+						
 						<br/>
-						<p:panel header="Selecione uma célula" toggleable="true"
-					style="width:30%;" collapsed="true">
-							
-    						<p:selectManyCheckbox  id="celula" value="#{cadastroUsuarioBean.celulasSelecionadas}" converter="oneMenuConverter">
-						        <f:selectItems style="margin-bottom:10px;" var = "cel" itemValue="#{cel}" value = "#{cadastroCelulaBean.listaCelula}" itemLabel="#{cel.nome}" />
-					    	</p:selectManyCheckbox>
-					    	</p:panel>
-					    <br/>
-					    
+			        	
 						<p:commandButton value="Cadastrar" icon="ui-icon-star"
 								action="#{cadastroUsuarioBean.salvar()}" update="@form">
 							</p:commandButton>
-							<p:commandButton value="Cancelar" style="margin-left:10px;"
-									action="#{cadastroUsuarioBean.cancela}">
-									<p:confirm header="Confirmação"
-									message="Tem certeza que deseja cancelar a alteração ? Todos os dados digitados serão perdidos."
-									icon="ui-icon-alert" />
-									<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
-									icon="ui-icon-cancel">
-		
-									<p:commandButton value="Sim" type="button"
-									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-									<p:commandButton value="Não" type="button"
-									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-								</p:confirmDialog>
-							</p:commandButton>
+							
 						<br/>
 						<br/>
+						
 						<p:dataTable id="usuarioTable"
 							value="#{cadastroUsuarioBean.listaUsuario}" var="user">
 							
@@ -85,8 +78,16 @@
 								<h:outputText value="#{user.email}" />
 							</p:column>
 							
+							<p:column headerText="Celula" width="5.0%">
+								<h:outputText value="#{user.celula.nome}" />
+							</p:column>
+							
+							<p:column headerText="Tipo de Usuario" width="5.0%">
+								<h:outputText value="#{user.tipo}" />
+							</p:column>
+							
 							<p:column headerText="Editar" width="1.0%">
-									<p:commandButton icon="ui-icon-pencil"
+									<p:commandButton id="botao_editar" immediate="true" icon="ui-icon-pencil"
 									action="alteraUsuario.xhtml" styleClass="botoesIcones"
 									style="center">
 									<f:param name="UsuarioID" value="#{user.id}" />
@@ -94,7 +95,7 @@
 							</p:column>
 
 							<p:column headerText="Excluir" width="1.0%">
-								<p:commandButton icon="ui-icon-trash"
+								<p:commandButton id="botao_excluir" immediate="true" icon="ui-icon-trash"
 									action="removeUsuario.xhtml" styleClass="botoesIcones"
 									style="center">
 									<f:param name="UsuarioID" value="#{user.id}" />
@@ -104,6 +105,8 @@
 					</p:panel>
 				</h:form>
 			</div>
+			<script type="text/javascript"
+					src="#{request.contextPath}/js/validacaoEmail.js"></script>
 		</h:body>
 	</ui:define>
 </ui:composition>

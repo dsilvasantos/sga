@@ -61,6 +61,7 @@ public class RemoveCelulaBean implements Serializable{
 			this.controladorMensagens.addMsgInfo("Celula excluída com sucesso !!");
 			return "cadastro_celula.xhtml";
 		}catch(Exception e){
+			this.controladorMensagens.addMsgErro("Erro ao deletar Célula !!");
 			e.printStackTrace();
 		}
 		return null;

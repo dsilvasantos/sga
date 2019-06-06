@@ -53,9 +53,10 @@ public class AplicacaoController {
 		if(TiposUsuarios.desenvolvedor.getValor() == SessionContext.getInstance().getUsuarioLogado().getTipo()) {
 			return true;
 		}else {
-			return false;
-		}
+		return false;
+		}	
 	}
+	
 
 	public void setPermissao(boolean permissao) {
 		this.permissao = permissao;

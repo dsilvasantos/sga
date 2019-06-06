@@ -19,10 +19,10 @@ public class Coleta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "aplicacao",nullable=false)
+	@Column(name = "id_aplicacao",nullable=false)
 	private int aplicacao;
 	
-	@Column(name = "recurso",nullable=false)
+	@Column(name = "id_recursos",nullable=false)
 	private int recurso;
 	
 	@Column(name = "valor",nullable=false)

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/template/template.xhtml">
+
+	<ui:define name="content">
+
+		<h:head>
+			<link type="text/css" rel="stylesheet" href="../../css/default.css" />
+		</h:head>
+
+
+			<div class="entry" style="line-height: 200%">
+				<h:form id="form">
+					<p:growl id="growl" showDetail="true" rendered="true" life="5000" />
+					<p:panel id="resultados" header="Resultados dos alertas">
+						<p:dataTable id="result" var="valor"
+							value="#{erro.recuperarErros()}"
+							emptyMessage="Nenhum alerta foi encontrado">
+							<p:column headerText="Prioridade">
+								<h:outputText value="#{valor.prioridade}" />
+							</p:column>
+							<p:column headerText="Descrição">
+								<h:outputText value="#{valor.descricao}" />
+							</p:column>
+							<p:column headerText="Aplicação">
+								<h:outputText
+									value="#{coletor.recuperarAplicacao(valor.aplicacao)}" />
+							</p:column>
+							<p:column headerText="Recurso">
+								<h:outputText value="#{coletor.recuperarRecurso(valor.recurso)}" />
+							</p:column>
+							<p:column headerText="Data de abertura">
+								<h:outputText value="#{valor.dataAbertura}" />
+							</p:column>
+							<p:column headerText="Status">
+								<h:outputText value="#{valor.status}" />
+							</p:column>
+							<p:column headerText="Ação">
+								<p:commandButton ajax="true" onstart="PF('statusDialog').show()"
+									oncomplete="PF('statusDialog').hide()" title="Limpar Alerta"
+									value="Limpar" actionListener="#{coletor.sendClean(valor)}"
+									update=":form:resultados" />
+								<p></p>
+								<p:commandButton ajax="true" onstart="PF('statusDialog').show()"
+									oncomplete="PF('solucaoDialog').show(),PF('statusDialog').hide()"
+									actionListener="#{erro.sendErro(valor)}" title="Solucionar"
+									value="Solucionar">
+									
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</h:form>
+				<ui:include src="solucao.xhtml">
+									</ui:include>
+			</div>
+	</ui:define>
+</ui:composition>
