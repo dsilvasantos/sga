@@ -95,7 +95,7 @@ public class RelatorioController {
 	}
 
 	public void gerarRecursosPorDepartamento() throws JRException, IOException, SQLException, NamingException {
-		if (departamento == null) {
+		if ((departamento == "" ) || (departamento==null)) {
 			msg = "Valores informados inválidos";
 			return;
 		}

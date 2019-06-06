@@ -23,8 +23,8 @@
 aplicacao.nome as aplicacao,recursos.NOME as recurso,valor,data
 FROM coleta,aplicacao,recursos,departamento,celula
 where departamento.id=$P{departamento} and celula.ID_DEPARTAMENTO=departamento.id and
-aplicacao.ID_CELULA=celula.id and coleta.aplicacao=aplicacao.ID and
-recursos.ID=coleta.recurso and data between $P{dataInicial} and $P{dataFinal}
+aplicacao.ID_CELULA=celula.id and coleta.id_aplicacao=aplicacao.ID and
+recursos.ID=coleta.id_recursos and data between $P{dataInicial} and $P{dataFinal}
 order by aplicacao.nome,recursos.NOME,coleta.data]]>
 	</queryString>
 	<field name="departamento" class="java.lang.String">
@@ -104,7 +104,7 @@ order by aplicacao.nome,recursos.NOME,coleta.data]]>
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="553" height="95" backcolor="#000000" uuid="6c6ca4e1-17cd-4913-93d6-5e670ea9ae8a"/>
 				<staticText>
-					<reportElement style="Title" x="0" y="0" width="370" height="66" uuid="a2a2cac8-5a7d-4487-8c54-dab235ce4e21"/>
+					<reportElement style="Title" x="0" y="0" width="370" height="60" uuid="a2a2cac8-5a7d-4487-8c54-dab235ce4e21"/>
 					<textElement>
 						<font isBold="false"/>
 					</textElement>
