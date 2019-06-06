@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.jboss.logging.Logger;
 
@@ -62,7 +63,13 @@ public class ConsultaRecursoBean implements Serializable{
 
 	@PostConstruct
 	public void iniciar() {
-		listaRecursos = listaRecursos();
+		
+		String idAplicacao = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+				.get("AplicacaoId");
+		
+		this.listaRecursos = this.recursosDAO.listaRecursoID(Integer.parseInt(idAplicacao));
+		
+		//listaRecursos = listaRecursos();
 	}
 
 	private List<Recursos> listaRecursos() {

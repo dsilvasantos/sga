@@ -35,12 +35,10 @@
 		
 							
 						<p:outputLabel for="celula" value="Célula:" />
-		  				 <h:selectOneMenu converter="oneMenuConverter" id="celula" value="#{cadastraAplicacaoBean.aplicacao.celula}"
+		  				 <p:selectOneMenu converter="oneMenuConverter" id="celula" value="#{cadastraAplicacaoBean.aplicacao.celula}"
 							style="width:150px">
-							<f:selectItem itemLabel="Selecionar Célula" itemValue=""
-								noSelectionOption="true" />
 							<f:selectItems var = "cel" itemValue="#{cel}" value = "#{cadastroCelulaBean.listaCelula}" itemLabel="#{cel.nome}" />
-						</h:selectOneMenu>
+						</p:selectOneMenu>
 
 
 						</p:panelGrid>

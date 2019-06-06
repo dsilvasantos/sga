@@ -26,11 +26,11 @@
 						<p:panelGrid columns="2">
 
 							<p:outputLabel for="nome" value="Nome do Departamento:" />
-							<p:inputText id="nome" value="#{cadastroDepartamentoBean.departamento.nome}" />
+							<p:inputText id="nome" value="#{cadastroDepartamentoBean.departamento.nome}" required="true" requiredMessage="O nome do departamento deve ser incluído!" />
 
 							<p:outputLabel for="localizacao" value="Localização do Departamento:" />
 							<p:inputText id="localizacao"
-								value="#{cadastroDepartamentoBean.departamento.localizacao}" />
+								value="#{cadastroDepartamentoBean.departamento.localizacao}" required="true" requiredMessage="A localização do departamento deve ser incluída!" />
 
 						</p:panelGrid>
 						<br/>
