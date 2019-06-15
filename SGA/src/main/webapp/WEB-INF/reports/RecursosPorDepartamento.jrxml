@@ -111,11 +111,11 @@ order by aplicacao.nome,recursos.NOME,coleta.data]]>
 					<text><![CDATA[SGA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="SubTitle" x="157" y="66" width="249" height="29" uuid="8978eac3-c578-41c9-837e-48d2b0184642"/>
+					<reportElement style="SubTitle" x="120" y="70" width="249" height="29" uuid="8978eac3-c578-41c9-837e-48d2b0184642"/>
 					<textElement>
 						<font size="22" isBold="false"/>
 					</textElement>
-					<text><![CDATA[Recursos por departamento]]></text>
+					<text><![CDATA[Recursos por Departamento]]></text>
 				</staticText>
 			</frame>
 			<frame>

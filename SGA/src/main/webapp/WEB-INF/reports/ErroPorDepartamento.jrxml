@@ -28,7 +28,7 @@ FROM erros,aplicacao,usuario,celula,departamento,recursos
 where departamento.ID=$P{departamento}  and celula.ID_DEPARTAMENTO=departamento.id and
 aplicacao.ID_CELULA=celula.ID and erros.ID_APLICACAO=aplicacao.ID and
 recursos.ID=erros.id_recursos and data_abertura >=  $P{dataInicial} and data_abertura <= $P{dataFinal} 
-order by aplicacao,data_abertura]]>
+order by aplicacao,recurso,data_abertura]]>
 	</queryString>
 	<field name="prioridade" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="prioridade"/>
