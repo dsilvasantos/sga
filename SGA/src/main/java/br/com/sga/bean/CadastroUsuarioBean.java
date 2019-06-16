@@ -81,6 +81,11 @@ public class CadastroUsuarioBean implements Serializable {
 
 	public String salvar() {
 		try {
+			if (this.usuario.getNome().length() < 2)
+            {
+				controladorMensagens.addMsgErro("Por favor, insira um nome Válido.");
+				return null;
+            } 
 			if(!validaEmail(usuario.getEmail())){
 		    	  controladorMensagens.addMsgErro("Email não é valido ! Insira por favor o e-mail corretamente.");
 		    	  return null;

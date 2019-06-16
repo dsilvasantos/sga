@@ -64,17 +64,16 @@
 							</p:column>
 							
 							<p:column headerText="Editar" width="1.0%">
-									<p:commandButton icon="ui-icon-pencil" immediate="true"
+									<p:commandButton class="botao_editar_cel" icon="ui-icon-pencil" immediate="true"
 									action="alteraCelula.xhtml" styleClass="botoesIcones"
-									style="center">
+									>
 								<f:param name="CelulaId" value="#{cel.id}" />
 									 </p:commandButton> 
 							</p:column>
 							
 							<p:column headerText="Excluir" width="1.0%">
-								<p:commandButton icon="ui-icon-trash" immediate="true"
-									action="removeCelula.xhtml" styleClass="botoesIcones"
-									style="center">
+								<p:commandButton class="botao_excluir_cel" icon="ui-icon-trash" immediate="true"
+									action="removeCelula.xhtml" styleClass="botoesIcones">
 									<f:param name="CelulaId" value="#{cel.id}" />
 								</p:commandButton>
 								</p:column>

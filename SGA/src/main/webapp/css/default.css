@@ -582,20 +582,40 @@ td.bts_start .ui-button-icon-only {
 	margin-right: auto;
 }
 
-#footer{
-	position:absolute;
+#footer {
+	position: absolute;
+}
+
+.botao_editar_cel{
+	width: 350px;
+    text-align: center;
+    padding: 15px 20px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    background-color: #FCC302;
+    font-size: 18px;	
+}
+
+.botao_excluir_cel{
+	width: 350px;
+    text-align: center;
+    padding: 15px 20px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    background-color: #FCC302;
+    font-size: 18px;	
 }
 
 .ui-datalist ul {
-        padding: 0px 10px 0 20px;
-        margin: 5px 0;
-    }
- 
-    .ui-datalist {
-        margin-bottom: 10px
-    }
- 
-    .ui-noborder tr.ui-widget-content {
-        background: none;
-    }
+	padding: 0px 10px 0 20px;
+	margin: 5px 0;
+}
+
+.ui-datalist {
+	margin-bottom: 10px
+}
+
+.ui-noborder tr.ui-widget-content {
+	background: none;
+}
 }
