@@ -58,7 +58,7 @@ public class CadastraRecursoAplicacaoBean implements Serializable{
 		this.listaRecursoAplicacao = listaRecursoAplicacao;
 	}	
 		
-	public String salvar(){
+	public String salvar(Aplicacao aplicacao){
 		try{
 			if(recursoAplicacao.getRecursos() == null) 
 			{
@@ -66,6 +66,7 @@ public class CadastraRecursoAplicacaoBean implements Serializable{
 			}
 			else 
 			{
+				recursoAplicacao.setAplicacao(aplicacao);
 				this.recursoAplicacaoDAO.persist(recursoAplicacao);
 				this.controladorMensagens.addMsgInfo("Recurso foi adicionado a aplicação com sucesso!");
 				recursoAplicacao = new RecursosAplicacao();
