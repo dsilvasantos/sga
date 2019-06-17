@@ -67,6 +67,7 @@ public class ConsultaRecursoBean implements Serializable{
 		String idAplicacao = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
 				.get("AplicacaoId");
 		
+		
 		this.listaRecursos = this.recursosDAO.listaRecursoID(Integer.parseInt(idAplicacao));
 		
 		//listaRecursos = listaRecursos();

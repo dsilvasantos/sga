@@ -71,11 +71,8 @@
 			<p:panel header="Recursos por Aplicação" style="margin-bottom:20px">
 				<p:panelGrid columns="2">
 				
-					<p:outputLabel for="celula" value="Adicionar recurso a aplicação: " />
-		  				 <p:selectOneMenu converter="oneMenuConverter" id="aplicacaoObj" var = "vrecursoAplicacao" value="#{cadastraRecursoAplicacaoBean.recursoAplicacao.aplicacao}"
-							 style="width:150px">
-							<f:selectItems var = "cel" itemValue="#{cel}" value = "#{editarAplicacaoBean.listaAplicacao}" itemLabel="#{cel.nome}"  />
-					</p:selectOneMenu>	
+					<p:outputLabel value="Nome da Aplicação: " />
+						<p:outputLabel value="#{editarAplicacaoBean.aplicacao.nome}" />
 				
 				
 					<p:outputLabel for="celula" value="Recurso:" />

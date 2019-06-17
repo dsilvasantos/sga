@@ -77,7 +77,7 @@ public class RecursosDAO extends EntityManagerSingleton{
 	public List<Recursos> listaRecursoID(int id) {
 		try {
 			Query query = entityManager.createNativeQuery(
-					"SELECT R.* FROM RECURSOS R WHERE R.ID NOT IN (SELECT ID FROM RECURSOS_APLICACAO WHERE ID_APLICACAO =?1) ",Recursos.class);
+					"SELECT R.* FROM RECURSOS R WHERE R.ID NOT IN (SELECT ID_RECURSOS FROM RECURSOS_APLICACAO WHERE ID_APLICACAO =?1) ",Recursos.class);
 			query.setParameter(1, id);
 			List<Recursos> result = query.getResultList();
 			return result;
