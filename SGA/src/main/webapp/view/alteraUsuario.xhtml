@@ -33,7 +33,7 @@
 					<p:inputText id="email" value="#{editarUsuarioBean.user.email}" />
 					
 					<p:outputLabel for="tipo_usuario" value="Tipo do Usuário:" />
-					<p:selectOneMenu id="tipo_usuario" value="#{cadastroUsuarioBean.usuario.tipo}">
+					<p:selectOneMenu id="tipo_usuario" value="#{editarUsuarioBean.user.tipo}">
 						<f:selectItem itemValue="1" itemLabel="1- Analista de Producao"/>
 						<f:selectItem itemValue="2" itemLabel="2- Analista de Suporte"/>
 						<f:selectItem itemValue="3" itemLabel="3- Desenvolvedor"/>
