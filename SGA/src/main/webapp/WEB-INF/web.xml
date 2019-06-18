@@ -45,7 +45,7 @@
 		</web-resource-collection>
 	</security-constraint>
 	<session-config>
-		<session-timeout>60</session-timeout>
+		<session-timeout>600000</session-timeout>
 	</session-config>
 
   
